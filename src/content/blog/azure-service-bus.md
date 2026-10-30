@@ -9,7 +9,7 @@ draft: false
 ---
 # Azure Service Bus
 
-![](/media/1712470547743.png)
+![](/media/miniatura-16-91x.png)
 
 Azure Service Bus è un message broker completamente gestito che permette di implementare una comunicazione asincrona fra diverse applicazioni / servizi in modo sicuro e affidabile. So che non è molto chiara come definizione ma adesso entro nel dettaglio.
 
