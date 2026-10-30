@@ -94,3 +94,10 @@ I protocolli per comunicare con l'Azure Service Bus sono:
 | Availability Zones (AZ) support | ✅ | ✅ | ✅ |
 
 
+## Integrazione con Fabric
+
+Per Azure Service Bus è disponibile, in preview, una sorgente che permette di acquisire dati da una coda o dalla subscription di un topic e portarli in Fabric. Ci sono alcune limitazioni:
+
+- Il namespace Service Bus deve essere raggiungibile pubblicamente, non dietro un firewall o dentro una virtual network. 
+- Questa sorgente al momento non supporta le funzionalità CI/CD, cioè l’integrazione Git e le Deployment Pipeline.
+
