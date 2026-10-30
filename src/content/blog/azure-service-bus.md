@@ -2,7 +2,7 @@
 title: Azure Service Bus
 description: "#1 - Azure Service Bus"
 pubDate: 2026-10-30
-heroImage: /media/azure-service-bus-endpointlogo.jpg
+heroImage: /media/azureservicebusendpointlogo50.png
 tags:
   - Azure
 draft: false
