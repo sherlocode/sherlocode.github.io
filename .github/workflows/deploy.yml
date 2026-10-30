@@ -4,7 +4,7 @@ name: Publish to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch: # allows manual runs from the Actions tab
 
 permissions:
