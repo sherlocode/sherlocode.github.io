@@ -11,12 +11,14 @@ draft: false
 
 ![](/media/1712470547743.png)
 
-Azure Service Bus è un microservizio di Azure che permette di implementare una comunicazione asincrona fra diversi sistemi / servizi in modo sicuro e affidabile. 
+Azure Service Bus è un message broker completamente gestito che permette di implementare una comunicazione asincrona fra diverse applicazioni / servizi in modo sicuro e affidabile. So che non è molto chiara come definizione ma adesso entro nel dettaglio.
 
-Questa comunicazione avviene tramite messaggi che vengono inviati a Azure Service Bus e inseriti in una coda di messaggi. I messaggi sono delle informazioni strutturate nel formato JSON (i vari limiti di dimensione, durevolezza e altro sono riportati sotto) che vengono consegnati ad un servizio o anche più di uno; infatti Azure Service Bus ci permette di definire due modalità di comunicazione:
+Questa comunicazione avviene tramite messaggi in un formato leggibile (JSON, XML, o semplicemente testo) che vengono inviati a Azure Service Bus, prima di essere salvati all'interno del Service Bus vengono convertiti in bytes. 
 
-- Queue - E' un canale punto a punto, ossia che collega due e solo due servizi, uno ad un estremità e l'altro dall'altra.
-- Subs / Topic - Il canale è condiviso fra più servizi che sottoscrivo ad un certo Topic.
+Questi messaggi possono essere consegnati ad un solo servizio o anche più di uno; infatti Azure Service Bus ci permette di definire due modalità di comunicazione:
+
+- Queue - E' un canale punto a punto, ossia un canale di comunicazione che collega due e solo due servizi, uno ad un estremità e l'altro dall'altra.
+- Pub/Sub - Il canale è condiviso fra più servizi che sottoscrivo (Sub) ad un certo Topic (vedi esempio dopo che chiarisce cos'è). Per intenderci, un esempio che spiega molto bene questo meccanismo è l'iscrizione ad un canale di Youtube. Quando ci interessa un certo canale noi ci iscriviamo ad esso, e quando un nuovo video viene pubblicato riceviamo una notifica. Questo è la stessa cosa che succede con il modello Pub/Sub, il canale è il Topic, l'iscrizione è la Sub e il creator che crea un video è il Publisher che manda a tutti i suoi iscritti il messaggio che ha pubblicato un nuovo contenuto.
 
 Azure Service Bus può essere utilizzato in architetture nelle quali abbiamo un flusso che coinvolge diversi servizi che possono impiegare tempi diversi di esecuzione e possono essere o non essere disponibili in certi istanti.
 
@@ -31,6 +33,8 @@ Introducendo nell'equazione Azure Service Bus invece, l'applicazione, una volta 
 Già da questo semplice esempio vediamo che Azure Service Bus è un servizio essenziale quando siamo di fronte ad un flusso applicativo con grandi carichi di lavoro e concentrati oppure con picchi temporali (si basti pensare ai portali di prenotazione di biglietti online, dove quando vengono messi in vendita i biglietti deve poter gestire in modo affidabile dei carichi molto alti in un periodo temporale molto ristretto). 
 
 
+
+&nbsp;
 
 &nbsp;
 
