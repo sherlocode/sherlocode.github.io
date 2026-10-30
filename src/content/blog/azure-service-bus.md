@@ -2,7 +2,7 @@
 title: Azure Service Bus
 description: "#1 - Azure Service Bus"
 pubDate: 2026-10-30
-heroImage: /media/1unzt-zzdvs2vpmhv-th0sw.png
+heroImage: /media/azure-service-bus-endpointlogo.jpg
 tags:
   - Azure
 draft: false
@@ -34,7 +34,7 @@ Già da questo semplice esempio vediamo che Azure Service Bus è un servizio ess
 
 
 
-## Funzionalità 
+## Funzionalità
 
 Azure Service Bus ha diverse funzionalità che conviene citare e che possono essere molto utili:
 
@@ -48,7 +48,7 @@ Un esempio potrebbe essere un video corrotto che viene caricato dall'utente e no
 
 Si possono impostare dei filtri per fare in modo che alcuni subscriber non ricevano alcuni messaggi presenti nella coda. Se vediamo il caso trattato prima se l'utente non vuole pubblicare il video su YouTube allora è inutile che il subcriber riceva il messaggio ed è quindi che entrano in gioco i filtri
 
-### Message Sessions 
+### Message Sessions
 
 Permettono di definire che un certo gruppo di messaggi debba essere processato nella stessa sessione. Come esempio possiamo prendere una banca in cui un cliente che ha un saldo di 0 euro. In un tempo molto breve versa 100 euro e ne preleva 80. Se il messaggio di prelievo viene processato prima di quello di versamento (perché il servizio di prelievo è più veloce a processare il dato e fa meno controlli) il risultato finale sarebbe che il messaggio del prelievo andrebbe in errore dato che quello di versamento  non è ancora stato processato
 
@@ -94,4 +94,3 @@ I protocolli per comunicare con l'Azure Service Bus sono:
 | Availability Zones (AZ) support | ✅ | ✅ | ✅ |
 
 
-  
