@@ -1,0 +1,24 @@
+---
+import { SITE_TITLE } from '../consts';
+
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'Articoli', active: path === '/' || path.startsWith('/blog') },
+  { href: '/tag/', label: 'Argomenti', active: path.startsWith('/tag') },
+  { href: '/about/', label: 'Chi sono', active: path.startsWith('/about') },
+];
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">◆</span>
+      {SITE_TITLE}
+    </a>
+    <nav aria-label="Principale">
+      {links.map((l) => (
+        <a href={l.href} aria-current={l.active ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>

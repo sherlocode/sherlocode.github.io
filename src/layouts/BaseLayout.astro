@@ -1,0 +1,23 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+type Props = import('astro/types').ComponentProps<typeof BaseHead>;
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <BaseHead {...props} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Vai al contenuto</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

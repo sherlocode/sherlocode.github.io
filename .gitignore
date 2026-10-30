@@ -1,0 +1,14 @@
+# build
+dist/
+.astro/
+
+# dipendenze
+node_modules/
+
+# log e sistema
+npm-debug.log*
+.DS_Store
+.env
+.env.*
+.vscode/
+.idea/

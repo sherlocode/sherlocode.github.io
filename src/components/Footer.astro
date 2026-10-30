@@ -1,0 +1,15 @@
+---
+import { AUTHOR, LINKEDIN_URL, GITHUB_URL } from '../consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>© {year} {AUTHOR}. Scritto a mano, condiviso volentieri.</p>
+    <p class="footer-links">
+      <a href={LINKEDIN_URL} rel="me noopener" target="_blank">LinkedIn</a>
+      <a href={GITHUB_URL} rel="me noopener" target="_blank">GitHub</a>
+      <a href="/rss.xml">RSS</a>
+    </p>
+  </div>
+</footer>

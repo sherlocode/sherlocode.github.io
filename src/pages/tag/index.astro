@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts, collectTags } from '../../utils';
+
+const tags = collectTags(await getPublishedPosts());
+---
+
+<BaseLayout title="Argomenti" description="Tutti i prodotti e le tecnologie trattati negli articoli.">
+  <section class="hero wrap">
+    <p class="eyebrow">Argomenti</p>
+    <h1>Prodotti e tecnologie</h1>
+    <p class="lede">Ogni articolo è etichettato con i prodotti di cui parla. Scegli da dove partire.</p>
+    {tags.length === 0 ? (
+      <p class="empty">Nessun argomento ancora.</p>
+    ) : (
+      <ul class="tags tags-lg">
+        {tags.map((t) => <li><a href={`/tag/${t.slug}/`}>{t.name} <span>{t.count}</span></a></li>)}
+      </ul>
+    )}
+  </section>
+</BaseLayout>

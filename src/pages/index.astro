@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getPublishedPosts, collectTags } from '../utils';
+
+const posts = await getPublishedPosts();
+const tags = collectTags(posts).slice(0, 12);
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <section class="hero wrap">
+    <p class="eyebrow">Libreria personale</p>
+    <h1>Quello che sto imparando, scritto perché serva anche a chi viene dopo.</h1>
+    <p class="lede">{SITE_DESCRIPTION}</p>
+    {tags.length > 0 && (
+      <ul class="tags tags-lg" aria-label="Argomenti principali">
+        {tags.map((t) => <li><a href={`/tag/${t.slug}/`}>{t.name} <span>{t.count}</span></a></li>)}
+      </ul>
+    )}
+  </section>
+
+  <section class="wrap post-list" aria-label="Articoli">
+    {posts.length === 0 && <p class="empty">Ancora nessun articolo. Il primo arriva presto.</p>}
+    {posts.map((post) => <PostCard post={post} />)}
+  </section>
+</BaseLayout>

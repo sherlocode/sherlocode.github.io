@@ -1,0 +1,82 @@
+# Configurazione di Pages CMS (https://pagescms.org)
+# Dice all'editor dove stanno articoli e immagini e quali campi mostrare.
+
+media:
+  input: public/media      # dove vengono salvate le immagini caricate
+  output: /media           # come vengono scritte nei contenuti (es. /media/foto.png)
+  categories: [image]
+  rename: safe             # "La Mia Foto.PNG" diventa "la-mia-foto.png"
+
+content:
+  - name: blog
+    label: Articoli
+    type: collection
+    path: src/content/blog
+    filename: "{primary}.md"   # il nome file (e quindi l'URL) nasce dal titolo
+    view:
+      fields: [title, pubDate, draft]
+      primary: title
+      sort: [pubDate, title]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - name: title
+        label: Titolo
+        type: string
+        required: true
+      - name: description
+        label: Descrizione
+        description: 1–2 frasi. Appare nell'elenco articoli e nell'anteprima su LinkedIn.
+        type: text
+        required: true
+      - name: pubDate
+        label: Data di pubblicazione
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updatedDate
+        label: Ultimo aggiornamento
+        description: Facoltativa. Compilala quando aggiorni un articolo già pubblicato.
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: heroImage
+        label: Immagine di copertina
+        description: Usata anche come anteprima su LinkedIn. Ideale 1200×627 px, PNG o JPG.
+        type: image
+      - name: tags
+        label: Prodotti / argomenti
+        description: Un tag per riga, es. "Azure", "Kubernetes", "Terraform".
+        type: string
+        list: true
+      - name: draft
+        label: Bozza (non pubblicare)
+        type: boolean
+        default: false
+      - name: body
+        label: Testo
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: about
+    label: Chi sono
+    type: file
+    path: src/content/pages/about.md
+    fields:
+      - name: title
+        label: Titolo
+        type: string
+        required: true
+      - name: description
+        label: Sottotitolo
+        type: text
+        required: true
+      - name: body
+        label: Testo
+        type: rich-text
+        options:
+          format: markdown

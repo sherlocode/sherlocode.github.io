@@ -1,0 +1,77 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts, formatDate, readingMinutes, tagSlug, type Post } from '../../utils';
+import { AUTHOR, LINKEDIN_URL } from '../../consts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+interface Props {
+  post: Post;
+  newer?: Post;
+  older?: Post;
+}
+
+const { post, newer, older } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, draft } = post.data;
+const { Content } = await render(post);
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+---
+
+<BaseLayout title={title} description={description} image={heroImage} type="article" publishedTime={pubDate} tags={tags}>
+  <article class="post">
+    <header class="post-header wrap-narrow">
+      {tags.length > 0 && (
+        <ul class="tags">
+          {tags.map((t) => <li><a href={`/tag/${tagSlug(t)}/`}>{t}</a></li>)}
+        </ul>
+      )}
+      <h1>{title}</h1>
+      <p class="lede">{description}</p>
+      <p class="meta">
+        <span>{AUTHOR}</span>
+        <span aria-hidden="true">·</span>
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        {updatedDate && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>aggiornato il <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time></span>
+          </>
+        )}
+        <span aria-hidden="true">·</span>
+        <span>{readingMinutes(post.body)} min</span>
+        {draft && <span class="badge">Bozza</span>}
+      </p>
+    </header>
+
+    {heroImage && (
+      <figure class="post-hero wrap">
+        <img src={heroImage} alt="" decoding="async" />
+      </figure>
+    )}
+
+    <div class="prose wrap-narrow">
+      <Content />
+    </div>
+
+    <footer class="post-footer wrap-narrow">
+      <div class="share">
+        <p>Ti è stato utile? Condividilo con chi sta facendo lo stesso percorso.</p>
+        <a class="button" href={shareUrl} target="_blank" rel="noopener">Condividi su LinkedIn</a>
+        <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener">Scrivimi su LinkedIn</a>
+      </div>
+      <nav class="pager" aria-label="Altri articoli">
+        {older ? <a href={`/blog/${older.id}/`}><span>← Precedente</span>{older.data.title}</a> : <span />}
+        {newer && <a class="next" href={`/blog/${newer.id}/`}><span>Successivo →</span>{newer.data.title}</a>}
+      </nav>
+    </footer>
+  </article>
+</BaseLayout>

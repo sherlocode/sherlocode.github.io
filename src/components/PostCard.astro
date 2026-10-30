@@ -1,0 +1,33 @@
+---
+import type { Post } from '../utils';
+import { formatDate, readingMinutes, tagSlug } from '../utils';
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const { title, description, pubDate, heroImage, tags, draft } = post.data;
+---
+
+<article class="card">
+  {heroImage && (
+    <a class="card-media" href={`/blog/${post.id}/`} tabindex="-1" aria-hidden="true">
+      <img src={heroImage} alt="" loading="lazy" decoding="async" />
+    </a>
+  )}
+  <div class="card-body">
+    <p class="meta">
+      <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+      <span aria-hidden="true">·</span>
+      <span>{readingMinutes(post.body)} min di lettura</span>
+      {draft && <span class="badge">Bozza</span>}
+    </p>
+    <h2 class="card-title"><a href={`/blog/${post.id}/`}>{title}</a></h2>
+    <p class="card-desc">{description}</p>
+    {tags.length > 0 && (
+      <ul class="tags">
+        {tags.map((t) => <li><a href={`/tag/${tagSlug(t)}/`}>{t}</a></li>)}
+      </ul>
+    )}
+  </div>
+</article>
