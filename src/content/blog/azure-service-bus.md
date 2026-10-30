@@ -34,9 +34,64 @@ Già da questo semplice esempio vediamo che Azure Service Bus è un servizio ess
 
 
 
-&nbsp;
+## Funzionalità 
 
-&nbsp;
+Azure Service Bus ha diverse funzionalità che conviene citare e che possono essere molto utili:
 
- 
+### Dead Lettering
 
+Questa funzionalità non si deve confondere con il retry dei messaggi in caso di errore. Infatti nel caso un cui un messaggio non riesca ad essere processato dopo un certo periodo di tempo o un certo numero di tentativi, questo viene spostato in una coda secondaria. Questa coda secondaria contiene tutti questi messaggi e permette di analizzare il problema che l'ha bloccato per identificare eventuali bug o il problema nel contenuto, senza andare a bloccare il normale funzionamento del sistema.
+
+Un esempio potrebbe essere un video corrotto che viene caricato dall'utente e non viene accettato dal sistema. Dopo un certo numero di tentativi viene spostato nella coda secondaria per un analisi del problema da parte di un operatore.
+
+### Filtri dei Subs
+
+Si possono impostare dei filtri per fare in modo che alcuni subscriber non ricevano alcuni messaggi presenti nella coda. Se vediamo il caso trattato prima se l'utente non vuole pubblicare il video su YouTube allora è inutile che il subcriber riceva il messaggio ed è quindi che entrano in gioco i filtri
+
+### Message Sessions 
+
+Permettono di definire che un certo gruppo di messaggi debba essere processato nella stessa sessione. Come esempio possiamo prendere una banca in cui un cliente che ha un saldo di 0 euro. In un tempo molto breve versa 100 euro e ne preleva 80. Se il messaggio di prelievo viene processato prima di quello di versamento (perché il servizio di prelievo è più veloce a processare il dato e fa meno controlli) il risultato finale sarebbe che il messaggio del prelievo andrebbe in errore dato che quello di versamento  non è ancora stato processato
+
+### Message Scheduling
+
+Questa funzionalità permette di impostare una data / ora dalla quale il messaggio può essere processato, prima di questo momento il messaggio è come se non esistesse per i vari interlocutori in ascolto sul Service Bus. 
+
+Anche qui come esempio possiamo pensare a un bonifico ricorrente che andiamo a fare ogni mese, quel bonifico fino alla data che ho impostato non verrà eseguito.
+
+### Duplicate Message Detection
+
+Azure Service Bus riesce ad identificare automaticamente se un messaggio è duplicato e, nel caso lo fosse, lo elimina senza farlo arrivare ai subcribers. 
+
+### TTL (Time To Live)
+
+Per ogni messaggio viene specificata un massima durata di vita, superata il messaggio viene cancellato e non verrà mai ricevuto dai subcribers. 
+
+## Protocolli
+
+I protocolli per comunicare con l'Azure Service Bus sono:
+
+- HTTP
+- AMQP - **A**dvanced **M**essage **Q**ueuing **P**rotocol
+
+## Pricing
+
+3 livelli di sottoscrizione: Basic, Standard e Premium
+
+
+| **Feature** | **Basic** | **Standard** | **Premium** |
+| ---------------------------------------- | --------- | ------------ | ----------- |
+| Queues | ✅ | ✅ | ✅ |
+| Scheduled messages | ✅ | ✅ | ✅ |
+| Topics | ❌ | ✅ | ✅ |
+| Transactions | ❌ | ✅ | ✅ |
+| De-duplication | ❌ | ✅ | ✅ |
+| Sessions | ❌ | ✅ | ✅ |
+| ForwardTo/SendVia | ❌ | ✅ | ✅ |
+| Message Size | 256 KB | 256 KB | 100 MB |
+| Resource isolation | ❌ | ❌ | ✅ |
+| Geo-Replication | ❌ | ❌ | ✅ |
+| Java Messaging Service (JMS) 2.0 Support | ❌ | ❌ | ✅ |
+| Availability Zones (AZ) support | ✅ | ✅ | ✅ |
+
+
+  
