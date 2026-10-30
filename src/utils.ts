@@ -3,7 +3,7 @@ import { LOCALE } from './consts';
 
 export type Post = CollectionEntry<'blog'>;
 
-/** Articoli pubblicati (le bozze si vedono solo in locale con `npm run dev`), dal più recente. */
+/** Published articles (drafts are visible locally with `npm run dev`), newest first. */
 export async function getPublishedPosts(): Promise<Post[]> {
   const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -18,7 +18,7 @@ export function tagSlug(tag: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
-/** Tutti i tag con il numero di articoli, ordinati per frequenza. */
+/** All tags with article counts, sorted by frequency. */
 export function collectTags(posts: Post[]): { name: string; slug: string; count: number }[] {
   const map = new Map<string, { name: string; slug: string; count: number }>();
   for (const post of posts) {

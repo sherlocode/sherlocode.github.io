@@ -1,12 +1,12 @@
 ---
-title: Chi sono
-description: Due righe su di me e sul perché tengo questa libreria.
+title: About
+description: A little about me and why I keep this library.
 ---
 
-Sono un Solution Architect in formazione. Qui raccolgo, in modo ordinato, quello che imparo sui prodotti e sulle architetture con cui lavoro.
+I’m an aspiring Solution Architect. Here I collect, in an organized way, what I learn about the products and architectures I work with.
 
-L'obiettivo è semplice: **lasciare materiale chiaro e pratico** a chi farà lo stesso percorso dopo di me, così da non dover ripartire ogni volta da zero.
+The goal is simple: **leave clear, practical material** for those who follow the same path, so they do not have to start from scratch each time.
 
-Se un articolo ti è stato utile, o se trovi qualcosa da correggere, scrivimi su LinkedIn.
+If an article was useful or you spot something that needs correcting, message me on LinkedIn.
 
-*Modifica questa pagina da Pages CMS → "Chi sono".*
+*Edit this page in Pages CMS → "About".*

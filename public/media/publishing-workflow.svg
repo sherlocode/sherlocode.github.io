@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420" role="img" aria-labelledby="title description">
+  <title id="title">Publishing workflow</title>
+  <desc id="description">Pages CMS commits to GitHub, GitHub Actions builds the site, and GitHub Pages publishes it.</desc>
+  <rect width="1400" height="420" fill="#f7f5ef"/>
+  <text x="46" y="70" fill="#202124" font-family="Georgia, serif" font-size="32" font-weight="700">From save to published site in about one minute</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="46" y="110" width="260" height="190" rx="18" fill="#fff" stroke="#dedbd2" stroke-width="3"/>
+    <text x="70" y="157" fill="#21658f" font-size="27" font-weight="700">1</text>
+    <text x="70" y="199" fill="#202124" font-size="29" font-weight="700">Pages CMS</text>
+    <text x="70" y="274" fill="#62666d" font-size="21">write and save</text>
+
+    <path d="M314 204h75" stroke="#21658f" stroke-width="4"/><path d="m389 194 16 10-16 10z" fill="#21658f"/>
+    <text x="315" y="237" fill="#62666d" font-size="18">commit</text>
+
+    <rect x="414" y="110" width="260" height="190" rx="18" fill="#fff" stroke="#dedbd2" stroke-width="3"/>
+    <text x="438" y="157" fill="#21658f" font-size="27" font-weight="700">2</text>
+    <text x="438" y="199" fill="#202124" font-size="29" font-weight="700">GitHub</text>
+    <text x="438" y="232" fill="#202124" font-size="29" font-weight="700">repository</text>
+    <text x="438" y="274" fill="#62666d" font-size="21">text and images</text>
+
+    <path d="M682 204h75" stroke="#21658f" stroke-width="4"/><path d="m757 194 16 10-16 10z" fill="#21658f"/>
+    <text x="687" y="237" fill="#62666d" font-size="18">push</text>
+
+    <rect x="782" y="110" width="260" height="190" rx="18" fill="#fff" stroke="#dedbd2" stroke-width="3"/>
+    <text x="806" y="157" fill="#21658f" font-size="27" font-weight="700">3</text>
+    <text x="806" y="199" fill="#202124" font-size="29" font-weight="700">GitHub</text>
+    <text x="806" y="232" fill="#202124" font-size="29" font-weight="700">Actions</text>
+    <text x="806" y="274" fill="#62666d" font-size="21">build with Astro</text>
+
+    <path d="M1050 204h75" stroke="#21658f" stroke-width="4"/><path d="m1125 194 16 10-16 10z" fill="#21658f"/>
+    <text x="1052" y="237" fill="#62666d" font-size="18">deploy</text>
+
+    <rect x="1150" y="110" width="210" height="190" rx="18" fill="#21658f"/>
+    <text x="1174" y="157" fill="#dcecf6" font-size="27" font-weight="700">4</text>
+    <text x="1174" y="199" fill="#fff" font-size="29" font-weight="700">GitHub</text>
+    <text x="1174" y="232" fill="#fff" font-size="29" font-weight="700">Pages</text>
+    <text x="1174" y="274" fill="#e2edf4" font-size="21">live site</text>
+  </g>
+  <text x="46" y="370" fill="#62666d" font-family="Arial, sans-serif" font-size="22">No servers, no database: every article is a versioned file.</text>
+</svg>

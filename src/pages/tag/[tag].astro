@@ -18,11 +18,11 @@ interface Props {
 const { name, posts } = Astro.props;
 ---
 
-<BaseLayout title={name} description={`Articoli su ${name}.`}>
+<BaseLayout title={name} description={`Articles about ${name}.`}>
   <section class="hero wrap">
-    <p class="eyebrow"><a href="/tag/">Argomenti</a></p>
+    <p class="eyebrow"><a href="/tag/">Topics</a></p>
     <h1>{name}</h1>
-    <p class="lede">{posts.length} {posts.length === 1 ? 'articolo' : 'articoli'}</p>
+    <p class="lede">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
   </section>
   <section class="wrap post-list">
     {posts.map((post) => <PostCard post={post} />)}

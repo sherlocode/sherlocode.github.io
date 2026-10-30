@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-// Pages CMS può salvare i campi vuoti come stringa vuota: li trattiamo come "non impostati".
+// Pages CMS may save empty fields as empty strings; treat them as unset.
 const emptyToUndefined = (v: unknown) => (v === '' || v === null ? undefined : v);
 
 const blog = defineCollection({
@@ -18,7 +18,7 @@ const blog = defineCollection({
   }),
 });
 
-// Pagine singole modificabili da Pages CMS (es. "Chi sono").
+// Individual pages editable in Pages CMS (e.g. "About").
 const pages = defineCollection({
   loader: glob({ base: './src/content/pages', pattern: '**/*.md' }),
   schema: z.object({

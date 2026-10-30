@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="627" viewBox="0 0 1200 627" role="img" aria-labelledby="title description">
+  <title id="title">How This Library Works</title>
+  <desc id="description">A guide to the architecture behind Architect Notes.</desc>
+  <rect width="1200" height="627" fill="#f7f5ef"/>
+  <path d="M0 0h18v627H0z" fill="#21658f"/>
+  <path d="M40 0v627M80 0v627M120 0v627M160 0v627M200 0v627M240 0v627M280 0v627M320 0v627M360 0v627M400 0v627M440 0v627M480 0v627M520 0v627M560 0v627M600 0v627M640 0v627M680 0v627M720 0v627M760 0v627M800 0v627M840 0v627M880 0v627M920 0v627M960 0v627M1000 0v627M1040 0v627M1080 0v627M1120 0v627M1160 0v627M0 40h1200M0 80h1200M0 120h1200M0 160h1200M0 200h1200M0 240h1200M0 280h1200M0 320h1200M0 360h1200M0 400h1200M0 440h1200M0 480h1200M0 520h1200M0 560h1200M0 600h1200" stroke="#e9e6de" stroke-width="1"/>
+  <text x="90" y="132" fill="#21658f" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="1.5">ARCHITECTURE</text>
+  <text x="90" y="218" fill="#202124" font-family="Georgia, serif" font-size="64" font-weight="700">How This Library</text>
+  <text x="90" y="292" fill="#202124" font-family="Georgia, serif" font-size="64" font-weight="700">Works</text>
+  <text x="90" y="356" fill="#62666d" font-family="Arial, sans-serif" font-size="29">Pages CMS, GitHub and Astro: a blog at zero cost.</text>
+  <path d="M1030 165 1180 315 1030 465 880 315z" fill="#dfedf5"/>
+  <path d="M1030 220 1125 315 1030 410 935 315z" fill="#21658f"/>
+  <path d="m1030 268 47 47-47 47-47-47z" fill="#f7f5ef"/>
+  <path d="M92 530 105 517 118 530 105 543z" fill="#21658f"/>
+  <text x="128" y="540" fill="#202124" font-family="Georgia, serif" font-size="30" font-weight="700">Architect Notes</text>
+</svg>

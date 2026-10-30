@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // L'indirizzo pubblico del sito. In GitHub Actions viene impostato in automatico
 // (https://<tuo-username>.github.io). Se un giorno userai un dominio tuo,
-// imposta la variabile SITE nel workflow oppure scrivilo qui.
+// Set the SITE variable in the workflow or provide it here.
 const site = process.env.SITE ?? 'https://tuo-username.github.io';
 
 export default defineConfig({

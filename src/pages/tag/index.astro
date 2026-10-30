@@ -5,13 +5,13 @@ import { getPublishedPosts, collectTags } from '../../utils';
 const tags = collectTags(await getPublishedPosts());
 ---
 
-<BaseLayout title="Argomenti" description="Tutti i prodotti e le tecnologie trattati negli articoli.">
+<BaseLayout title="Topics" description="All the products and technologies covered in the articles.">
   <section class="hero wrap">
-    <p class="eyebrow">Argomenti</p>
-    <h1>Prodotti e tecnologie</h1>
-    <p class="lede">Ogni articolo è etichettato con i prodotti di cui parla. Scegli da dove partire.</p>
+    <p class="eyebrow">Topics</p>
+    <h1>Products and technologies</h1>
+    <p class="lede">Each article is tagged with the products it covers. Pick a place to start.</p>
     {tags.length === 0 ? (
-      <p class="empty">Nessun argomento ancora.</p>
+      <p class="empty">No topics yet.</p>
     ) : (
       <ul class="tags tags-lg">
         {tags.map((t) => <li><a href={`/tag/${t.slug}/`}>{t.name} <span>{t.count}</span></a></li>)}

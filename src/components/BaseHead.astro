@@ -14,8 +14,8 @@ interface Props {
 const { title, description, image, type = 'website', publishedTime, tags = [] } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-// LinkedIn vuole un'immagine assoluta in PNG o JPG (non SVG), idealmente 1200×627.
-const ogImage = new URL(image || '/og-default.png', Astro.site);
+// LinkedIn requires an absolute PNG or JPG image (not SVG), ideally 1200×627.
+const ogImage = new URL(image && /\.(png|jpe?g)$/i.test(image) ? image : '/og-default.png', Astro.site);
 const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
 ---
 
@@ -32,7 +32,7 @@ const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
 <meta name="description" content={description} />
 <meta name="author" content={AUTHOR} />
 
-<!-- Open Graph: è quello che LinkedIn legge per l'anteprima del link -->
+<!-- Open Graph metadata used by LinkedIn for link previews -->
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={SITE_TITLE} />
 <meta property="og:url" content={canonicalURL} />
@@ -40,7 +40,7 @@ const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:image:alt" content={title} />
-<meta property="og:locale" content="it_IT" />
+<meta property="og:locale" content="en_US" />
 {type === 'article' && <meta property="article:author" content={AUTHOR} />}
 {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
 {tags.map((t) => <meta property="article:tag" content={t} />)}

@@ -43,12 +43,12 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
         {updatedDate && (
           <>
             <span aria-hidden="true">·</span>
-            <span>aggiornato il <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time></span>
+            <span>updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time></span>
           </>
         )}
         <span aria-hidden="true">·</span>
         <span>{readingMinutes(post.body)} min</span>
-        {draft && <span class="badge">Bozza</span>}
+        {draft && <span class="badge">Draft</span>}
       </p>
     </header>
 
@@ -64,13 +64,13 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
 
     <footer class="post-footer wrap-narrow">
       <div class="share">
-        <p>Ti è stato utile? Condividilo con chi sta facendo lo stesso percorso.</p>
-        <a class="button" href={shareUrl} target="_blank" rel="noopener">Condividi su LinkedIn</a>
-        <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener">Scrivimi su LinkedIn</a>
+        <p>Was this useful? Share it with someone on the same journey.</p>
+        <a class="button" href={shareUrl} target="_blank" rel="noopener">Share on LinkedIn</a>
+        <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener">Get in touch on LinkedIn</a>
       </div>
-      <nav class="pager" aria-label="Altri articoli">
-        {older ? <a href={`/blog/${older.id}/`}><span>← Precedente</span>{older.data.title}</a> : <span />}
-        {newer && <a class="next" href={`/blog/${newer.id}/`}><span>Successivo →</span>{newer.data.title}</a>}
+      <nav class="pager" aria-label="More articles">
+        {older ? <a href={`/blog/${older.id}/`}><span>← Older</span>{older.data.title}</a> : <span />}
+        {newer && <a class="next" href={`/blog/${newer.id}/`}><span>Newer →</span>{newer.data.title}</a>}
       </nav>
     </footer>
   </article>

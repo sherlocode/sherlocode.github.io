@@ -10,18 +10,18 @@ const tags = collectTags(posts).slice(0, 12);
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <section class="hero wrap">
-    <p class="eyebrow">Libreria personale</p>
-    <h1>Quello che sto imparando, scritto perché serva anche a chi viene dopo.</h1>
+    <p class="eyebrow">A personal library</p>
+    <h1>What I’m learning, written to help those who come next.</h1>
     <p class="lede">{SITE_DESCRIPTION}</p>
     {tags.length > 0 && (
-      <ul class="tags tags-lg" aria-label="Argomenti principali">
+      <ul class="tags tags-lg" aria-label="Featured topics">
         {tags.map((t) => <li><a href={`/tag/${t.slug}/`}>{t.name} <span>{t.count}</span></a></li>)}
       </ul>
     )}
   </section>
 
-  <section class="wrap post-list" aria-label="Articoli">
-    {posts.length === 0 && <p class="empty">Ancora nessun articolo. Il primo arriva presto.</p>}
+  <section class="wrap post-list" aria-label="Articles">
+    {posts.length === 0 && <p class="empty">No articles yet. The first one is coming soon.</p>}
     {posts.map((post) => <PostCard post={post} />)}
   </section>
 </BaseLayout>

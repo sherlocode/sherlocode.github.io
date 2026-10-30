@@ -1,6 +1,6 @@
 /* ------------------------------------------------------------------
    Architect Notes — stile editoriale, chiaro/scuro automatico.
-   Cambia i colori qui sotto per personalizzare tutto il sito.
+  Change the colors below to customize the entire site.
 ------------------------------------------------------------------- */
 :root {
   --bg: #f7f5f0;
@@ -79,14 +79,14 @@ h1, h2, h3 { font-family: var(--font-serif); line-height: 1.2; letter-spacing: -
 .hero h1 { font-size: clamp(2rem, 4.5vw, 3.1rem); margin: 0 0 16px; max-width: 20ch; }
 .lede { font-size: 1.15rem; color: var(--muted); max-width: 60ch; margin: 0 0 24px; }
 
-/* Tag */
+/* Tags */
 .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; }
 .tags a { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); text-decoration: none; font-size: 0.8rem; font-weight: 600; }
 .tags a:hover { filter: brightness(0.95); }
 .tags-lg a { font-size: 0.9rem; padding: 6px 14px; }
 .tags-lg span { opacity: 0.6; font-weight: 500; margin-left: 4px; }
 
-/* Lista articoli */
+/* Article list */
 .post-list { display: grid; gap: 20px; padding-bottom: 32px; }
 .card { display: grid; grid-template-columns: 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .card-media img { width: 100%; aspect-ratio: 1200 / 627; object-fit: cover; }
@@ -104,7 +104,7 @@ h1, h2, h3 { font-family: var(--font-serif); line-height: 1.2; letter-spacing: -
 .badge { background: #f6e3b4; color: #6b4a00; border-radius: 6px; padding: 0 8px; font-size: 0.75rem; font-weight: 600; }
 .empty { color: var(--muted); }
 
-/* Articolo */
+/* Article */
 .post-header { padding: 56px 0 24px; }
 .post-header h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); margin: 16px 0 12px; }
 .post-hero { margin: 8px auto 40px; }
@@ -126,16 +126,16 @@ h1, h2, h3 { font-family: var(--font-serif); line-height: 1.2; letter-spacing: -
 .prose th { font-weight: 600; border-bottom-width: 2px; }
 .prose hr { border: 0; border-top: 1px solid var(--line); margin: 2.5em 0; }
 
-/* Shiki: tema scuro automatico per i blocchi di codice */
+/* Shiki: automatic dark theme for code blocks */
 @media (prefers-color-scheme: dark) {
   .astro-code, .astro-code span { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important; }
 }
 
-/* Video incorporati (YouTube, Vimeo…) */
+/* Embedded video (YouTube, Vimeo…) */
 .video { position: relative; aspect-ratio: 16 / 9; margin: 1.6em 0; border-radius: 10px; overflow: hidden; background: #000; }
 .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-/* Footer articolo */
+/* Article footer */
 .post-footer { margin-top: 56px; }
 .share { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .share p { margin: 0 0 4px; width: 100%; font-weight: 600; }

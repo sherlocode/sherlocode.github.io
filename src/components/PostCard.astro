@@ -19,8 +19,8 @@ const { title, description, pubDate, heroImage, tags, draft } = post.data;
     <p class="meta">
       <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
       <span aria-hidden="true">·</span>
-      <span>{readingMinutes(post.body)} min di lettura</span>
-      {draft && <span class="badge">Bozza</span>}
+      <span>{readingMinutes(post.body)} min read</span>
+      {draft && <span class="badge">Draft</span>}
     </p>
     <h2 class="card-title"><a href={`/blog/${post.id}/`}>{title}</a></h2>
     <p class="card-desc">{description}</p>

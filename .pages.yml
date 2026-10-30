@@ -1,18 +1,18 @@
-# Configurazione di Pages CMS (https://pagescms.org)
-# Dice all'editor dove stanno articoli e immagini e quali campi mostrare.
+# Pages CMS configuration (https://pagescms.org)
+# Tells the editor where articles and images live and which fields to show.
 
 media:
-  input: public/media      # dove vengono salvate le immagini caricate
-  output: /media           # come vengono scritte nei contenuti (es. /media/foto.png)
+  input: public/media      # where uploaded images are saved
+  output: /media           # how they are referenced in content (e.g. /media/photo.png)
   categories: [image]
   rename: safe             # "La Mia Foto.PNG" diventa "la-mia-foto.png"
 
 content:
   - name: blog
-    label: Articoli
+    label: Articles
     type: collection
     path: src/content/blog
-    filename: "{primary}.md"   # il nome file (e quindi l'URL) nasce dal titolo
+    filename: "{primary}.md"   # the filename (and therefore the URL) comes from the title
     view:
       fields: [title, pubDate, draft]
       primary: title
@@ -22,61 +22,61 @@ content:
         order: desc
     fields:
       - name: title
-        label: Titolo
+        label: Title
         type: string
         required: true
       - name: description
-        label: Descrizione
-        description: 1–2 frasi. Appare nell'elenco articoli e nell'anteprima su LinkedIn.
+        label: Description
+        description: 1–2 sentences. Appears in the article list and LinkedIn preview.
         type: text
         required: true
       - name: pubDate
-        label: Data di pubblicazione
+        label: Publication date
         type: date
         required: true
         options:
           format: yyyy-MM-dd
       - name: updatedDate
-        label: Ultimo aggiornamento
-        description: Facoltativa. Compilala quando aggiorni un articolo già pubblicato.
+        label: Last updated
+        description: Optional. Fill this in when updating a published article.
         type: date
         default: ""
         options:
           format: yyyy-MM-dd
       - name: heroImage
-        label: Immagine di copertina
-        description: Usata anche come anteprima su LinkedIn. Ideale 1200×627 px, PNG o JPG.
+        label: Cover image
+        description: Also used for the LinkedIn preview. Ideally 1200×627 px, PNG or JPG.
         type: image
       - name: tags
-        label: Prodotti / argomenti
-        description: Un tag per riga, es. "Azure", "Kubernetes", "Terraform".
+        label: Products / topics
+        description: One tag per line, e.g. "Azure", "Kubernetes", "Terraform".
         type: string
         list: true
       - name: draft
-        label: Bozza (non pubblicare)
+        label: Draft (do not publish)
         type: boolean
         default: false
       - name: body
-        label: Testo
+        label: Body
         type: rich-text
         options:
           format: markdown
 
   - name: about
-    label: Chi sono
+    label: About
     type: file
     path: src/content/pages/about.md
     fields:
       - name: title
-        label: Titolo
+        label: Title
         type: string
         required: true
       - name: description
-        label: Sottotitolo
+        label: Subtitle
         type: text
         required: true
       - name: body
-        label: Testo
+        label: Body
         type: rich-text
         options:
           format: markdown
