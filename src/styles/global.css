@@ -3,32 +3,21 @@
   Change the colors below to customize the entire site.
 ------------------------------------------------------------------- */
 :root {
-  --bg: #f7f5f0;
-  --surface: #ffffff;
-  --text: #1d1f23;
-  --muted: #5d6169;
-  --line: #e2ded4;
-  --accent: #1f5f8b;
-  --accent-soft: #e3eef6;
-  --code-bg: #f0ede6;
+  --bg: #0A0A0B;
+  --surface: #141416;
+  --text: #F2F2F0;
+  --muted: #8A8A85;
+  --line: #26262A;
+  --accent: #CDFF3A;
+  --accent-green: #2BFF88;
+  --accent-orange: #FF7A2B;
+  --accent-soft: #1A1A1E;
+  --code-bg: #101013;
   --radius: 14px;
   --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
   --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #14161a;
-    --surface: #1b1e23;
-    --text: #e8e6e1;
-    --muted: #9ea3ab;
-    --line: #2c3037;
-    --accent: #7db8e0;
-    --accent-soft: #1c2c3a;
-    --code-bg: #20242a;
-  }
+  color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -101,7 +90,7 @@ h1, h2, h3 { font-family: var(--font-serif); line-height: 1.2; letter-spacing: -
 }
 
 .meta { color: var(--muted); font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0; }
-.badge { background: #f6e3b4; color: #6b4a00; border-radius: 6px; padding: 0 8px; font-size: 0.75rem; font-weight: 600; }
+.badge { background: #26262A; color: var(--accent-orange); border: 1px solid #2A2A2E; border-radius: 6px; padding: 0 8px; font-size: 0.75rem; font-weight: 600; }
 .empty { color: var(--muted); }
 
 /* Article */
@@ -132,7 +121,7 @@ h1, h2, h3 { font-family: var(--font-serif); line-height: 1.2; letter-spacing: -
 }
 
 /* Embedded video (YouTube, Vimeo…) */
-.video { position: relative; aspect-ratio: 16 / 9; margin: 1.6em 0; border-radius: 10px; overflow: hidden; background: #000; }
+.video { position: relative; aspect-ratio: 16 / 9; margin: 1.6em 0; border-radius: 10px; overflow: hidden; background: var(--bg); }
 .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* Article footer */
