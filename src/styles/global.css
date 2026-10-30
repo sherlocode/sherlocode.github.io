@@ -79,8 +79,8 @@ h1, h2, h3 { font-family: var(--font-serif); line-height: 1.2; letter-spacing: -
 .post-list { display: grid; gap: 20px; padding-bottom: 32px; }
 .card { display: grid; grid-template-columns: 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .card:has(.card-media) { grid-template-columns: minmax(96px, 160px) minmax(0, 1fr); align-items: center; gap: 14px; padding: 12px; }
-.card-media { display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 8px; }
-.card-media img { width: 100%; height: 100%; object-fit: cover; border: 1px solid var(--line); border-radius: 8px; }
+.card-media { display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 8px; background: var(--bg); }
+.card-media img { width: 100%; height: 100%; object-fit: contain; border: 1px solid var(--line); border-radius: 8px; }
 .card-body { padding: 20px 22px 22px; }
 .card:has(.card-media) .card-body { padding: 4px 8px 4px 0; }
 .card-title { font-size: 1.45rem; margin: 6px 0 8px; }
@@ -98,8 +98,8 @@ h1, h2, h3 { font-family: var(--font-serif); line-height: 1.2; letter-spacing: -
 /* Article */
 .post-header { padding: 56px 0 24px; }
 .post-header h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); margin: 16px 0 12px; }
-.post-hero { width: min(640px, calc(100% - 32px)); aspect-ratio: 16 / 9; overflow: hidden; margin: 8px auto 40px; border-radius: 8px; }
-.post-hero img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
+.post-hero { width: min(640px, calc(100% - 32px)); aspect-ratio: 16 / 9; overflow: hidden; margin: 8px auto 40px; border-radius: 8px; background: var(--bg); }
+.post-hero img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; border: 1px solid var(--line); }
 
 .prose { font-size: 1.08rem; }
 .prose h2 { font-size: 1.75rem; margin: 2.2em 0 0.6em; }
