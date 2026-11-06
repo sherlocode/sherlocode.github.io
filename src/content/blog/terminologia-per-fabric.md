@@ -60,7 +60,7 @@ E' un servizio Azure che permette di definire e schedulare data pipelines per tr
 
 ![image.png](/media/image-6.png)
 
-  E' una piattaforma cloud di analytics costruita su Apache Spark, ottimizzata per grandi quantità di dati, data science e SQL analytics. Inoltre si basa su formati open-source lakehouse come per esempio Delta Lake. 
+E' una piattaforma cloud di analytics costruita su Apache Spark, ottimizzata per grandi quantità di dati, data science e SQL analytics. Inoltre si basa su formati open-source lakehouse come per esempio Delta Lake. 
 
 Databriks fa parte dei managed services su Azure.
 
@@ -68,5 +68,5 @@ Databriks fa parte dei managed services su Azure.
 
 ![image.png](/media/image-7.png)
 
-E' un servizio che permette di gestire la governance dei dati su tutto lo stream aziendale. Si può utilizzare per creare una mappa dei propri dati e tracciare come i dati nascono e si spostano all'interno della propria organizzazione e fra vari applicativi / sistemi. 
+E' un servizio che permette di gestire la governance dei dati su tutto lo stream aziendale. Si può utilizzare per creare una mappa dei propri dati e tracciare come i dati nascono e si spostano all'interno della propria organizzazione e fra vari applicativi / sistemi. Si possono anche definire policy e permessi sui dati condivisi fra diversi applicativi / sistemi.
 
