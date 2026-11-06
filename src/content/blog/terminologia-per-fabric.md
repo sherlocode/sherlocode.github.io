@@ -50,3 +50,23 @@ E' un pattern che introduce 3 livelli di ingestione dei dati all'interno di un d
 - **Silver** - Vengono puliti e normalizzati i dati, cancellando i duplicati e standardizzando i tipi di dato
 - **Gold** - I dati vengono aggregati e modellati per permettere la creazione di report di analisi e visualizzazioni
 
+### Azure Data Factory
+
+![image.png](/media/image-5.png)
+
+E' un servizio Azure che permette di definire e schedulare data pipelines per trasferire e trasformare dati. Si può integrare con gli altri servizi di Azure permettendo di acquisire dati da stoage di dati sul cloud, usare la potenza di calcolo del cloud per eleborarli e alla fine salvare il risultato all'interno di un altro data store.
+
+### Azure Databriks
+
+![image.png](/media/image-6.png)
+
+  E' una piattaforma cloud di analytics costruita su Apache Spark, ottimizzata per grandi quantità di dati, data science e SQL analytics. Inoltre si basa su formati open-source lakehouse come per esempio Delta Lake. 
+
+Databriks fa parte dei managed services su Azure.
+
+### Microsoft Purview
+
+![image.png](/media/image-7.png)
+
+E' un servizio che permette di gestire la governance dei dati su tutto lo stream aziendale. Si può utilizzare per creare una mappa dei propri dati e tracciare come i dati nascono e si spostano all'interno della propria organizzazione e fra vari applicativi / sistemi. 
+
