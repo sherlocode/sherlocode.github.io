@@ -45,5 +45,3 @@ Qual'è la dimensione del blocco? Dipende dallo strumento di esportazione in Par
 - Row group di grandi dimensioni / n° di righe - La compressione è migliore e si hanno meno metadati ma serve più memoria per scrivere il file
 - Row group di piccole dimensioni / n° di byte - Possiamo eseguire un filtraggio più fine ed eseguire delle query che saltano interni rowgroup e sono più performanti ma in cambio abbiamo più overhead
 
-![image.png](blob:https:/app.pagescms.org/478bf6a9-a75e-4bbb-84e6-f55e6a2f16af)
-
