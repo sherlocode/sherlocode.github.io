@@ -5,21 +5,21 @@ pubDate: 2026-11-06
 heroImage: /media/glossary-book-icon-in-flat-style-guidebook-encyclopedia-illustration-on-isolated-background-a-z-notebook-sign-business-concept-vector.jpg
 draft: false
 ---
-### **Data lake** 
+### **Data lake**
 
 E' un archivio centralizzato di grandi dimensioni che permette di memorizzare al suo interno una grande quantità di dati nel loro formato originale, infatti supporta qualsiasi formato (strutturato, semi strutturato e non strutturato). L'idea è quella di salvare quante più informazioni possibili subito per poi andare a decidere come, quali e quante usare dopo. 
 
-### **Data warehouse** 
+### **Data warehouse**
 
 E' un database progettato per l'analisi e la reportistica, improntato a analizzre dei dati e non eseguire operazioni quotidiane come un normale database relazionale. Raccoglie dati da diverse fonti, li pulisce, li integra e li memorizza organizzandoli in modo che i dati siano ottimizzati per operazioni di lettura. 
 
-### **Data lakehouse** 
+### **Data lakehouse**
 
 E' un architettura che unisce i due visti prima, data lake e data warehouse. Quindi combina lo storage economico, flessibile e aperto del data lake con le prestazioni del data warehouse. 
 
 E' stato introdotto principalmente per risolvere il problema di avere i dati in due parti diverse; un'azienda prendeva i suoi data e li portava nel data lake, dopo di ché, ne duplicava una porzione, trasformandoli e integrandoli con il data warehouse. Questo portava a duplicare dati, avere pipeline complicate e che richiedevano tempo per completare la loro esecuzione ed infine i dati soventemente non erano aggiornati perché risiedevano sul data lake e dovevano attendere la pipeline.
 
-### **Modello OLAP (Online Analytical Processing)**  
+### **Modello OLAP (Online Analytical Processing)**
 
 E' una metodologia per l'organizzazione dei dati che si concentra sulla loro analisi. Tipicamente i dati vengono strutturati in righe e colonne e viene eseguita un'analisi bidimensionale, con i modelli OLAP, invece, i dati vengono organizzati in un cubo con tre dimensioni come minimo, ma se ne possono aggiungere molte di più (in questo caso di parla di *ipercubo*). Questo permette di analizzare un dato da più punti di vista contemporaneamente.
 
@@ -42,5 +42,11 @@ Un Data analyst userà il data warehouse per eseguire query e creare report e vi
 
 Un utente business userà i modelli OLAP per andare a eseguire analisi sui propri dati aziendali in modo da poter estrarre informazioni utili per prendere decisioni consapevoli.
 
-  
+### Architettura medallion
+
+E' un pattern che introduce 3 livelli di ingestione dei dati all'interno di un data lakehouse. Questi livelli sono:
+
+- **Bronze** - vengono memorizzati i dati così come sono salvati nel sistema sorgente, senza applicare trasformazioni.
+- **Silver** - Vengono puliti e normalizzati i dati, cancellando i duplicati e standardizzando i tipi di dato
+- **Gold** - I dati vengono aggregati e modellati per permettere la creazione di report di analisi e visualizzazioni
 
