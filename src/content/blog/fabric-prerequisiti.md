@@ -2,7 +2,7 @@
 title: Fabric - Prerequisiti
 description: Prerequisiti di conoscenza e tecnologie per Fabric
 pubDate: 2026-11-06
-draft: true
+draft: false
 ---
 ## Parquet
 
