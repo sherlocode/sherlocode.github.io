@@ -1,5 +1,5 @@
 ---
-title: Fabric - Prerequisiti
+title: Formato parquet
 description: Prerequisiti di conoscenza e tecnologie per Fabric
 pubDate: 2026-11-06
 draft: false
@@ -45,7 +45,6 @@ I metadati sono serializzati in formato [Thrift](https://en.wikipedia.org/wiki/A
   - il numero totale di righe
   - la versione e `created_by`
   - metadati chiave-valore liberi, dove per esempio Spark o Arrow salvano il proprio schema originale
-
 - Per ogni row group
   - il numero di righe
   - la dimensione in byte
