@@ -1,0 +1,46 @@
+---
+title: Terminologia per Fabric
+description: Breve glossario per le terminologia richiesta per conoscenza di Fabric
+pubDate: 2026-11-06
+heroImage: /media/glossary-book-icon-in-flat-style-guidebook-encyclopedia-illustration-on-isolated-background-a-z-notebook-sign-business-concept-vector.jpg
+draft: false
+---
+### **Data lake** 
+
+E' un archivio centralizzato di grandi dimensioni che permette di memorizzare al suo interno una grande quantità di dati nel loro formato originale, infatti supporta qualsiasi formato (strutturato, semi strutturato e non strutturato). L'idea è quella di salvare quante più informazioni possibili subito per poi andare a decidere come, quali e quante usare dopo. 
+
+### **Data warehouse** 
+
+E' un database progettato per l'analisi e la reportistica, improntato a analizzre dei dati e non eseguire operazioni quotidiane come un normale database relazionale. Raccoglie dati da diverse fonti, li pulisce, li integra e li memorizza organizzandoli in modo che i dati siano ottimizzati per operazioni di lettura. 
+
+### **Data lakehouse** 
+
+E' un architettura che unisce i due visti prima, data lake e data warehouse. Quindi combina lo storage economico, flessibile e aperto del data lake con le prestazioni del data warehouse. 
+
+E' stato introdotto principalmente per risolvere il problema di avere i dati in due parti diverse; un'azienda prendeva i suoi data e li portava nel data lake, dopo di ché, ne duplicava una porzione, trasformandoli e integrandoli con il data warehouse. Questo portava a duplicare dati, avere pipeline complicate e che richiedevano tempo per completare la loro esecuzione ed infine i dati soventemente non erano aggiornati perché risiedevano sul data lake e dovevano attendere la pipeline.
+
+### **Modello OLAP (Online Analytical Processing)**  
+
+E' una metodologia per l'organizzazione dei dati che si concentra sulla loro analisi. Tipicamente i dati vengono strutturati in righe e colonne e viene eseguita un'analisi bidimensionale, con i modelli OLAP, invece, i dati vengono organizzati in un cubo con tre dimensioni come minimo, ma se ne possono aggiungere molte di più (in questo caso di parla di *ipercubo*). Questo permette di analizzare un dato da più punti di vista contemporaneamente.
+
+![image.png](/media/image-4.png)
+
+I concetti di base sono:
+
+- Misure - i valori numeri da analizzare. Es: quantità venduta, margine, fatturato...
+- Dimensioni - Gli assi lungo cui si analizzano le misure. Es: tempo, articolo, cliente, regione...
+- Gerarchie - I dettagli all'interno di una dimensione. Es: se scegliamo come dimensione la regione abbiamo nazione - regione - provincia - comune - indirizzo
+- Cubo - Sarebbe l'insieme delle misure incrociate su tutte le dimensioni. Es: La quantità venduta della tazza rossa a Londra nel marzo del 2021
+
+
+
+Introdotti questi concetti, possiamo quindi comprendere i vari strumenti citati sopra verranno usati da diverse tipologie di utenti. 
+
+Un data scientist lavorerà direttamente con i dati salvati nel data lake per esplorarli e modellarli.
+
+Un Data analyst userà il data warehouse per eseguire query e creare report e visualizzazioni complesse
+
+Un utente business userà i modelli OLAP per andare a eseguire analisi sui propri dati aziendali in modo da poter estrarre informazioni utili per prendere decisioni consapevoli.
+
+  
+
