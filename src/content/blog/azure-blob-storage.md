@@ -3,6 +3,8 @@ title: Azure Blob Storage
 description: "#2 - Azure Blob Storage"
 pubDate: 2026-11-06
 heroImage: /media/azure-blob-1.png
+tags:
+  - Azure
 draft: false
 ---
 # Azure Blob Storage
@@ -21,7 +23,7 @@ Azure Blob Storage supporta 3 diversi tipi di BLOB:
 
 - Block BLOB - Un BLOB viene gestito come un set di blocchi. Ogni blocco può variare in dimensione ed è l'unità più piccola che può essere scritta / letta. Si usa per file che variano poco nel tempo
 - Page BLOB - Un BLOB è organizzato con una collezione di pagine di dimensione massima di 512 byte. Questi tipi di BLOB sono ottimizzati per operazioni di lettura e scrittura casuale. Si possono leggere e scrivere le singole pagine.
-- Append BLOB - Un BLOB è gestito con un block BLOB ottimizzato per operazioni di append. Si possono solo aggiungere BLOB in coda e la modifica / cancellazione non è consentita. 
+- Append BLOB - Un BLOB è gestito con un block BLOB ottimizzato per operazioni di append. Si possono solo aggiungere BLOB in coda e la modifica / cancellazione non è consentita.
 
 ![image.png](/media/image-9.png)
 
