@@ -83,3 +83,22 @@ E' una soluzione data lake basata utilizzata in Azure che combina i la scalabili
 Databricks può collegarsi ai dati contenuti in Azure Data Lake Gen2 e processarli, inoltre i tenant Microsoft Fabric eseguono automaticamente il deploy di OneLake che è basato su questa tecnologia. I namespace gerarchici permettono di definire i permessi in modo granulare andando a indicare le autorizzazioni di lettura/scrittura e esecuzione direttamente sui singoli file o cartelle.
 
 ***Per creare un Azure Data Lake Storage Gen2 si deve abilitare l'opzione hierarchical namespace nelle impostazione dell'Azure Storage account.***
+
+### Architettura data warehousing
+
+![image.png](/media/image-18.png)
+
+L'architettura varia a seconda di come variano le tecnologie sottostanti ma tipicamente includono i seguenti elementi:
+
+**Data ingestion ed elaborazione** 
+
+Vengono prelevati i dati da più sorgenti (possono essere DB relazionali, files, stream in real time) e caricati dentro un data lake o un data warehouse relazionale. L'operazione di caricamento può essere di due tipi
+
+- ETL - Extract, Trasform e Load
+- ELT - Extract, Load e Transform
+
+Indipendentemente dalla modalità scelta, il dataset risultante è ottimizzato per eseguire query e analisi su questi dati. L'elaborazione dei dati viene eseguita da sistemi che possono processare grandi volumi di dati in parallelo. La fase di data ingestion può avvenire sia come esecuzione batch di dati statici che elaborazione real time di stream di dati.
+
+
+
+&nbsp;
