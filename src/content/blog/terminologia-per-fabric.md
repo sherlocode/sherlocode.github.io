@@ -72,3 +72,12 @@ Databriks fa parte dei managed services su Azure.
 
 E' un servizio che permette di gestire la governance dei dati su tutto lo stream aziendale. Si può utilizzare per creare una mappa dei propri dati e tracciare come i dati nascono e si spostano all'interno della propria organizzazione e fra vari applicativi / sistemi. Si possono anche definire policy e permessi sui dati condivisi fra diversi applicativi / sistemi.
 
+### Azure Data Lake Storage Gen2
+
+![image.png](/media/image-11.png)
+
+E' una soluzione data lake basata utilizzata in Azure che combina i la scalabilità e i costi di Azure Blob Storage con un file system gerarchico che è compatibile con i principali sistemi di analytics.
+
+Databricks può collegarsi ai dati contenuti in Azure Data Lake Gen2 e processarli, inoltre i tenant Microsoft Fabric eseguono automaticamente il deploy di OneLake che è basato su questa tecnologia. I namespace gerarchici permettono di definire i permessi in modo granulare andando a indicare le autorizzazioni di lettura/scrittura e esecuzione direttamente sui singoli file o cartelle.
+
+***Per creare un Azure Data Lake Storage Gen2 si deve abilitare l'opzione hierarchical namespace nelle impostazione dell'Azure Storage account.***
