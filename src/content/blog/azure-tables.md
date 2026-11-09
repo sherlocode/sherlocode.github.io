@@ -3,6 +3,8 @@ title: Azure Tables
 description: "#4 - Azure Tables"
 pubDate: 2026-11-09
 heroImage: /media/tablestorage.png
+tags:
+  - Azure
 draft: false
 ---
 # Azure Tables
