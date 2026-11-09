@@ -12,7 +12,7 @@ export const LOCALE = 'en-US';
 // ------------------------------------------------------------------
 
 /** Buttondown username (https://buttondown.com/<username>). Empty = no signup forms. */
-export const BUTTONDOWN_USERNAME = '';
+export const BUTTONDOWN_USERNAME = 'sherlocode';
 
 /** Umami Cloud website ID (Settings → Websites → Edit → Website ID). Empty = no analytics. */
 export const UMAMI_WEBSITE_ID = '';
