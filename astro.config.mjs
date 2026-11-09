@@ -2,10 +2,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// L'indirizzo pubblico del sito. In GitHub Actions viene impostato in automatico
-// (https://<tuo-username>.github.io). Se un giorno userai un dominio tuo,
-// Set the SITE variable in the workflow or provide it here.
-const site = process.env.SITE ?? 'https://tuo-username.github.io';
+// Public URL of the site, used for canonical links, sitemap, RSS and LinkedIn previews.
+// The GitHub Actions workflow sets SITE; this default is used for local builds.
+const site = process.env.SITE ?? 'https://sherlocode.app';
 
 export default defineConfig({
   site,

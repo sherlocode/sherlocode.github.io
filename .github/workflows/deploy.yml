@@ -36,9 +36,8 @@ jobs:
       - name: Build the site
         run: npm run build
         env:
-          # Public URL: https://<your-username>.github.io
-          # For a custom domain, replace this with e.g. https://www.example.com
-          SITE: https://${{ github.repository_owner }}.github.io
+          # Public URL of the site (custom domain configured in Settings → Pages).
+          SITE: https://sherlocode.app
 
       - name: Upload the site
         uses: actions/upload-pages-artifact@v3
