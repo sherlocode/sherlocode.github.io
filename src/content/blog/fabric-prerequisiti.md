@@ -2,7 +2,7 @@
 title: Formato parquet
 description: Prerequisiti di conoscenza e tecnologie per Fabric
 pubDate: 2026-11-06
-heroImage: /media/parquet-logo.png
+heroImage: /media/fabric-datasources-parquet.png
 tags:
   - Fabric
 draft: false
