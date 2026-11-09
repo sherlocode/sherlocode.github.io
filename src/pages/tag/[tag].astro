@@ -19,12 +19,16 @@ const { name, posts } = Astro.props;
 ---
 
 <BaseLayout title={name} description={`Articles about ${name}.`}>
-  <section class="hero wrap">
-    <p class="eyebrow"><a href="/tag/">Topics</a></p>
-    <h1>{name}</h1>
-    <p class="lede">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
+  <section class="hero grid-bg">
+    <div class="wrap">
+      <p class="crumbs"><a href="/tag/">Topics</a><span aria-hidden="true">/</span><span>{name}</span></p>
+      <h1>{name}<em>.</em></h1>
+      <p class="lede">{posts.length} {posts.length === 1 ? 'article' : 'articles'} on this topic.</p>
+    </div>
   </section>
-  <section class="wrap post-list">
-    {posts.map((post) => <PostCard post={post} />)}
+  <section class="wrap">
+    <div class="post-grid">
+      {posts.map((post, i) => <PostCard post={post} index={posts.length - i} />)}
+    </div>
   </section>
 </BaseLayout>

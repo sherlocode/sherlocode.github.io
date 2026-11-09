@@ -1,15 +1,23 @@
 ---
+import Logo from './Logo.astro';
 import { AUTHOR, LINKEDIN_URL, GITHUB_URL } from '../consts';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="wrap footer-inner">
-    <p>© {year} {AUTHOR}. Written by hand, shared gladly.</p>
-    <p class="footer-links">
-      <a href={LINKEDIN_URL} rel="me noopener" target="_blank">LinkedIn</a>
-      <a href={GITHUB_URL} rel="me noopener" target="_blank">GitHub</a>
-      <a href="/rss.xml">RSS</a>
-    </p>
+  <div class="wrap footer-top">
+    <div>
+      <Logo />
+      <p class="footer-tagline">Notes on the technologies I learn along the way, written for whoever comes next.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a class="pill" href={LINKEDIN_URL} rel="me noopener" target="_blank">LinkedIn ↗</a></li>
+      <li><a class="pill" href={GITHUB_URL} rel="me noopener" target="_blank">GitHub ↗</a></li>
+      <li><a class="pill" href="/rss.xml">RSS</a></li>
+    </ul>
+  </div>
+  <div class="wrap footer-bottom label">
+    <p>© {year} {AUTHOR}</p>
+    <p>// written by hand, shared gladly</p>
   </div>
 </footer>

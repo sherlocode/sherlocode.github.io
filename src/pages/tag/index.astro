@@ -6,16 +6,25 @@ const tags = collectTags(await getPublishedPosts());
 ---
 
 <BaseLayout title="Topics" description="All the products and technologies covered in the articles.">
-  <section class="hero wrap">
-    <p class="eyebrow">Topics</p>
-    <h1>Products and technologies</h1>
-    <p class="lede">Each article is tagged with the products it covers. Pick a place to start.</p>
+  <section class="hero grid-bg">
+    <div class="wrap">
+      <p class="label label-accent">// Topics</p>
+      <h1>Products and <em>technologies.</em></h1>
+      <p class="lede">Each article is tagged with the products it covers. Pick a place to start.</p>
+    </div>
+  </section>
+  <section class="wrap">
     {tags.length === 0 ? (
       <p class="empty">No topics yet.</p>
     ) : (
-      <ul class="tags tags-lg">
-        {tags.map((t) => <li><a href={`/tag/${t.slug}/`}>{t.name} <span>{t.count}</span></a></li>)}
-      </ul>
+      <div class="topic-grid">
+        {tags.map((t) => (
+          <a class="topic" href={`/tag/${t.slug}/`}>
+            <span>{t.count} {t.count === 1 ? 'article' : 'articles'}</span>
+            <strong>{t.name} →</strong>
+          </a>
+        ))}
+      </div>
     )}
   </section>
 </BaseLayout>

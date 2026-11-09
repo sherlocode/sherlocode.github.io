@@ -4,30 +4,40 @@ import { formatDate, readingMinutes, tagSlug } from '../utils';
 
 interface Props {
   post: Post;
+  /** Position in the list, shown as a small "01" label on the image. */
+  index?: number;
+  featured?: boolean;
 }
-const { post } = Astro.props;
+const { post, index, featured = false } = Astro.props;
 const { title, description, pubDate, heroImage, tags, draft } = post.data;
+const url = `/blog/${post.id}/`;
 ---
 
-<article class="card">
-  {heroImage && (
-    <a class="card-media" href={`/blog/${post.id}/`} tabindex="-1" aria-hidden="true">
-      <img src={heroImage} alt="" loading="lazy" decoding="async" />
-    </a>
-  )}
+<article class:list={['card', { 'card-featured': featured }]}>
+  <div class="card-media">
+    {index !== undefined && <span class="card-index">{featured ? 'Latest' : String(index).padStart(2, '0')}</span>}
+    {heroImage ? (
+      <img src={heroImage} alt="" loading={featured ? 'eager' : 'lazy'} decoding="async" />
+    ) : (
+      <div class="placeholder" aria-hidden="true"><span class="logo-lens">&lt;/&gt;</span></div>
+    )}
+  </div>
   <div class="card-body">
     <p class="meta">
       <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
-      <span aria-hidden="true">·</span>
+      <span class="sep" aria-hidden="true">/</span>
       <span>{readingMinutes(post.body)} min read</span>
       {draft && <span class="badge">Draft</span>}
     </p>
-    <h2 class="card-title"><a href={`/blog/${post.id}/`}>{title}</a></h2>
+    <h2 class="card-title"><a href={url}>{title}</a></h2>
     <p class="card-desc">{description}</p>
-    {tags.length > 0 && (
-      <ul class="tags">
-        {tags.map((t) => <li><a href={`/tag/${tagSlug(t)}/`}>{t}</a></li>)}
-      </ul>
-    )}
+    <div class="card-foot">
+      {tags.length > 0 && (
+        <ul class="tags">
+          {tags.map((t) => <li><a href={`/tag/${tagSlug(t)}/`}>{t}</a></li>)}
+        </ul>
+      )}
+      {featured && <span class="read-more" aria-hidden="true">Read →</span>}
+    </div>
   </div>
 </article>

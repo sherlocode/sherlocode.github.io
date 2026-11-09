@@ -1,5 +1,11 @@
 ---
-import { SITE_TITLE } from '../consts';
+import Logo from './Logo.astro';
+
+interface Props {
+  /** Shows a reading-progress bar under the header (article pages). */
+  progress?: boolean;
+}
+const { progress = false } = Astro.props;
 
 const path = Astro.url.pathname;
 const links = [
@@ -11,14 +17,26 @@ const links = [
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark" aria-hidden="true">◆</span>
-      {SITE_TITLE}
-    </a>
-    <nav aria-label="Main">
+    <Logo />
+    <nav class="site-nav" aria-label="Main">
       {links.map((l) => (
         <a href={l.href} aria-current={l.active ? 'page' : undefined}>{l.label}</a>
       ))}
     </nav>
   </div>
+  {progress && <div class="progress" id="progress" aria-hidden="true"></div>}
 </header>
+
+{progress && (
+  <script>
+    const bar = document.getElementById('progress');
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      if (bar) bar.style.transform = `scaleX(${ratio})`;
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  </script>
+)}
