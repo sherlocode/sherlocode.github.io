@@ -6,6 +6,47 @@ heroImage: /media/fabric-datasources-parquet.png
 tags:
   - Fabric
 draft: false
+quiz:
+- question: Quali sono i tre livelli in cui sono organizzati i dati in un file Parquet?
+  options:
+  - Tabelle, righe, celle
+  - Row group, column chunk, pagine
+  - Schema, partizioni, blocchi
+  - Header, body, footer
+  answer: 2
+  explanation: Un file è diviso in row group; ogni colonna ha il suo column chunk, a sua volta diviso in pagine.
+- question: Qual è la più piccola unità di compressione e lettura?
+  options:
+  - Il row group
+  - Il column chunk
+  - La pagina
+  - Il footer
+  answer: 3
+  explanation: La pagina, di solito intorno a 1 MB, è la più piccola unità di compressione e lettura.
+- question: Dove si trovano i metadati (schema, statistiche) in un file Parquet?
+  options:
+  - All'inizio del file, prima dei dati
+  - In un file separato
+  - Nel footer, alla fine del file
+  - Ripetuti in ogni pagina
+  answer: 3
+  explanation: Il footer, alla fine del file, è la mappa di cosa c'è nel file e dove si trova.
+- question: Quali statistiche sono salvate per ogni column chunk?
+  options:
+  - Media e deviazione standard
+  - Min, max e numero di null
+  - Solo il numero di righe
+  - La lista dei valori distinti
+  answer: 2
+  explanation: Min, max e numero di null permettono alle query di saltare interi row group.
+- question: Che effetto hanno row group più piccoli?
+  options:
+  - Compressione migliore e meno metadati
+  - Filtraggio più fine ma più overhead
+  - Il file diventa leggibile da un editor di testo
+  - Nessun effetto
+  answer: 2
+  explanation: Row group piccoli permettono di saltare più dati nelle query, ma aggiungono overhead; quelli grandi comprimono meglio ma richiedono più memoria in scrittura.
 ---
 ## Parquet
 

@@ -1,7 +1,8 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts, formatDate, readingMinutes, tagSlug, type Post } from '../../utils';
+import { getPublishedPosts, formatDate, readingMinutes, tagSlug, quizStorageKey, type Post } from '../../utils';
+import QuizStatus from '../../components/QuizStatus.astro';
 import { AUTHOR, LINKEDIN_URL } from '../../consts';
 
 export async function getStaticPaths() {
@@ -19,7 +20,7 @@ interface Props {
 }
 
 const { post, newer, older } = Astro.props;
-const { title, description, pubDate, updatedDate, heroImage, tags, draft } = post.data;
+const { title, description, pubDate, updatedDate, heroImage, tags, draft, quiz } = post.data;
 const { Content } = await render(post);
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
@@ -64,6 +65,17 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
     </div>
 
     <footer class="post-footer wrap-narrow">
+      {quiz.length > 0 && (
+        <a class="quiz-cta" href={`/quiz/${post.id}/`} data-quiz-card>
+          <span class="quiz-cta-icon" aria-hidden="true">?</span>
+          <span class="quiz-cta-text">
+            <span class="label label-accent">// {quiz.length} questions</span>
+            <strong>Check your knowledge!</strong>
+            <span class="quiz-status" data-quiz-status={quizStorageKey(post.id)} data-total={quiz.length} data-empty="Test what you just read">Test what you just read</span>
+          </span>
+          <span class="button" data-quiz-action>Start the quiz →</span>
+        </a>
+      )}
       <div class="share">
         <p class="label label-accent">// Was this useful?</p>
         <h2>Share it with someone on the same journey.</h2>
@@ -78,4 +90,5 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
       </nav>
     </footer>
   </article>
+  {quiz.length > 0 && <QuizStatus />}
 </BaseLayout>

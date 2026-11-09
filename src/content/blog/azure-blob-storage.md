@@ -6,6 +6,55 @@ heroImage: /media/azure-blob-1.png
 tags:
   - Azure
 draft: false
+quiz:
+- question: Che tipo di dati è pensato per memorizzare Azure Blob Storage?
+  options:
+  - Dati relazionali con chiavi esterne
+  - Grandi quantità di dati non strutturati, come file binari
+  - Solo messaggi tra applicazioni
+  - Solo dati key/value di piccole dimensioni
+  answer: 2
+  explanation: Blob Storage è fatto per grandi quantità di dati non strutturati, salvati come BLOB.
+- question: A cosa serve un container?
+  options:
+  - A eseguire codice vicino ai dati
+  - A raggruppare logicamente i blob e controllare chi può leggerli e scriverli
+  - A comprimere i blob
+  - A replicare i blob in un'altra regione
+  answer: 2
+  explanation: Il container è un raggruppamento logico dei blob e il punto in cui si gestiscono gli accessi.
+- question: Quale tipo di BLOB permette solo di aggiungere dati in coda, senza modificarli o cancellarli?
+  options:
+  - Block BLOB
+  - Page BLOB
+  - Append BLOB
+  - Archive BLOB
+  answer: 3
+  explanation: 'L''Append BLOB è ottimizzato per le operazioni di append: si aggiunge solo in coda.'
+- question: Quale tipo di BLOB è ottimizzato per letture e scritture casuali su pagine da 512 byte?
+  options:
+  - Block BLOB
+  - Page BLOB
+  - Append BLOB
+  - Cool BLOB
+  answer: 2
+  explanation: Il Page BLOB è una collezione di pagine da 512 byte, leggibili e scrivibili singolarmente.
+- question: Devi conservare per legge dei backup a cui non accederai quasi mai. Quale livello di accesso scegli?
+  options:
+  - Hot
+  - Cool
+  - Cold
+  - Archive
+  answer: 4
+  explanation: Archive ha il costo di storage più basso, ma lettura e cancellazione sono costose e lente.
+- question: Cosa succede se cancelli un blob nel livello Cool prima di 30 giorni?
+  options:
+  - Niente, la cancellazione è sempre gratuita
+  - Paghi un costo di cancellazione anticipata
+  - Il blob passa automaticamente ad Archive
+  - La cancellazione viene rifiutata
+  answer: 2
+  explanation: Nel livello Cool la cancellazione prima di 30 giorni comporta un costo; nel Cold il limite è di 90 giorni.
 ---
 # Azure Blob Storage
 

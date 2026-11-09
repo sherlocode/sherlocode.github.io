@@ -6,6 +6,55 @@ heroImage: /media/1unzt-zzdvs2vpmhv-th0sw.png
 tags:
   - Azure
 draft: false
+quiz:
+- question: Che cos'è Azure Service Bus?
+  options:
+  - Un database NoSQL gestito
+  - Un message broker completamente gestito per la comunicazione asincrona
+  - Un servizio per ospitare siti web statici
+  - Un file share di rete nel cloud
+  answer: 2
+  explanation: 'Service Bus è un message broker gestito: le applicazioni si scambiano messaggi in modo asincrono, sicuro e affidabile.'
+- question: Qual è la differenza tra una Queue e il modello Pub/Sub?
+  options:
+  - La Queue collega due soli servizi, nel Pub/Sub più subscriber ricevono i messaggi di un Topic
+  - La Queue è sincrona, il Pub/Sub è asincrono
+  - La Queue accetta solo JSON, il Pub/Sub qualsiasi formato
+  - Non c'è differenza, sono due nomi della stessa cosa
+  answer: 1
+  explanation: La Queue è un canale punto a punto; nel Pub/Sub i servizi si iscrivono a un Topic, come gli iscritti a un canale YouTube.
+- question: Un messaggio non riesce a essere processato dopo diversi tentativi. Quale funzionalità lo sposta in una coda secondaria per analizzarlo?
+  options:
+  - Message Scheduling
+  - Duplicate Message Detection
+  - Dead Lettering
+  - TTL (Time To Live)
+  answer: 3
+  explanation: Il Dead Lettering sposta i messaggi non processabili in una coda secondaria, senza bloccare il resto del sistema.
+- question: Versamento e prelievo sullo stesso conto devono essere processati nell'ordine giusto. Quale funzionalità serve?
+  options:
+  - Filtri dei Subs
+  - Message Sessions
+  - Message Scheduling
+  - Dead Lettering
+  answer: 2
+  explanation: Le Message Sessions fanno processare un gruppo di messaggi correlati nella stessa sessione, mantenendone l'ordine.
+- question: Quale livello di pricing NON supporta i Topic?
+  options:
+  - Basic
+  - Standard
+  - Premium
+  - Tutti e tre li supportano
+  answer: 1
+  explanation: 'Il livello Basic offre solo le code: Topic, sessioni e de-duplicazione partono dallo Standard.'
+- question: Qual è la dimensione massima di un messaggio nel livello Premium?
+  options:
+  - 256 KB
+  - 1 MB
+  - 10 MB
+  - 100 MB
+  answer: 4
+  explanation: Basic e Standard arrivano a 256 KB, il Premium fino a 100 MB.
 ---
 # Azure Service Bus
 

@@ -6,6 +6,47 @@ heroImage: /media/tablestorage.png
 tags:
   - Azure
 draft: false
+quiz:
+- question: Che tipo di storage è Azure Table Storage?
+  options:
+  - Un database relazionale
+  - Uno storage NoSQL key/value
+  - Un file share di rete
+  - Un message broker
+  answer: 2
+  explanation: Azure Tables è uno storage NoSQL che salva i dati in formato key/value.
+- question: Da cosa è composta la chiave univoca di ogni riga?
+  options:
+  - Solo da un ID numerico
+  - Partition key + row key
+  - Nome della tabella + timestamp
+  - Chiave esterna + chiave primaria
+  answer: 2
+  explanation: La partition key indica la partizione, la row key identifica la riga dentro quella partizione.
+- question: Quale di queste affermazioni è vera?
+  options:
+  - Ogni riga deve avere le stesse colonne
+  - Supporta stored procedures e viste
+  - Righe diverse possono avere un numero diverso di colonne
+  - Supporta chiavi esterne tra tabelle
+  answer: 3
+  explanation: Le righe possono avere colonne diverse; non esistono chiavi esterne, relazioni, stored procedures o viste.
+- question: A cosa serve la partition key, oltre a organizzare i dati?
+  options:
+  - A cifrare le righe
+  - A migliorare le performance e ridurre i tempi di lettura
+  - A collegare tabelle diverse
+  - A definire il tipo delle colonne
+  answer: 2
+  explanation: 'Le righe con la stessa partition key sono salvate insieme: le operazioni sui dati sono più veloci.'
+- question: Quando Azure Tables NON è lo strumento adatto?
+  options:
+  - Per i log applicativi
+  - Per profili e preferenze utente
+  - Quando ogni riga ha moltissime informazioni (oltre 252 proprietà o circa 1 MB)
+  - Per tabelle di lookup e configurazioni
+  answer: 3
+  explanation: 'Ogni riga ha al massimo 252 proprietà e circa 1 MB: è ideale per tante righe con poche colonne.'
 ---
 # Azure Tables
 
