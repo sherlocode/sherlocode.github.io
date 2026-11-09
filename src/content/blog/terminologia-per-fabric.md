@@ -21,6 +21,8 @@ E' un architettura che unisce i due visti prima, data lake e data warehouse. Qui
 
 E' stato introdotto principalmente per risolvere il problema di avere i dati in due parti diverse; un'azienda prendeva i suoi data e li portava nel data lake, dopo di ché, ne duplicava una porzione, trasformandoli e integrandoli con il data warehouse. Questo portava a duplicare dati, avere pipeline complicate e che richiedevano tempo per completare la loro esecuzione ed infine i dati soventemente non erano aggiornati perché risiedevano sul data lake e dovevano attendere la pipeline.
 
+![image.png](/media/image-17.png)
+
 ### **Modello OLAP (Online Analytical Processing)**
 
 E' una metodologia per l'organizzazione dei dati che si concentra sulla loro analisi. Tipicamente i dati vengono strutturati in righe e colonne e viene eseguita un'analisi bidimensionale, con i modelli OLAP, invece, i dati vengono organizzati in un cubo con tre dimensioni come minimo, ma se ne possono aggiungere molte di più (in questo caso di parla di *ipercubo*). Questo permette di analizzare un dato da più punti di vista contemporaneamente.
