@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts, collectTags } from '../utils';
+import { localizePath, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const tags = collectTags(await getPublishedPosts(lang));
+---
+
+<BaseLayout title={s.nav.topics} description={s.topics.metaDescription} lang={lang}>
+  <section class="hero grid-bg">
+    <div class="wrap">
+      <p class="label label-accent">{s.topics.eyebrow}</p>
+      <h1>{s.topics.title[0]}<em>{s.topics.title[1]}</em></h1>
+      <p class="lede">{s.topics.lede}</p>
+    </div>
+  </section>
+  <section class="wrap">
+    {tags.length === 0 ? (
+      <p class="empty">{s.topics.empty}</p>
+    ) : (
+      <div class="topic-grid">
+        {tags.map((tag) => (
+          <a class="topic" href={localizePath(lang, `/tag/${tag.slug}/`)}>
+            <span>{s.topics.count(tag.count)}</span>
+            <strong>{tag.name} →</strong>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>

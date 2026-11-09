@@ -9,7 +9,16 @@ const site = process.env.SITE ?? 'https://tuo-username.github.io';
 
 export default defineConfig({
   site,
-  integrations: [sitemap()],
+  i18n: {
+    locales: ['en', 'it'],
+    defaultLocale: 'en',
+    routing: { prefixDefaultLocale: false },
+  },
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'en', locales: { en: 'en-US', it: 'it-IT' } },
+    }),
+  ],
   markdown: {
     shikiConfig: {
       themes: { light: 'github-light', dark: 'github-dark' },

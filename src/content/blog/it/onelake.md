@@ -54,7 +54,7 @@ E' un datalake unico per i dati della propria organizzazione. Viene deployato au
 
 ![image.png](/media/image-12.png)
 
-Come abbiamo visto [Terminologia per Fabric · SherloCode](https://sherlocode.github.io/blog/terminologia-per-fabric/) OneLake accetta tutti i formati di file, siano essi strutturati, semi strutturati o non strutturati. Inoltre permette di usare gli stessi dati con diversi motori di analytics senza richiedere di spostare o duplicare i dati.
+Come abbiamo visto [Terminologia per Fabric](/it/blog/terminologia-per-fabric/) OneLake accetta tutti i formati di file, siano essi strutturati, semi strutturati o non strutturati. Inoltre permette di usare gli stessi dati con diversi motori di analytics senza richiedere di spostare o duplicare i dati.
 
 I principali benefiici di OneLake sono i seguenti:
 

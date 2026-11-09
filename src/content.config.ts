@@ -15,6 +15,8 @@ const blog = defineCollection({
     heroImage: z.preprocess(emptyToUndefined, z.string().optional()),
     tags: z.preprocess((v) => (Array.isArray(v) ? v.filter(Boolean) : []), z.array(z.string())),
     draft: z.preprocess((v) => v === true, z.boolean()),
+    // Links the English and Italian versions of the same article when their file names differ.
+    translationKey: z.preprocess(emptyToUndefined, z.string().optional()),
     // Optional "Check your knowledge!" quiz shown at the end of the article.
     // `answer` is the number of the correct option, starting from 1.
     quiz: z.preprocess(

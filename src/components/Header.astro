@@ -1,29 +1,47 @@
 ---
 import Logo from './Logo.astro';
+import { LANGS, LANG_META, localizePath, stripLang, t, type Lang } from '../i18n';
 
 interface Props {
+  lang: Lang;
+  /** URL path of the current page in each language; a missing language links to its home page. */
+  alternates: Partial<Record<Lang, string>>;
   /** Shows a reading-progress bar under the header (article pages). */
   progress?: boolean;
 }
-const { progress = false } = Astro.props;
+const { lang, alternates, progress = false } = Astro.props;
+const s = t(lang);
 
-const path = Astro.url.pathname;
+const path = stripLang(Astro.url.pathname);
 const links = [
-  { href: '/', label: 'Articles', active: path === '/' || path.startsWith('/blog') },
-  { href: '/tag/', label: 'Topics', active: path.startsWith('/tag') },
-  { href: '/quiz/', label: 'Quiz', active: path.startsWith('/quiz') },
-  { href: '/about/', label: 'About', active: path.startsWith('/about') },
+  { href: '/', label: s.nav.articles, active: path === '/' || path.startsWith('/blog') },
+  { href: '/tag/', label: s.nav.topics, active: path.startsWith('/tag') },
+  { href: '/quiz/', label: s.nav.quiz, active: path.startsWith('/quiz') },
+  { href: '/about/', label: s.nav.about, active: path.startsWith('/about') },
 ];
 ---
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <Logo />
-    <nav class="site-nav" aria-label="Main">
-      {links.map((l) => (
-        <a href={l.href} aria-current={l.active ? 'page' : undefined}>{l.label}</a>
-      ))}
-    </nav>
+    <Logo href={localizePath(lang, '/')} />
+    <div class="header-right">
+      <nav class="site-nav" aria-label="Main">
+        {links.map((l) => (
+          <a href={localizePath(lang, l.href)} aria-current={l.active ? 'page' : undefined}>{l.label}</a>
+        ))}
+      </nav>
+      <div class="lang-switch" role="group" aria-label="Language">
+        {LANGS.map((l) =>
+          l === lang ? (
+            <span class="is-current" aria-current="true" title={LANG_META[l].name}>{LANG_META[l].short}</span>
+          ) : (
+            <a href={alternates[l] ?? localizePath(l, '/')} hreflang={l} lang={l} title={s.switchTo} data-umami-event="Language switch" data-umami-event-to={l}>
+              {LANG_META[l].short}
+            </a>
+          ),
+        )}
+      </div>
+    </div>
   </div>
   {progress && <div class="progress" id="progress" aria-hidden="true"></div>}
 </header>

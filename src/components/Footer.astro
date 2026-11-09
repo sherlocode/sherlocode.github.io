@@ -1,24 +1,31 @@
 ---
 import Logo from './Logo.astro';
 import { AUTHOR, LINKEDIN_URL, GITHUB_URL } from '../consts';
+import { localizePath, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-top">
     <div>
-      <Logo />
-      <p class="footer-tagline">Notes on the technologies I learn along the way, written for whoever comes next.</p>
+      <Logo href={localizePath(lang, '/')} />
+      <p class="footer-tagline">{s.footer.tagline}</p>
     </div>
     <ul class="footer-links">
       <li><a class="pill" href={LINKEDIN_URL} rel="me noopener" target="_blank">LinkedIn ↗</a></li>
       <li><a class="pill" href={GITHUB_URL} rel="me noopener" target="_blank">GitHub ↗</a></li>
-      <li><a class="pill" href="/rss.xml">RSS</a></li>
-      <li><a class="pill" href="/privacy/">Privacy</a></li>
+      <li><a class="pill" href={localizePath(lang, '/rss.xml')}>RSS</a></li>
+      <li><a class="pill" href={localizePath(lang, '/privacy/')}>{s.footer.privacy}</a></li>
     </ul>
   </div>
   <div class="wrap footer-bottom label">
     <p>© {year} {AUTHOR}</p>
-    <p>// written by hand, shared gladly</p>
+    <p>{s.footer.sign}</p>
   </div>
 </footer>

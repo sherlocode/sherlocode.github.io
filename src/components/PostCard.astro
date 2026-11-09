@@ -1,6 +1,7 @@
 ---
 import type { Post } from '../utils';
-import { formatDate, readingMinutes, tagSlug } from '../utils';
+import { formatDate, readingMinutes, postUrl, postLang, tagUrl } from '../utils';
+import { t } from '../i18n';
 
 interface Props {
   post: Post;
@@ -10,12 +11,14 @@ interface Props {
 }
 const { post, index, featured = false } = Astro.props;
 const { title, description, pubDate, heroImage, tags, draft } = post.data;
-const url = `/blog/${post.id}/`;
+const lang = postLang(post);
+const s = t(lang);
+const url = postUrl(post);
 ---
 
 <article class:list={['card', { 'card-featured': featured }]}>
   <div class="card-media">
-    {index !== undefined && <span class="card-index">{featured ? 'Latest' : String(index).padStart(2, '0')}</span>}
+    {index !== undefined && <span class="card-index">{featured ? s.home.latest : String(index).padStart(2, '0')}</span>}
     {heroImage ? (
       <img src={heroImage} alt="" loading={featured ? 'eager' : 'lazy'} decoding="async" />
     ) : (
@@ -24,20 +27,20 @@ const url = `/blog/${post.id}/`;
   </div>
   <div class="card-body">
     <p class="meta">
-      <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+      <time datetime={pubDate.toISOString()}>{formatDate(pubDate, lang)}</time>
       <span class="sep" aria-hidden="true">/</span>
-      <span>{readingMinutes(post.body)} min read</span>
-      {draft && <span class="badge">Draft</span>}
+      <span>{s.card.minRead(readingMinutes(post.body))}</span>
+      {draft && <span class="badge">{s.card.draft}</span>}
     </p>
     <h2 class="card-title"><a href={url}>{title}</a></h2>
     <p class="card-desc">{description}</p>
     <div class="card-foot">
       {tags.length > 0 && (
         <ul class="tags">
-          {tags.map((t) => <li><a href={`/tag/${tagSlug(t)}/`}>{t}</a></li>)}
+          {tags.map((tag) => <li><a href={tagUrl(lang, tag)}>{tag}</a></li>)}
         </ul>
       )}
-      {featured && <span class="read-more" aria-hidden="true">Read →</span>}
+      {featured && <span class="read-more" aria-hidden="true">{s.card.read}</span>}
     </div>
   </div>
 </article>

@@ -1,0 +1,100 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import QuizStatus from '../components/QuizStatus.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { AUTHOR, LINKEDIN_URL } from '../consts';
+import { LANGS, localizePath, t } from '../i18n';
+import {
+  formatDate, readingMinutes, tagUrl, quizStorageKey, postLang, postUrl, quizUrl, postKey, getTranslation, type Post,
+} from '../utils';
+
+interface Props {
+  post: Post;
+  newer?: Post;
+  older?: Post;
+}
+
+const { post, newer, older } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, draft, quiz } = post.data;
+const lang = postLang(post);
+const s = t(lang);
+const { Content } = await render(post);
+
+// The same article in every language that has it (for hreflang and the language switcher).
+const alternates: Partial<Record<(typeof LANGS)[number], string>> = {};
+for (const l of LANGS) {
+  const tr = l === lang ? post : await getTranslation(post, l);
+  if (tr) alternates[l] = postUrl(tr);
+}
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+---
+
+<BaseLayout title={title} description={description} lang={lang} alternates={alternates} image={heroImage} type="article" publishedTime={pubDate} tags={tags}>
+  <article class="post">
+    <header class="post-header grid-bg">
+      <div class="wrap-narrow">
+        <p class="crumbs">
+          <a href={localizePath(lang, '/')}>{s.nav.articles}</a>
+          {tags.map((tag) => (
+            <>
+              <span aria-hidden="true">/</span>
+              <a href={tagUrl(lang, tag)}>{tag}</a>
+            </>
+          ))}
+          {draft && <span class="badge">{s.card.draft}</span>}
+        </p>
+        <h1>{title}</h1>
+        <p class="lede">{description}</p>
+        <dl class="post-meta">
+          <div><dt>{s.post.author}</dt><dd>{AUTHOR}</dd></div>
+          <div><dt>{s.post.published}</dt><dd><time datetime={pubDate.toISOString()}>{formatDate(pubDate, lang)}</time></dd></div>
+          {updatedDate && (
+            <div><dt>{s.post.updated}</dt><dd><time datetime={updatedDate.toISOString()}>{formatDate(updatedDate, lang)}</time></dd></div>
+          )}
+          <div><dt>{s.post.reading}</dt><dd>{s.post.minutes(readingMinutes(post.body))}</dd></div>
+        </dl>
+      </div>
+    </header>
+
+    {heroImage && (
+      <figure class="post-hero">
+        <img src={heroImage} alt="" decoding="async" />
+      </figure>
+    )}
+
+    <div class="prose wrap-narrow" lang={lang}>
+      <Content />
+    </div>
+
+    <footer class="post-footer wrap-narrow">
+      {quiz.length > 0 && (
+        <a class="quiz-cta" href={quizUrl(post)} data-quiz-card data-umami-event="Quiz CTA click" data-umami-event-quiz={postKey(post)} data-umami-event-lang={lang}>
+          <span class="quiz-cta-icon" aria-hidden="true">?</span>
+          <span class="quiz-cta-text">
+            <span class="label label-accent">// {s.quiz.questions(quiz.length)}</span>
+            <strong>{s.quiz.cta}</strong>
+            <span class="quiz-status" data-quiz-status={quizStorageKey(post)} data-total={quiz.length} data-empty={s.quiz.ctaEmpty} data-best-label={s.quiz.best} data-retake={s.quiz.retake}>{s.quiz.ctaEmpty}</span>
+          </span>
+          <span class="button" data-quiz-action>{s.quiz.ctaStart}</span>
+        </a>
+      )}
+      <Newsletter lang={lang} source="article" />
+      <div class="share">
+        <p class="label label-accent">{s.post.useful}</p>
+        <h2>{s.post.shareTitle}</h2>
+        <div class="share-actions">
+          <a class="button" href={shareUrl} target="_blank" rel="noopener" data-umami-event="Share on LinkedIn" data-umami-event-article={postKey(post)} data-umami-event-lang={lang}>{s.post.share}</a>
+          <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener" data-umami-event="Get in touch">{s.post.contact}</a>
+        </div>
+      </div>
+      <nav class="pager" aria-label={s.nav.articles}>
+        {older && <a href={postUrl(older)}><span>{s.post.older}</span>{older.data.title}</a>}
+        {newer && <a class="next" href={postUrl(newer)}><span>{s.post.newer}</span>{newer.data.title}</a>}
+      </nav>
+    </footer>
+  </article>
+  {quiz.length > 0 && <QuizStatus />}
+</BaseLayout>

@@ -1,7 +1,7 @@
 ---
 /*
  * Fills every element marked with data-quiz-status="<storage key>" with the result
- * saved in this browser. Include it once on any page that shows quiz badges.
+ * saved in this browser. Texts come from data-empty, data-best-label and data-retake. Include it once on any page that shows quiz badges.
  */
 ---
 
@@ -25,19 +25,19 @@
       const total = Number(node.dataset.total) || saved?.total || 0;
       const host = node.closest<HTMLElement>('[data-quiz-card]');
       if (!saved) {
-        node.textContent = node.dataset.empty ?? 'Not taken yet';
+        node.textContent = node.dataset.empty ?? '';
         node.classList.remove('is-done', 'is-perfect');
         continue;
       }
       done++;
       sum += total ? saved.best / total : 0;
       const perfect = saved.best === total;
-      node.textContent = `${perfect ? '★ ' : ''}Best ${saved.best} / ${total}`;
+      node.textContent = `${perfect ? '★ ' : ''}${node.dataset.bestLabel ?? 'Best'} ${saved.best} / ${total}`;
       node.classList.add('is-done');
       node.classList.toggle('is-perfect', perfect);
       host?.classList.add('is-done');
       const action = host?.querySelector<HTMLElement>('[data-quiz-action]');
-      if (action) action.textContent = 'Retake →';
+      if (action) action.textContent = node.dataset.retake ?? 'Retake →';
     }
     const summary = document.querySelector<HTMLElement>('[data-quiz-summary]');
     if (summary) {

@@ -1,0 +1,8 @@
+---
+import QuizView from '../../../views/QuizView.astro';
+import { quizPaths } from '../../../routes';
+
+export const getStaticPaths = () => quizPaths('it');
+---
+
+<QuizView {...Astro.props} />

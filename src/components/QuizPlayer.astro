@@ -1,47 +1,68 @@
 ---
 import type { Post } from '../utils';
-import { quizStorageKey } from '../utils';
+import { quizStorageKey, postKey, postLang, postUrl } from '../utils';
+import { localizePath, t } from '../i18n';
 
 interface Props {
   post: Post;
 }
 const { post } = Astro.props;
+const lang = postLang(post);
+const s = t(lang).quiz;
 const questions = post.data.quiz.map((q) => ({
   question: q.question,
   options: q.options,
   answer: q.answer - 1, // 0-based for the script
   explanation: q.explanation ?? '',
 }));
-const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
+const strings = {
+  question: s.question,
+  score: s.score,
+  correct: s.correct,
+  wrong: s.wrong,
+  next: s.next,
+  result: s.result,
+  verdicts: s.verdicts,
+  best: s.best,
+  attempt: s.attempt,
+  attempts: s.attempts,
+  saved: s.saved,
+  answer: s.answer,
+};
+const data = JSON.stringify({ key: quizStorageKey(post), quiz: postKey(post), lang, questions, s: strings });
 ---
 
 <div class="quiz" data-quiz={data}>
   <div class="quiz-top">
-    <span class="label" data-counter>Question 1 / {questions.length}</span>
-    <span class="label" data-live-score>Score 0</span>
+    <span class="label" data-counter>{s.question} 1 / {questions.length}</span>
+    <span class="label" data-live-score>{s.score} 0</span>
   </div>
   <div class="quiz-bar" aria-hidden="true"><span data-bar></span></div>
 
   <div class="quiz-stage" data-stage aria-live="polite">
-    <noscript><p class="empty">The quiz needs JavaScript enabled in your browser.</p></noscript>
+    <noscript><p class="empty">{s.noscript}</p></noscript>
   </div>
 
   <div class="quiz-result" data-result hidden>
-    <p class="label label-accent">// Result</p>
+    <p class="label label-accent">{s.resultLabel}</p>
     <div class="quiz-score"><strong data-score></strong><span data-total></span></div>
     <p class="quiz-verdict" data-verdict></p>
     <p class="meta" data-best></p>
     <ol class="quiz-review" data-review></ol>
     <div class="share-actions">
-      <button class="button" type="button" data-retry data-umami-event="Quiz retry">Try again ↻</button>
-      <a class="button button-ghost" href={`/blog/${post.id}/`}>Back to the article</a>
-      <a class="button button-ghost" href="/quiz/">All quizzes</a>
+      <button class="button" type="button" data-retry data-umami-event="Quiz retry">{s.retry}</button>
+      <a class="button button-ghost" href={postUrl(post)}>{s.back}</a>
+      <a class="button button-ghost" href={localizePath(lang, '/quiz/')}>{s.all}</a>
     </div>
   </div>
 </div>
 
 <script>
   type Question = { question: string; options: string[]; answer: number; explanation: string };
+  type Strings = {
+    question: string; score: string; correct: string; wrong: string; next: string; result: string;
+    verdicts: string[]; best: string; attempt: string; attempts: string; saved: string; answer: string;
+  };
   type Saved = { best: number; last: number; total: number; attempts: number; date: string };
 
   const read = (key: string): Saved | null => {
@@ -75,8 +96,10 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
   };
 
   for (const root of document.querySelectorAll<HTMLElement>('[data-quiz]')) {
-    const { key, questions } = JSON.parse(root.dataset.quiz!) as { key: string; questions: Question[] };
-    const $ = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const { key, quiz, lang, questions, s } = JSON.parse(root.dataset.quiz!) as {
+      key: string; quiz: string; lang: string; questions: Question[]; s: Strings;
+    };
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
     const stage = $('[data-stage]');
     const result = $('[data-result]');
     const counter = $('[data-counter]');
@@ -89,8 +112,8 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
 
     const showQuestion = () => {
       const q = questions[index];
-      counter.textContent = `Question ${index + 1} / ${questions.length}`;
-      liveScore.textContent = `Score ${score}`;
+      counter.textContent = `${s.question} ${index + 1} / ${questions.length}`;
+      liveScore.textContent = `${s.score} ${score}`;
       bar.style.width = `${(index / questions.length) * 100}%`;
 
       stage.replaceChildren();
@@ -98,7 +121,7 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
       card.append(el('h2', 'quiz-question', q.question));
       const list = el('div', 'quiz-options');
       list.setAttribute('role', 'group');
-      list.setAttribute('aria-label', 'Answers');
+      list.setAttribute('aria-label', s.answer);
       const order = shuffle(q.options.map((text, i) => ({ text, i })));
       const letters = 'ABCDEFGH';
       const buttons: HTMLButtonElement[] = [];
@@ -122,7 +145,7 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
         const right = chosen === q.answer;
         if (right) score++;
         answers.push({ q, chosen });
-        liveScore.textContent = `Score ${score}`;
+        liveScore.textContent = `${s.score} ${score}`;
         bar.style.width = `${((index + 1) / questions.length) * 100}%`;
         for (const b of buttons) {
           b.disabled = true;
@@ -132,10 +155,10 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
         }
         feedback.hidden = false;
         feedback.classList.add(right ? 'ok' : 'ko');
-        feedback.append(el('strong', '', right ? 'Correct!' : 'Not quite.'));
+        feedback.append(el('strong', '', right ? s.correct : s.wrong));
         if (q.explanation) feedback.append(el('p', '', q.explanation));
         const last = index === questions.length - 1;
-        const next = el('button', 'button', last ? 'See your result →' : 'Next question →') as HTMLButtonElement;
+        const next = el('button', 'button', last ? s.result : s.next) as HTMLButtonElement;
         next.type = 'button';
         next.addEventListener('click', () => {
           index++;
@@ -160,7 +183,7 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
       write(key, saved);
       // Analytics event (only if Umami is enabled on the site).
       try {
-        (window as any).umami?.track('Quiz completed', { quiz: key.split(':').pop(), score, total, perfect: score === total });
+        (window as any).umami?.track('Quiz completed', { quiz, lang, score, total, perfect: score === total });
       } catch {
         /* analytics not available */
       }
@@ -173,12 +196,9 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
       $('[data-score]').textContent = String(score);
       $('[data-total]').textContent = `/ ${total}`;
       $('[data-verdict]').textContent =
-        pct === 1 ? 'Perfect score. You nailed it!' :
-        pct >= 0.7 ? 'Great job, you know this topic well.' :
-        pct >= 0.4 ? 'Good start. A quick reread will fix the gaps.' :
-        'Worth another read of the article, then try again.';
+        s.verdicts[pct === 1 ? 0 : pct >= 0.7 ? 1 : pct >= 0.4 ? 2 : 3];
       $('[data-best]').textContent =
-        `Best ${saved.best} / ${total} · ${saved.attempts} ${saved.attempts === 1 ? 'attempt' : 'attempts'} · saved in this browser`;
+        `${s.best} ${saved.best} / ${total} · ${saved.attempts} ${saved.attempts === 1 ? s.attempt : s.attempts} · ${s.saved}`;
 
       const review = $('[data-review]');
       review.replaceChildren();
@@ -186,7 +206,7 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
         const ok = a.chosen === a.q.answer;
         const li = el('li', ok ? 'ok' : 'ko');
         li.append(el('span', 'quiz-mark', ok ? '✓' : '✕'), el('span', '', a.q.question));
-        if (!ok) li.append(el('small', '', `Answer: ${a.q.options[a.q.answer]}`));
+        if (!ok) li.append(el('small', '', `${s.answer}: ${a.q.options[a.q.answer]}`));
         review.append(li);
       }
       result.scrollIntoView({ behavior: 'smooth', block: 'start' });

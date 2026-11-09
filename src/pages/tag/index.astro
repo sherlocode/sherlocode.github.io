@@ -1,30 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts, collectTags } from '../../utils';
-
-const tags = collectTags(await getPublishedPosts());
+import TopicsView from '../../views/TopicsView.astro';
 ---
 
-<BaseLayout title="Topics" description="All the products and technologies covered in the articles.">
-  <section class="hero grid-bg">
-    <div class="wrap">
-      <p class="label label-accent">// Topics</p>
-      <h1>Products and <em>technologies.</em></h1>
-      <p class="lede">Each article is tagged with the products it covers. Pick a place to start.</p>
-    </div>
-  </section>
-  <section class="wrap">
-    {tags.length === 0 ? (
-      <p class="empty">No topics yet.</p>
-    ) : (
-      <div class="topic-grid">
-        {tags.map((t) => (
-          <a class="topic" href={`/tag/${t.slug}/`}>
-            <span>{t.count} {t.count === 1 ? 'article' : 'articles'}</span>
-            <strong>{t.name} →</strong>
-          </a>
-        ))}
-      </div>
-    )}
-  </section>
-</BaseLayout>
+<TopicsView lang="en" />
