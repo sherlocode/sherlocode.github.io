@@ -15,6 +15,6 @@ export const LOCALE = 'en-US';
 export const BUTTONDOWN_USERNAME = 'sherlocode';
 
 /** Umami Cloud website ID (Settings → Websites → Edit → Website ID). Empty = no analytics. */
-export const UMAMI_WEBSITE_ID = '';
+export const UMAMI_WEBSITE_ID = '51df9450-f25c-4fcf-a17b-5619691fdb0e';
 /** Umami script URL: keep the default for Umami Cloud, change it only if you self-host. */
 export const UMAMI_SCRIPT_URL = 'https://cloud.umami.is/script.js';
