@@ -2,7 +2,7 @@
 title: Terminologia per Fabric
 description: Breve glossario per le terminologia richiesta per conoscenza di Fabric
 pubDate: 2026-11-06
-heroImage: /media/344-3441162classroom-icon-stack-of-books-png-transparent-png.png
+heroImage: /media/5432699.png
 tags:
   - Fabric
 draft: false
