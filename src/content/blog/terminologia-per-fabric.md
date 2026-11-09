@@ -99,6 +99,9 @@ Vengono prelevati i dati da più sorgenti (possono essere DB relazionali, files,
 
 Indipendentemente dalla modalità scelta, il dataset risultante è ottimizzato per eseguire query e analisi su questi dati. L'elaborazione dei dati viene eseguita da sistemi che possono processare grandi volumi di dati in parallelo. La fase di data ingestion può avvenire sia come esecuzione batch di dati statici che elaborazione real time di stream di dati.
 
+**Analytical data store**
 
+Questi store includono data warehouses relezionali, data lakes basati su file-system e architetture ibride che combinano le funzionalità dei data warehouses e dei data lakes (ossia i data lakehouses).
 
-&nbsp;
+**Analytical data model**
+
