@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedPosts, formatDate, readingMinutes, tagSlug, quizStorageKey, type Post } from '../../utils';
 import QuizStatus from '../../components/QuizStatus.astro';
+import Newsletter from '../../components/Newsletter.astro';
 import { AUTHOR, LINKEDIN_URL } from '../../consts';
 
 export async function getStaticPaths() {
@@ -66,7 +67,7 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
 
     <footer class="post-footer wrap-narrow">
       {quiz.length > 0 && (
-        <a class="quiz-cta" href={`/quiz/${post.id}/`} data-quiz-card>
+        <a class="quiz-cta" href={`/quiz/${post.id}/`} data-quiz-card data-umami-event="Quiz CTA click" data-umami-event-quiz={post.id}>
           <span class="quiz-cta-icon" aria-hidden="true">?</span>
           <span class="quiz-cta-text">
             <span class="label label-accent">// {quiz.length} questions</span>
@@ -76,12 +77,13 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
           <span class="button" data-quiz-action>Start the quiz →</span>
         </a>
       )}
+      <Newsletter source="article" />
       <div class="share">
         <p class="label label-accent">// Was this useful?</p>
         <h2>Share it with someone on the same journey.</h2>
         <div class="share-actions">
-          <a class="button" href={shareUrl} target="_blank" rel="noopener">Share on LinkedIn ↗</a>
-          <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener">Get in touch</a>
+          <a class="button" href={shareUrl} target="_blank" rel="noopener" data-umami-event="Share on LinkedIn" data-umami-event-article={post.id}>Share on LinkedIn ↗</a>
+          <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener" data-umami-event="Get in touch">Get in touch</a>
         </div>
       </div>
       <nav class="pager" aria-label="More articles">

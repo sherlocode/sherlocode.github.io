@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import QuizStatus from '../../components/QuizStatus.astro';
+import Newsletter from '../../components/Newsletter.astro';
 import { getQuizPosts, quizStorageKey } from '../../utils';
 
 const posts = await getQuizPosts();
@@ -52,5 +53,8 @@ const totalQuestions = posts.reduce((n, p) => n + p.data.quiz.length, 0);
       ))}
     </div>
   </section>
+  <div class="wrap">
+    <Newsletter variant="band" source="quiz" />
+  </div>
   <QuizStatus />
 </BaseLayout>

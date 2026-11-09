@@ -1,0 +1,9 @@
+---
+import { UMAMI_WEBSITE_ID, UMAMI_SCRIPT_URL } from '../consts';
+const enabled = UMAMI_WEBSITE_ID.trim() !== '';
+---
+
+{/* Umami: cookieless, privacy-friendly analytics. Loaded only in production builds. */}
+{enabled && import.meta.env.PROD && (
+  <script is:inline defer src={UMAMI_SCRIPT_URL} data-website-id={UMAMI_WEBSITE_ID} data-do-not-track="true"></script>
+)}

@@ -1,0 +1,36 @@
+---
+import { BUTTONDOWN_USERNAME } from '../consts';
+
+interface Props {
+  /** "band" = wide section (home), "card" = compact box (end of article). */
+  variant?: 'band' | 'card';
+  /** Where the signup happened, saved as a Buttondown tag (e.g. "home", "article"). */
+  source?: string;
+}
+const { variant = 'card', source = 'site' } = Astro.props;
+const enabled = BUTTONDOWN_USERNAME.trim() !== '';
+const action = `https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`;
+const id = `nl-${source}`;
+---
+
+{enabled && (
+  <section class:list={['newsletter', `newsletter-${variant}`]} aria-labelledby={`${id}-title`}>
+    <div class="newsletter-text">
+      <p class="label label-accent">// Newsletter</p>
+      <h2 id={`${id}-title`}>Learn along with me.</h2>
+      <p>One email when a new article and its quiz are out. No spam, unsubscribe anytime.</p>
+    </div>
+    <form class="newsletter-form" action={action} method="post" target="_blank">
+      <label class="sr-only" for={`${id}-email`}>Email address</label>
+      <div class="newsletter-row">
+        <input id={`${id}-email`} type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+        <input type="hidden" name="embed" value="1" />
+        <input type="hidden" name="tag" value={source} />
+        <button class="button" type="submit" data-umami-event="Newsletter signup" data-umami-event-source={source}>Subscribe →</button>
+      </div>
+      <p class="newsletter-note">
+        You’ll get a confirmation email first. See the <a href="/privacy/">privacy notes</a>.
+      </p>
+    </form>
+  </section>
+)}
