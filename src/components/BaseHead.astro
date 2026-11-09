@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from './Analytics.astro';
 import { SITE_TITLE, AUTHOR } from '../consts';
 
 interface Props {
@@ -50,3 +51,5 @@ const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
+
+<Analytics />

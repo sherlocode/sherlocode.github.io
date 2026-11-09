@@ -33,7 +33,7 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
     <p class="meta" data-best></p>
     <ol class="quiz-review" data-review></ol>
     <div class="share-actions">
-      <button class="button" type="button" data-retry>Try again ↻</button>
+      <button class="button" type="button" data-retry data-umami-event="Quiz retry">Try again ↻</button>
       <a class="button button-ghost" href={`/blog/${post.id}/`}>Back to the article</a>
       <a class="button button-ghost" href="/quiz/">All quizzes</a>
     </div>
@@ -158,6 +158,12 @@ const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
         date: new Date().toISOString(),
       };
       write(key, saved);
+      // Analytics event (only if Umami is enabled on the site).
+      try {
+        (window as any).umami?.track('Quiz completed', { quiz: key.split(':').pop(), score, total, perfect: score === total });
+      } catch {
+        /* analytics not available */
+      }
 
       stage.replaceChildren();
       root.querySelector('.quiz-top')!.setAttribute('hidden', '');

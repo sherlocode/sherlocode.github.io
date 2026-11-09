@@ -492,6 +492,42 @@ button.button { cursor: pointer; font-family: inherit; }
   .quiz-tile-media { flex-basis: 72px; padding: 10px; }
 }
 
+/* ---------- Newsletter ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.newsletter {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(205, 255, 58, 0.10), transparent 50%),
+    var(--panel);
+  border: 1px solid var(--line); border-radius: var(--radius);
+}
+.newsletter h2 { margin: 10px 0 8px; letter-spacing: -0.03em; }
+.newsletter-text p:not(.label) { margin: 0; color: var(--text-2); }
+.newsletter-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.newsletter input[type='email'] {
+  flex: 1; min-width: 0; min-width: min(240px, 100%);
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--line-2); border-radius: 999px;
+  padding: 11px 20px; font: inherit; font-size: 0.98rem;
+}
+.newsletter input[type='email']::placeholder { color: var(--faint); }
+.newsletter input[type='email']:focus { outline: none; border-color: var(--accent); }
+.newsletter-note { margin: 12px 0 0; font-size: 0.82rem; color: var(--faint); }
+.newsletter-note a { color: var(--muted); }
+.newsletter-card { padding: 30px 32px; margin-bottom: 20px; }
+.newsletter-card h2 { font-size: 1.6rem; }
+.newsletter-card .newsletter-form { margin-top: 20px; }
+.newsletter-band { margin-top: 72px; padding: 48px; display: grid; gap: 32px; align-items: center; }
+.newsletter-band h2 { font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.05; letter-spacing: -0.045em; }
+@media (min-width: 900px) {
+  .newsletter-band { grid-template-columns: 1fr 1.1fr; gap: 56px; }
+}
+@media (max-width: 640px) {
+  .newsletter-card, .newsletter-band { padding: 24px; }
+  .newsletter-band { margin-top: 56px; }
+  .newsletter .button { width: 100%; justify-content: center; }
+}
+
 @media (max-width: 640px) {
   body { font-size: 16px; }
   .header-inner { height: 60px; }
