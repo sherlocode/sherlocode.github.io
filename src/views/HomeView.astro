@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { SITE_TITLE } from '../consts';
+import { getPublishedPosts, collectTags } from '../utils';
+import { localizePath, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const posts = await getPublishedPosts(lang);
+const allTags = collectTags(posts);
+const tags = allTags.slice(0, 12);
+const [latest, ...rest] = posts;
+---
+
+<BaseLayout title={SITE_TITLE} description={s.siteDescription} lang={lang}>
+  <section class="hero grid-bg">
+    <div class="wrap">
+      <p class="label label-accent">{s.home.eyebrow}</p>
+      <h1>{s.home.title[0]}<em>{s.home.title[1]}</em></h1>
+      <p class="lede">{s.siteDescription}</p>
+      <div class="hero-stats">
+        <div><strong>{posts.length}</strong><span>{s.home.articles}</span></div>
+        <div><strong>{allTags.length}</strong><span>{s.home.topics}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="articles-title">
+    <div class="section-head">
+      <h2 id="articles-title"><i>01</i>{s.home.articles}</h2>
+      {tags.length > 0 && (
+        <ul class="tags tags-lg" aria-label={s.home.topics}>
+          {tags.map((tag) => <li><a href={localizePath(lang, `/tag/${tag.slug}/`)}>{tag.name}<span>{tag.count}</span></a></li>)}
+        </ul>
+      )}
+    </div>
+
+    {posts.length === 0 && <p class="empty">{s.home.empty}</p>}
+    {latest && <PostCard post={latest} index={posts.length} featured />}
+    <div class="post-grid">
+      {rest.map((post, i) => <PostCard post={post} index={posts.length - 1 - i} />)}
+    </div>
+  </section>
+
+  <div class="wrap">
+    <Newsletter lang={lang} variant="band" source="home" />
+  </div>
+</BaseLayout>

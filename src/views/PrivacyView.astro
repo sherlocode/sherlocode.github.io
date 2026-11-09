@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { BUTTONDOWN_USERNAME, UMAMI_WEBSITE_ID, LINKEDIN_URL } from '../consts';
+import type { Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const newsletter = BUTTONDOWN_USERNAME.trim() !== '';
+const analytics = UMAMI_WEBSITE_ID.trim() !== '';
+const it = lang === 'it';
+
+const c = it
+  ? {
+      title: 'Note sulla privacy',
+      description: 'Cosa salva e cosa misura questo sito, e perché.',
+      lede: 'In breve e in chiaro: cosa salva questo sito, cosa misura e perché. Ultimo aggiornamento: novembre 2026.',
+      noCookiesTitle: 'Niente cookie, niente pubblicità',
+      noCookies: 'Questo sito non usa cookie, pubblicità né tracciamento su altri siti. È un sito statico ospitato su GitHub Pages, che può registrare dati tecnici di base (come gli indirizzi IP) per far funzionare il servizio in sicurezza.',
+      quizTitle: 'Risultati dei quiz',
+      quiz: ['I punteggi dei quiz sono salvati solo nel tuo browser (', '), così ritrovi i tuoi progressi quando torni. Non vengono mai inviati a me né a nessun altro. Puoi cancellarli quando vuoi eliminando i dati di questo sito dal browser.'],
+      statsTitle: 'Statistiche anonime',
+      stats: ['Uso ', ' per contare le visite e alcune azioni (per esempio un quiz completato o un clic su “Condividi”). Umami non usa cookie, non raccoglie dati personali e non ti segue su altri siti. Se il tuo browser invia il segnale “Do Not Track”, non viene raccolta nessuna statistica.'],
+      nlTitle: 'Newsletter',
+      nl: ['Se ti iscrivi, il tuo indirizzo email viene conservato da ', ', il servizio che invia la newsletter. Viene usato solo per mandarti i nuovi articoli. Prima di essere aggiunto ricevi una email di conferma, e ogni email contiene il link per disiscriverti.'],
+      questionsTitle: 'Domande',
+      questions: ['Per qualsiasi domanda sui tuoi dati scrivimi su ', '.'],
+    }
+  : {
+      title: 'Privacy notes',
+      description: 'What this site stores, measures and why.',
+      lede: 'Short and plain: what this site stores, what it measures and why. Last updated November 2026.',
+      noCookiesTitle: 'No cookies, no ads',
+      noCookies: 'This site does not use cookies, advertising or tracking across other websites. It is a static site hosted on GitHub Pages, which may log basic technical data (such as IP addresses) to keep the service running and secure.',
+      quizTitle: 'Quiz results',
+      quiz: ['Your quiz scores are saved only in your browser (', '), so you can see your progress when you come back. They are never sent to me or anyone else. You can delete them at any time by clearing this site’s data in your browser.'],
+      statsTitle: 'Anonymous statistics',
+      stats: ['I use ', ' to count visits and a few actions (for example a completed quiz or a click on “Share”). Umami does not use cookies, does not collect personal data and does not follow you across sites. If your browser sends a “Do Not Track” signal, no statistics are collected.'],
+      nlTitle: 'Newsletter',
+      nl: ['If you subscribe, your email address is stored by ', ', the service that sends the newsletter. It is used only to send you new articles. You will receive a confirmation email before being added, and every email has an unsubscribe link.'],
+      questionsTitle: 'Questions',
+      questions: ['Write to me on ', ' for any question about your data.'],
+    };
+---
+
+<BaseLayout title="Privacy" description={c.description} lang={lang}>
+  <section class="post-header grid-bg">
+    <div class="wrap-narrow">
+      <p class="label label-accent">// Privacy</p>
+      <h1 style="margin-top:18px">{c.title}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </section>
+
+  <div class="prose wrap-narrow">
+    <h2>{c.noCookiesTitle}</h2>
+    <p>{c.noCookies}</p>
+
+    <h2>{c.quizTitle}</h2>
+    <p>{c.quiz[0]}<code>localStorage</code>{c.quiz[1]}</p>
+
+    {analytics && (
+      <>
+        <h2>{c.statsTitle}</h2>
+        <p>{c.stats[0]}<a href="https://umami.is" target="_blank" rel="noopener">Umami</a>{c.stats[1]}</p>
+      </>
+    )}
+
+    {newsletter && (
+      <>
+        <h2>{c.nlTitle}</h2>
+        <p>{c.nl[0]}<a href="https://buttondown.com" target="_blank" rel="noopener">Buttondown</a>{c.nl[1]}</p>
+      </>
+    )}
+
+    <h2>{c.questionsTitle}</h2>
+    <p>{c.questions[0]}<a href={LINKEDIN_URL} target="_blank" rel="noopener">LinkedIn</a>{c.questions[1]}</p>
+  </div>
+</BaseLayout>

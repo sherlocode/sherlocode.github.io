@@ -8,10 +8,10 @@ media:
   rename: safe             # "La Mia Foto.PNG" diventa "la-mia-foto.png"
 
 content:
-  - name: blog
-    label: Articles
+  - name: blog-en
+    label: Articles (English)
     type: collection
-    path: src/content/blog
+    path: src/content/blog/en
     filename: "{primary}.md"   # the filename (and therefore the URL) comes from the title
     view:
       fields: [title, pubDate, draft]
@@ -56,6 +56,10 @@ content:
         label: Draft (do not publish)
         type: boolean
         default: false
+      - name: translationKey
+        label: Translation key
+        description: "Optional. Links this article to its Italian version. Needed only if the two files have different names: write the Italian file name (without .md). Fill it in on one of the two versions only."
+        type: string
       - name: quiz
         label: Quiz (Check your knowledge!)
         description: Optional. Questions shown in a quiz at the end of the article and in the Quiz section.
@@ -87,10 +91,112 @@ content:
         options:
           format: markdown
 
-  - name: about
-    label: About
+  - name: blog-it
+    label: Articoli (Italiano)
+    type: collection
+    path: src/content/blog/it
+    filename: "{primary}.md"   # the filename (and therefore the URL) comes from the title
+    view:
+      fields: [title, pubDate, draft]
+      primary: title
+      sort: [pubDate, title]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        description: 1–2 sentences. Appears in the article list and LinkedIn preview.
+        type: text
+        required: true
+      - name: pubDate
+        label: Publication date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updatedDate
+        label: Last updated
+        description: Optional. Fill this in when updating a published article.
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: heroImage
+        label: Cover image
+        description: Also used for the LinkedIn preview. Ideally 1200×627 px, PNG or JPG.
+        type: image
+      - name: tags
+        label: Products / topics
+        description: One tag per line, e.g. "Azure", "Kubernetes", "Terraform".
+        type: string
+        list: true
+      - name: draft
+        label: Draft (do not publish)
+        type: boolean
+        default: false
+      - name: translationKey
+        label: Translation key
+        description: "Optional. Links this article to its English version. Needed only if the two files have different names: write the English file name (without .md). Fill it in on one of the two versions only."
+        type: string
+      - name: quiz
+        label: Quiz (Check your knowledge!)
+        description: Optional. Questions shown in a quiz at the end of the article and in the Quiz section.
+        type: object
+        list: true
+        fields:
+          - name: question
+            label: Question
+            type: string
+            required: true
+          - name: options
+            label: Options
+            description: Possible answers, one per line (at least 2).
+            type: string
+            list: true
+            required: true
+          - name: answer
+            label: Correct option number
+            description: Position of the correct answer in the list above (1 = first, 2 = second…).
+            type: number
+            required: true
+          - name: explanation
+            label: Explanation
+            description: Optional. Shown after answering.
+            type: text
+      - name: body
+        label: Body
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: about-en
+    label: About (English)
     type: file
-    path: src/content/pages/about.md
+    path: src/content/pages/en/about.md
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Subtitle
+        type: text
+        required: true
+      - name: body
+        label: Body
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: about-it
+    label: Chi sono (Italiano)
+    type: file
+    path: src/content/pages/it/about.md
     fields:
       - name: title
         label: Title

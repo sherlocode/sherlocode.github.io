@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import QuizPlayer from '../components/QuizPlayer.astro';
+import { postLang, postUrl, quizUrl, tagUrl, getTranslation, type Post } from '../utils';
+import { LANGS, localizePath, t, type Lang } from '../i18n';
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const { title, tags, heroImage, quiz } = post.data;
+const lang = postLang(post);
+const s = t(lang);
+
+const alternates: Partial<Record<Lang, string>> = {};
+for (const l of LANGS) {
+  const tr = l === lang ? post : await getTranslation(post, l);
+  alternates[l] = tr && tr.data.quiz.length > 0 ? quizUrl(tr) : localizePath(l, '/quiz/');
+}
+---
+
+<BaseLayout title={s.quiz.pageTitle(title)} description={s.quiz.pageDescription(title, quiz.length)} lang={lang} alternates={alternates} image={heroImage}>
+  <section class="post-header grid-bg quiz-header">
+    <div class="wrap-narrow">
+      <p class="crumbs">
+        <a href={localizePath(lang, '/quiz/')}>{s.nav.quiz}</a>
+        {tags.map((tag) => (
+          <>
+            <span aria-hidden="true">/</span>
+            <a href={tagUrl(lang, tag)}>{tag}</a>
+          </>
+        ))}
+      </p>
+      <p class="label label-accent">{s.quiz.eyebrow}</p>
+      <h1 style="margin-top:14px">{title}</h1>
+      <p class="lede">{s.quiz.pageLede(quiz.length)} <a href={postUrl(post)}>{s.quiz.readFirst}</a></p>
+    </div>
+  </section>
+
+  <div class="wrap-narrow">
+    <QuizPlayer post={post} />
+  </div>
+</BaseLayout>

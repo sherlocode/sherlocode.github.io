@@ -1,23 +1,34 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
+import BaseHead, { type Props as HeadProps } from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { LANGS, localizePath, stripLang, t } from '../i18n';
 
-type Props = import('astro/types').ComponentProps<typeof BaseHead>;
+type Props = Omit<HeadProps, 'alternates'> & {
+  /**
+   * URL path of this page in each language. If omitted, the same path is assumed in every
+   * language (true for home, topics, quiz list, about, privacy).
+   */
+  alternates?: HeadProps['alternates'];
+};
+
 const props = Astro.props;
+const { lang } = props;
+const base = stripLang(Astro.url.pathname);
+const alternates = props.alternates ?? Object.fromEntries(LANGS.map((l) => [l, localizePath(l, base)]));
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
-    <BaseHead {...props} />
+    <BaseHead {...props} alternates={alternates} />
   </head>
   <body>
-    <a class="skip" href="#main">Skip to content</a>
-    <Header progress={props.type === 'article'} />
+    <a class="skip" href="#main">{t(lang).skip}</a>
+    <Header lang={lang} alternates={alternates} progress={props.type === 'article'} />
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>

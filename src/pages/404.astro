@@ -1,13 +1,15 @@
 ---
+// GitHub Pages serves this single page for every missing URL, in both languages.
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Page not found" description="The page you’re looking for doesn’t exist.">
+<BaseLayout title="Page not found" description="The page you’re looking for doesn’t exist." lang="en" alternates={{ en: '/', it: '/it/' }}>
   <section class="hero grid-bg">
     <div class="wrap">
       <p class="label label-accent">// Error 404</p>
       <h1>This page doesn’t exist <em>(yet).</em></h1>
       <p class="lede">Maybe the article was renamed. <a href="/">Back to articles →</a></p>
+      <p class="lede" lang="it" style="margin-top:16px">Questa pagina non esiste (ancora). <a href="/it/">Torna agli articoli →</a></p>
     </div>
   </section>
 </BaseLayout>

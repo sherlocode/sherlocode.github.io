@@ -1,39 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import QuizPlayer from '../../components/QuizPlayer.astro';
-import { getQuizPosts, tagSlug, type Post } from '../../utils';
+import QuizView from '../../views/QuizView.astro';
+import { quizPaths } from '../../routes';
 
-export async function getStaticPaths() {
-  const posts = await getQuizPosts();
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
-}
-
-interface Props {
-  post: Post;
-}
-const { post } = Astro.props;
-const { title, tags, heroImage, quiz } = post.data;
+export const getStaticPaths = () => quizPaths('en');
 ---
 
-<BaseLayout title={`Quiz: ${title}`} description={`Check your knowledge on ${title}: ${quiz.length} questions.`} image={heroImage}>
-  <section class="post-header grid-bg quiz-header">
-    <div class="wrap-narrow">
-      <p class="crumbs">
-        <a href="/quiz/">Quiz</a>
-        {tags.map((t) => (
-          <>
-            <span aria-hidden="true">/</span>
-            <a href={`/tag/${tagSlug(t)}/`}>{t}</a>
-          </>
-        ))}
-      </p>
-      <p class="label label-accent">// Check your knowledge!</p>
-      <h1 style="margin-top:14px">{title}</h1>
-      <p class="lede">{quiz.length} questions based on the article. <a href={`/blog/${post.id}/`}>Read it first →</a></p>
-    </div>
-  </section>
-
-  <div class="wrap-narrow">
-    <QuizPlayer post={post} />
-  </div>
-</BaseLayout>
+<QuizView {...Astro.props} />

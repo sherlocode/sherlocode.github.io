@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import QuizStatus from '../components/QuizStatus.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { getQuizPosts, quizStorageKey, quizUrl } from '../utils';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const q = s.quiz;
+const posts = await getQuizPosts(lang);
+const totalQuestions = posts.reduce((n, p) => n + p.data.quiz.length, 0);
+---
+
+<BaseLayout title={s.nav.quiz} description={q.indexDescription} lang={lang}>
+  <section class="hero grid-bg">
+    <div class="wrap">
+      <p class="label label-accent">{q.eyebrow}</p>
+      <h1>{q.indexTitle[0]}<em>{q.indexTitle[1]}</em></h1>
+      <p class="lede">{q.indexLede}</p>
+      <div class="hero-stats" data-quiz-summary>
+        <div><strong>{posts.length}</strong><span>{q.stats.quizzes}</span></div>
+        <div><strong>{totalQuestions}</strong><span>{q.stats.questions}</span></div>
+        <div><strong data-done>0</strong><span>{q.stats.completed}</span></div>
+        <div><strong data-avg>—</strong><span>{q.stats.avg}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="quiz-title">
+    <div class="section-head">
+      <h2 id="quiz-title"><i>01</i>{q.all}</h2>
+    </div>
+    {posts.length === 0 && <p class="empty">{q.empty}</p>}
+    <div class="quiz-grid">
+      {posts.map((post) => (
+        <article class="quiz-tile" data-quiz-card>
+          <div class="quiz-tile-media">
+            {post.data.heroImage ? (
+              <img src={post.data.heroImage} alt="" loading="lazy" decoding="async" />
+            ) : (
+              <span class="logo-lens" aria-hidden="true">&lt;/&gt;</span>
+            )}
+          </div>
+          <div class="quiz-tile-body">
+            <p class="meta">
+              <span>{q.questions(post.data.quiz.length)}</span>
+              {post.data.tags.map((tag) => (<><span class="sep" aria-hidden="true">/</span><span>{tag}</span></>))}
+            </p>
+            <h3><a href={quizUrl(post)}>{post.data.title}</a></h3>
+            <div class="quiz-tile-foot">
+              <span class="quiz-status" data-quiz-status={quizStorageKey(post)} data-total={post.data.quiz.length} data-empty={q.notTaken} data-best-label={q.best} data-retake={q.retake}>{q.notTaken}</span>
+              <span class="read-more" data-quiz-action aria-hidden="true">{q.start}</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <div class="wrap">
+    <Newsletter lang={lang} variant="band" source="quiz" />
+  </div>
+  <QuizStatus />
+</BaseLayout>

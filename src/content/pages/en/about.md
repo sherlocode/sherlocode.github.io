@@ -9,4 +9,3 @@ The goal is simple: **leave clear, practical material** for those who follow the
 
 If an article was useful or you spot something that needs correcting, message me on LinkedIn.
 
-*Edit this page in Pages CMS → "About".*

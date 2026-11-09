@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts, collectTags, type Post } from '../utils';
+import { LANGS, localizePath, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  name: string;
+  posts: Post[];
+}
+const { lang, name, posts } = Astro.props;
+const s = t(lang);
+const slug = Astro.params.tag as string;
+
+// Link to the same tag in the other language only if it exists there.
+const alternates: Partial<Record<Lang, string>> = {};
+for (const l of LANGS) {
+  const exists = l === lang || collectTags(await getPublishedPosts(l)).some((x) => x.slug === slug);
+  if (exists) alternates[l] = localizePath(l, `/tag/${slug}/`);
+}
+---
+
+<BaseLayout title={name} description={s.topics.tagDescription(name)} lang={lang} alternates={alternates}>
+  <section class="hero grid-bg">
+    <div class="wrap">
+      <p class="crumbs"><a href={localizePath(lang, '/tag/')}>{s.nav.topics}</a><span aria-hidden="true">/</span><span>{name}</span></p>
+      <h1>{name}<em>.</em></h1>
+      <p class="lede">{s.topics.tagLede(posts.length)}</p>
+    </div>
+  </section>
+  <section class="wrap">
+    <div class="post-grid">
+      {posts.map((post, i) => <PostCard post={post} index={posts.length - i} />)}
+    </div>
+  </section>
+</BaseLayout>
