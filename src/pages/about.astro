@@ -8,9 +8,12 @@ const { Content } = await render(page);
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <section class="post-header wrap-narrow">
-    <h1>{page.data.title}</h1>
-    <p class="lede">{page.data.description}</p>
+  <section class="post-header grid-bg">
+    <div class="wrap-narrow">
+      <p class="label label-accent">// About</p>
+      <h1 style="margin-top:18px">{page.data.title}</h1>
+      <p class="lede">{page.data.description}</p>
+    </div>
   </section>
   <div class="prose wrap-narrow">
     <Content />

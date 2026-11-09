@@ -28,32 +28,33 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
 
 <BaseLayout title={title} description={description} image={heroImage} type="article" publishedTime={pubDate} tags={tags}>
   <article class="post">
-    <header class="post-header wrap-narrow">
-      {tags.length > 0 && (
-        <ul class="tags">
-          {tags.map((t) => <li><a href={`/tag/${tagSlug(t)}/`}>{t}</a></li>)}
-        </ul>
-      )}
-      <h1>{title}</h1>
-      <p class="lede">{description}</p>
-      <p class="meta">
-        <span>{AUTHOR}</span>
-        <span aria-hidden="true">·</span>
-        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
-        {updatedDate && (
-          <>
-            <span aria-hidden="true">·</span>
-            <span>updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time></span>
-          </>
-        )}
-        <span aria-hidden="true">·</span>
-        <span>{readingMinutes(post.body)} min</span>
-        {draft && <span class="badge">Draft</span>}
-      </p>
+    <header class="post-header grid-bg">
+      <div class="wrap-narrow">
+        <p class="crumbs">
+          <a href="/">Articles</a>
+          {tags.map((t) => (
+            <>
+              <span aria-hidden="true">/</span>
+              <a href={`/tag/${tagSlug(t)}/`}>{t}</a>
+            </>
+          ))}
+          {draft && <span class="badge">Draft</span>}
+        </p>
+        <h1>{title}</h1>
+        <p class="lede">{description}</p>
+        <dl class="post-meta">
+          <div><dt>Author</dt><dd>{AUTHOR}</dd></div>
+          <div><dt>Published</dt><dd><time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time></dd></div>
+          {updatedDate && (
+            <div><dt>Updated</dt><dd><time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time></dd></div>
+          )}
+          <div><dt>Reading</dt><dd>{readingMinutes(post.body)} min</dd></div>
+        </dl>
+      </div>
     </header>
 
     {heroImage && (
-      <figure class="post-hero wrap">
+      <figure class="post-hero">
         <img src={heroImage} alt="" decoding="async" />
       </figure>
     )}
@@ -64,12 +65,15 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
 
     <footer class="post-footer wrap-narrow">
       <div class="share">
-        <p>Was this useful? Share it with someone on the same journey.</p>
-        <a class="button" href={shareUrl} target="_blank" rel="noopener">Share on LinkedIn</a>
-        <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener">Get in touch on LinkedIn</a>
+        <p class="label label-accent">// Was this useful?</p>
+        <h2>Share it with someone on the same journey.</h2>
+        <div class="share-actions">
+          <a class="button" href={shareUrl} target="_blank" rel="noopener">Share on LinkedIn ↗</a>
+          <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener">Get in touch</a>
+        </div>
       </div>
       <nav class="pager" aria-label="More articles">
-        {older ? <a href={`/blog/${older.id}/`}><span>← Older</span>{older.data.title}</a> : <span />}
+        {older && <a href={`/blog/${older.id}/`}><span>← Older</span>{older.data.title}</a>}
         {newer && <a class="next" href={`/blog/${newer.id}/`}><span>Newer →</span>{newer.data.title}</a>}
       </nav>
     </footer>
