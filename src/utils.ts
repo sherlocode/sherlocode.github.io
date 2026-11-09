@@ -9,6 +9,14 @@ export async function getPublishedPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
+/** Published articles that have a "Check your knowledge!" quiz. */
+export async function getQuizPosts(): Promise<Post[]> {
+  return (await getPublishedPosts()).filter((p) => p.data.quiz.length > 0);
+}
+
+/** localStorage key where a quiz result is saved (shared by every quiz component). */
+export const quizStorageKey = (slug: string) => `sherlocode:quiz:${slug}`;
+
 export function tagSlug(tag: string): string {
   return tag
     .toLowerCase()

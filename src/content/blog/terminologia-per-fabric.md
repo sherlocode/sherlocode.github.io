@@ -6,6 +6,55 @@ heroImage: /media/5432699.png
 tags:
   - Fabric
 draft: false
+quiz:
+- question: Qual è la caratteristica principale di un data lake?
+  options:
+  - Accetta solo dati strutturati e puliti
+  - Conserva grandi quantità di dati nel loro formato originale, di qualsiasi tipo
+  - È ottimizzato solo per le transazioni quotidiane
+  - Contiene solo dati aggregati
+  answer: 2
+  explanation: Il data lake salva subito i dati così come sono, per decidere dopo come usarli.
+- question: Quale problema risolve il data lakehouse?
+  options:
+  - Avere i dati duplicati tra data lake e data warehouse, con pipeline lente e dati non aggiornati
+  - La mancanza di backup
+  - L'assenza di un formato di file standard
+  - La gestione delle email aziendali
+  answer: 1
+  explanation: Il lakehouse unisce lo storage del data lake con le prestazioni del data warehouse, evitando le copie.
+- question: Nel modello OLAP, cos'è una 'misura'?
+  options:
+  - Un asse di analisi, come tempo o regione
+  - Un valore numerico da analizzare, come fatturato o quantità venduta
+  - Un livello di dettaglio dentro una dimensione
+  - Il numero di dimensioni del cubo
+  answer: 2
+  explanation: Le misure sono i valori numerici; le dimensioni sono gli assi lungo cui si analizzano.
+- question: Nell'architettura medallion, in quale livello i dati vengono puliti e normalizzati?
+  options:
+  - Bronze
+  - Silver
+  - Gold
+  - Platinum
+  answer: 2
+  explanation: 'Bronze: dati grezzi. Silver: puliti e normalizzati. Gold: aggregati per i report.'
+- question: Come si crea un Azure Data Lake Storage Gen2?
+  options:
+  - Creando un database SQL
+  - Abilitando l'hierarchical namespace nello storage account
+  - Installando Databricks
+  - Attivando OneLake in Fabric
+  answer: 2
+  explanation: ADLS Gen2 è uno storage account con l'opzione hierarchical namespace abilitata.
+- question: A cosa serve Microsoft Purview?
+  options:
+  - A creare pipeline ETL
+  - 'Alla governance dei dati: mappa, tracciamento e policy'
+  - Ad addestrare modelli di machine learning
+  - A ospitare data warehouse
+  answer: 2
+  explanation: Purview mappa i dati, traccia da dove nascono e come si spostano, e ne gestisce policy e permessi.
 ---
 ### **Data lake**
 

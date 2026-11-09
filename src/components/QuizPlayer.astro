@@ -1,0 +1,202 @@
+---
+import type { Post } from '../utils';
+import { quizStorageKey } from '../utils';
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const questions = post.data.quiz.map((q) => ({
+  question: q.question,
+  options: q.options,
+  answer: q.answer - 1, // 0-based for the script
+  explanation: q.explanation ?? '',
+}));
+const data = JSON.stringify({ key: quizStorageKey(post.id), questions });
+---
+
+<div class="quiz" data-quiz={data}>
+  <div class="quiz-top">
+    <span class="label" data-counter>Question 1 / {questions.length}</span>
+    <span class="label" data-live-score>Score 0</span>
+  </div>
+  <div class="quiz-bar" aria-hidden="true"><span data-bar></span></div>
+
+  <div class="quiz-stage" data-stage aria-live="polite">
+    <noscript><p class="empty">The quiz needs JavaScript enabled in your browser.</p></noscript>
+  </div>
+
+  <div class="quiz-result" data-result hidden>
+    <p class="label label-accent">// Result</p>
+    <div class="quiz-score"><strong data-score></strong><span data-total></span></div>
+    <p class="quiz-verdict" data-verdict></p>
+    <p class="meta" data-best></p>
+    <ol class="quiz-review" data-review></ol>
+    <div class="share-actions">
+      <button class="button" type="button" data-retry>Try again ↻</button>
+      <a class="button button-ghost" href={`/blog/${post.id}/`}>Back to the article</a>
+      <a class="button button-ghost" href="/quiz/">All quizzes</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  type Question = { question: string; options: string[]; answer: number; explanation: string };
+  type Saved = { best: number; last: number; total: number; attempts: number; date: string };
+
+  const read = (key: string): Saved | null => {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? (JSON.parse(raw) as Saved) : null;
+    } catch {
+      return null;
+    }
+  };
+  const write = (key: string, value: Saved) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {
+      /* storage unavailable (private mode…): the quiz still works, it just isn't saved */
+    }
+  };
+  const shuffle = <T,>(a: T[]) => {
+    const r = [...a];
+    for (let i = r.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [r[i], r[j]] = [r[j], r[i]];
+    }
+    return r;
+  };
+  const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  };
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-quiz]')) {
+    const { key, questions } = JSON.parse(root.dataset.quiz!) as { key: string; questions: Question[] };
+    const $ = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const stage = $('[data-stage]');
+    const result = $('[data-result]');
+    const counter = $('[data-counter]');
+    const liveScore = $('[data-live-score]');
+    const bar = $('[data-bar]');
+
+    let index = 0;
+    let score = 0;
+    let answers: { q: Question; chosen: number }[] = [];
+
+    const showQuestion = () => {
+      const q = questions[index];
+      counter.textContent = `Question ${index + 1} / ${questions.length}`;
+      liveScore.textContent = `Score ${score}`;
+      bar.style.width = `${(index / questions.length) * 100}%`;
+
+      stage.replaceChildren();
+      const card = el('div', 'quiz-card');
+      card.append(el('h2', 'quiz-question', q.question));
+      const list = el('div', 'quiz-options');
+      list.setAttribute('role', 'group');
+      list.setAttribute('aria-label', 'Answers');
+      const order = shuffle(q.options.map((text, i) => ({ text, i })));
+      const letters = 'ABCDEFGH';
+      const buttons: HTMLButtonElement[] = [];
+      order.forEach((opt, pos) => {
+        const b = el('button', 'quiz-option') as HTMLButtonElement;
+        b.type = 'button';
+        b.dataset.index = String(opt.i);
+        b.append(el('span', 'quiz-letter', letters[pos]), el('span', '', opt.text));
+        b.addEventListener('click', () => choose(opt.i));
+        buttons.push(b);
+        list.append(b);
+      });
+      card.append(list);
+      const feedback = el('div', 'quiz-feedback');
+      feedback.hidden = true;
+      card.append(feedback);
+      stage.append(card);
+      buttons[0]?.focus({ preventScroll: true });
+
+      function choose(chosen: number) {
+        const right = chosen === q.answer;
+        if (right) score++;
+        answers.push({ q, chosen });
+        liveScore.textContent = `Score ${score}`;
+        bar.style.width = `${((index + 1) / questions.length) * 100}%`;
+        for (const b of buttons) {
+          b.disabled = true;
+          const i = Number(b.dataset.index);
+          if (i === q.answer) b.classList.add('is-correct');
+          else if (i === chosen) b.classList.add('is-wrong');
+        }
+        feedback.hidden = false;
+        feedback.classList.add(right ? 'ok' : 'ko');
+        feedback.append(el('strong', '', right ? 'Correct!' : 'Not quite.'));
+        if (q.explanation) feedback.append(el('p', '', q.explanation));
+        const last = index === questions.length - 1;
+        const next = el('button', 'button', last ? 'See your result →' : 'Next question →') as HTMLButtonElement;
+        next.type = 'button';
+        next.addEventListener('click', () => {
+          index++;
+          if (last) finish();
+          else showQuestion();
+        });
+        feedback.append(next);
+        next.focus({ preventScroll: true });
+      }
+    };
+
+    const finish = () => {
+      const total = questions.length;
+      const prev = read(key);
+      const saved: Saved = {
+        best: Math.max(score, prev?.best ?? 0),
+        last: score,
+        total,
+        attempts: (prev?.attempts ?? 0) + 1,
+        date: new Date().toISOString(),
+      };
+      write(key, saved);
+
+      stage.replaceChildren();
+      root.querySelector('.quiz-top')!.setAttribute('hidden', '');
+      root.querySelector('.quiz-bar')!.setAttribute('hidden', '');
+      result.hidden = false;
+      const pct = score / total;
+      $('[data-score]').textContent = String(score);
+      $('[data-total]').textContent = `/ ${total}`;
+      $('[data-verdict]').textContent =
+        pct === 1 ? 'Perfect score. You nailed it!' :
+        pct >= 0.7 ? 'Great job, you know this topic well.' :
+        pct >= 0.4 ? 'Good start. A quick reread will fix the gaps.' :
+        'Worth another read of the article, then try again.';
+      $('[data-best]').textContent =
+        `Best ${saved.best} / ${total} · ${saved.attempts} ${saved.attempts === 1 ? 'attempt' : 'attempts'} · saved in this browser`;
+
+      const review = $('[data-review]');
+      review.replaceChildren();
+      for (const a of answers) {
+        const ok = a.chosen === a.q.answer;
+        const li = el('li', ok ? 'ok' : 'ko');
+        li.append(el('span', 'quiz-mark', ok ? '✓' : '✕'), el('span', '', a.q.question));
+        if (!ok) li.append(el('small', '', `Answer: ${a.q.options[a.q.answer]}`));
+        review.append(li);
+      }
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const start = () => {
+      index = 0;
+      score = 0;
+      answers = [];
+      result.hidden = true;
+      root.querySelector('.quiz-top')!.removeAttribute('hidden');
+      root.querySelector('.quiz-bar')!.removeAttribute('hidden');
+      showQuestion();
+    };
+
+    $('[data-retry]').addEventListener('click', start);
+    start();
+  }
+</script>

@@ -15,6 +15,27 @@ const blog = defineCollection({
     heroImage: z.preprocess(emptyToUndefined, z.string().optional()),
     tags: z.preprocess((v) => (Array.isArray(v) ? v.filter(Boolean) : []), z.array(z.string())),
     draft: z.preprocess((v) => v === true, z.boolean()),
+    // Optional "Check your knowledge!" quiz shown at the end of the article.
+    // `answer` is the number of the correct option, starting from 1.
+    quiz: z.preprocess(
+      (v) => (Array.isArray(v) ? v.filter((q) => q && q.question) : []),
+      z.array(
+        z
+          .object({
+            question: z.string(),
+            options: z.preprocess(
+              (v) => (Array.isArray(v) ? v.filter((o) => o !== '' && o != null).map(String) : []),
+              z.array(z.string()).min(2, 'A quiz question needs at least 2 options'),
+            ),
+            answer: z.coerce.number().int().min(1),
+            explanation: z.preprocess(emptyToUndefined, z.string().optional()),
+          })
+          .refine((q) => q.answer <= q.options.length, {
+            message: '`answer` must be the number of one of the options (1, 2, 3…)',
+            path: ['answer'],
+          }),
+      ),
+    ),
   }),
 });
 

@@ -6,6 +6,47 @@ heroImage: /media/azure-storage-accounts.png
 tags:
   - Azure
 draft: false
+quiz:
+- question: Che cos'è Azure Files?
+  options:
+  - Un database documentale
+  - Uno share di rete basato sul cloud per condividere file tra utenti
+  - Un servizio di backup per macchine virtuali
+  - Un editor di documenti online
+  answer: 2
+  explanation: 'Azure Files è uno share di rete nel cloud: sostituisce i file server aziendali senza costi di hardware.'
+- question: Quale problema dei file server locali risolve Azure Files?
+  options:
+  - Non supportano i file di testo
+  - Scalano male quando crescono gli utenti o serve l'accesso da fuori rete
+  - Non permettono di creare cartelle
+  - Non hanno permessi
+  answer: 2
+  explanation: I file server locali scalano male con più utenti e con l'accesso esterno; Azure Files offre alta disponibilità e scalabilità.
+- question: Quale strumento serve a sincronizzare file locali con Azure Files?
+  options:
+  - AzCopy
+  - Azure File Sync
+  - Azure Data Factory
+  - Microsoft Purview
+  answer: 2
+  explanation: Azure File Sync tiene sincronizzati i file locali con lo share su Azure.
+- question: Che differenza c'è tra i tier HDD e SSD?
+  options:
+  - HDD è più veloce e più costoso
+  - SSD ha throughput maggiore ma costa di più
+  - Sono identici, cambia solo il nome
+  - SSD è disponibile solo per i file di log
+  answer: 2
+  explanation: SSD offre prestazioni migliori a un costo più alto; HDD è meno performante ma più economico.
+- question: Quali protocolli supporta Azure Files?
+  options:
+  - FTP e SFTP
+  - HTTP e AMQP
+  - SMB e NFS
+  - SQL e ODBC
+  answer: 3
+  explanation: Azure Files si usa tramite SMB e NFS, i protocolli classici delle cartelle di rete.
 ---
 # Azure Files
 

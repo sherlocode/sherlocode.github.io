@@ -56,6 +56,31 @@ content:
         label: Draft (do not publish)
         type: boolean
         default: false
+      - name: quiz
+        label: Quiz (Check your knowledge!)
+        description: Optional. Questions shown in a quiz at the end of the article and in the Quiz section.
+        type: object
+        list: true
+        fields:
+          - name: question
+            label: Question
+            type: string
+            required: true
+          - name: options
+            label: Options
+            description: Possible answers, one per line (at least 2).
+            type: string
+            list: true
+            required: true
+          - name: answer
+            label: Correct option number
+            description: Position of the correct answer in the list above (1 = first, 2 = second…).
+            type: number
+            required: true
+          - name: explanation
+            label: Explanation
+            description: Optional. Shown after answering.
+            type: text
       - name: body
         label: Body
         type: rich-text

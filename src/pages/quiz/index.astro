@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import QuizStatus from '../../components/QuizStatus.astro';
+import { getQuizPosts, quizStorageKey } from '../../utils';
+
+const posts = await getQuizPosts();
+const totalQuestions = posts.reduce((n, p) => n + p.data.quiz.length, 0);
+---
+
+<BaseLayout title="Quiz" description="Check your knowledge: a short quiz for every article.">
+  <section class="hero grid-bg">
+    <div class="wrap">
+      <p class="label label-accent">// Check your knowledge!</p>
+      <h1>One quiz for <em>every article.</em></h1>
+      <p class="lede">Read, then test yourself. Your best score is saved in this browser, so you can see what you’ve already mastered.</p>
+      <div class="hero-stats" data-quiz-summary>
+        <div><strong>{posts.length}</strong><span>Quizzes</span></div>
+        <div><strong>{totalQuestions}</strong><span>Questions</span></div>
+        <div><strong data-done>0</strong><span>Completed</span></div>
+        <div><strong data-avg>—</strong><span>Avg best</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="quiz-title">
+    <div class="section-head">
+      <h2 id="quiz-title"><i>01</i>All quizzes</h2>
+    </div>
+    {posts.length === 0 && <p class="empty">No quizzes yet.</p>}
+    <div class="quiz-grid">
+      {posts.map((post) => (
+        <article class="quiz-tile" data-quiz-card>
+          <div class="quiz-tile-media">
+            {post.data.heroImage ? (
+              <img src={post.data.heroImage} alt="" loading="lazy" decoding="async" />
+            ) : (
+              <span class="logo-lens" aria-hidden="true">&lt;/&gt;</span>
+            )}
+          </div>
+          <div class="quiz-tile-body">
+            <p class="meta">
+              <span>{post.data.quiz.length} questions</span>
+              {post.data.tags.map((t) => (<><span class="sep" aria-hidden="true">/</span><span>{t}</span></>))}
+            </p>
+            <h3><a href={`/quiz/${post.id}/`}>{post.data.title}</a></h3>
+            <div class="quiz-tile-foot">
+              <span class="quiz-status" data-quiz-status={quizStorageKey(post.id)} data-total={post.data.quiz.length}>Not taken yet</span>
+              <span class="read-more" data-quiz-action aria-hidden="true">Start →</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <QuizStatus />
+</BaseLayout>

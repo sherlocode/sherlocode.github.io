@@ -6,6 +6,47 @@ heroImage: /media/onelake512color.png
 tags:
   - Fabric
 draft: false
+quiz:
+- question: Che cos'è OneLake?
+  options:
+  - Un data lake unico per tutti i dati dell'organizzazione
+  - Un data warehouse relazionale
+  - Un servizio di messaggistica
+  - Uno strumento di reportistica
+  answer: 1
+  explanation: OneLake è il data lake unico e centralizzato per i dati analytics dell'organizzazione.
+- question: Come viene creato OneLake?
+  options:
+  - Va creato a mano da un amministratore
+  - Viene deployato automaticamente con ogni tenant di Microsoft Fabric
+  - Si installa da Azure Marketplace
+  - Si crea abilitando un'opzione nello storage account
+  answer: 2
+  explanation: Ogni tenant di Microsoft Fabric ha automaticamente il suo OneLake.
+- question: Quali formati di file accetta OneLake?
+  options:
+  - Solo Parquet
+  - Solo dati strutturati
+  - Strutturati, semi strutturati e non strutturati
+  - Solo CSV e JSON
+  answer: 3
+  explanation: OneLake accetta qualsiasi formato di file.
+- question: Su quale tecnologia è costruito OneLake?
+  options:
+  - Azure SQL Database
+  - Azure Data Lake Storage Gen2
+  - Azure Files
+  - Azure Cosmos DB
+  answer: 2
+  explanation: 'OneLake si basa su ADLS Gen2, compatibile con la maggior parte dei sistemi di analytics: niente lock-in.'
+- question: Quale vantaggio offre usare gli stessi dati con motori di analytics diversi?
+  options:
+  - Non serve spostare o duplicare i dati
+  - I dati vengono cifrati due volte
+  - Si possono usare solo motori Microsoft
+  - I dati diventano relazionali
+  answer: 1
+  explanation: Motori diversi lavorano sugli stessi dati senza copie né spostamenti.
 ---
 # OneLake
 
