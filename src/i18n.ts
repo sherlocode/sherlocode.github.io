@@ -128,6 +128,11 @@ export const ui = {
       button: 'Subscribe →',
       note: ['You’ll get a confirmation email first. See the ', 'privacy notes', '.'],
     },
+    comments: {
+      eyebrow: '// Comments',
+      title: 'Join the conversation',
+      text: 'Questions, corrections or your own experience: sign in with GitHub to comment.',
+    },
     notFound: { title: 'Page not found', description: 'The page you’re looking for doesn’t exist.' },
   },
   it: {
@@ -218,6 +223,11 @@ export const ui = {
       placeholder: 'tu@esempio.it',
       button: 'Iscriviti →',
       note: ['Prima riceverai una email di conferma. Leggi le ', 'note sulla privacy', '.'],
+    },
+    comments: {
+      eyebrow: '// Commenti',
+      title: 'Partecipa alla discussione',
+      text: 'Domande, correzioni o la tua esperienza: accedi con GitHub per commentare.',
     },
     notFound: { title: 'Pagina non trovata', description: 'La pagina che cerchi non esiste.' },
   },

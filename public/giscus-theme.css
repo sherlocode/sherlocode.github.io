@@ -1,0 +1,81 @@
+/*
+ * SherloCode theme for giscus comments.
+ * Starts from giscus' dark theme and overrides colors and fonts with the brand book.
+ * giscus loads this file from https://sherlocode.app/giscus-theme.css.
+ */
+@import url('https://giscus.app/themes/dark.css');
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('https://sherlocode.app/fonts/space-grotesk-latin.woff2') format('woff2');
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('https://sherlocode.app/fonts/space-mono-400-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+main {
+  --color-canvas-default: #101013;
+  --color-canvas-overlay: #141416;
+  --color-canvas-inset: #0a0a0b;
+  --color-canvas-subtle: #141416;
+  --color-border-default: #2a2a2e;
+  --color-border-muted: #232327;
+  --color-fg-default: #f2f2f0;
+  --color-fg-muted: #c9c9c3;
+  --color-fg-subtle: #8a8a85;
+  --color-neutral-muted: rgb(138 138 133 / 25%);
+
+  --color-accent-fg: #cdff3a;
+  --color-accent-emphasis: #cdff3a;
+  --color-accent-muted: rgb(205 255 58 / 40%);
+  --color-accent-subtle: rgb(205 255 58 / 12%);
+  --color-success-fg: #2bff88;
+  --color-attention-fg: #ff7a2b;
+  --color-danger-fg: #ff7a2b;
+
+  --color-btn-text: #f2f2f0;
+  --color-btn-bg: #1c1c20;
+  --color-btn-border: #2a2a2e;
+  --color-btn-hover-bg: #232327;
+  --color-btn-hover-border: #cdff3a;
+  --color-btn-selected-bg: #141416;
+
+  --color-btn-primary-text: #0a0a0b;
+  --color-btn-primary-bg: #cdff3a;
+  --color-btn-primary-border: #cdff3a;
+  --color-btn-primary-hover-bg: #dbff6e;
+  --color-btn-primary-hover-border: #dbff6e;
+  --color-btn-primary-selected-bg: #cdff3a;
+  --color-btn-primary-disabled-text: rgb(10 10 11 / 60%);
+  --color-btn-primary-disabled-bg: rgb(205 255 58 / 45%);
+  --color-btn-primary-disabled-border: transparent;
+
+  --color-segmented-control-button-bg: #0a0a0b;
+  --color-scale-gray-7: #232327;
+  --color-scale-blue-8: rgb(205 255 58 / 18%);
+  --color-social-reaction-bg-hover: #232327;
+  --color-social-reaction-bg-reacted-hover: rgb(205 255 58 / 18%);
+
+  font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+main code,
+main pre,
+main .gsc-comment-author + span,
+main .gsc-reactions-count {
+  font-family: 'Space Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+
+main .gsc-comment-box,
+main .gsc-comment > div {
+  border-radius: 4px;
+}
+
+main .btn-primary {
+  font-weight: 700;
+}

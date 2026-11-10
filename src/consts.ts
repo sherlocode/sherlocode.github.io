@@ -15,3 +15,13 @@ export const BUTTONDOWN_USERNAME = 'sherlocode';
 export const UMAMI_WEBSITE_ID = '51df9450-f25c-4fcf-a17b-5619691fdb0e';
 /** Umami script URL: keep the default for Umami Cloud, change it only if you self-host. */
 export const UMAMI_SCRIPT_URL = 'https://cloud.umami.is/script.js';
+
+// ------------------------------------------------------------------
+// Comments: giscus (stored in this repository's GitHub Discussions).
+// Comments stay switched off while GISCUS_CATEGORY_ID is empty.
+// IDs come from https://giscus.app (repository + "Comments" category).
+// ------------------------------------------------------------------
+export const GISCUS_REPO = 'sherlocode/sherlocode.github.io';
+export const GISCUS_REPO_ID = 'R_kgDOVc8sbA';
+export const GISCUS_CATEGORY = 'Comments';
+export const GISCUS_CATEGORY_ID = '';
