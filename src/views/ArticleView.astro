@@ -3,7 +3,8 @@ import { render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import QuizStatus from '../components/QuizStatus.astro';
 import Newsletter from '../components/Newsletter.astro';
-import { AUTHOR, LINKEDIN_URL } from '../consts';
+import Comments from '../components/Comments.astro';
+import { AUTHOR, LINKEDIN_URL, GISCUS_CATEGORY_ID } from '../consts';
 import { LANGS, localizePath, t } from '../i18n';
 import {
   formatDate, readingMinutes, tagUrl, quizStorageKey, postLang, postUrl, quizUrl, postKey, getTranslation, type Post,
@@ -56,6 +57,9 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
           )}
           <div><dt>{s.post.reading}</dt><dd>{s.post.minutes(readingMinutes(post.body))}</dd></div>
         </dl>
+        {GISCUS_CATEGORY_ID && (
+          <p class="note"><span class="note-icon" aria-hidden="true">!</span><span>{s.comments.articleNote[0]}<a href="#comments" data-umami-event="Report mistake click">{s.comments.articleNote[1]}</a></span></p>
+        )}
       </div>
     </header>
 
@@ -90,6 +94,7 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
           <a class="button button-ghost" href={LINKEDIN_URL} target="_blank" rel="noopener" data-umami-event="Get in touch">{s.post.contact}</a>
         </div>
       </div>
+      <Comments lang={lang} term={postKey(post)} />
       <nav class="pager" aria-label={s.nav.articles}>
         {older && <a href={postUrl(older)}><span>{s.post.older}</span>{older.data.title}</a>}
         {newer && <a class="next" href={postUrl(newer)}><span>{s.post.newer}</span>{newer.data.title}</a>}

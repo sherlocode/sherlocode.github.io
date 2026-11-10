@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { BUTTONDOWN_USERNAME, UMAMI_WEBSITE_ID, LINKEDIN_URL } from '../consts';
+import { BUTTONDOWN_USERNAME, UMAMI_WEBSITE_ID, GISCUS_CATEGORY_ID, LINKEDIN_URL } from '../consts';
 import type { Lang } from '../i18n';
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 const { lang } = Astro.props;
 const newsletter = BUTTONDOWN_USERNAME.trim() !== '';
 const analytics = UMAMI_WEBSITE_ID.trim() !== '';
+const comments = GISCUS_CATEGORY_ID.trim() !== '';
 const it = lang === 'it';
 
 const c = it
@@ -24,6 +25,8 @@ const c = it
       stats: ['Uso ', ' per contare le visite e alcune azioni (per esempio un quiz completato o un clic su “Condividi”). Umami non usa cookie, non raccoglie dati personali e non ti segue su altri siti. Se il tuo browser invia il segnale “Do Not Track”, non viene raccolta nessuna statistica.'],
       nlTitle: 'Newsletter',
       nl: ['Se ti iscrivi, il tuo indirizzo email viene conservato da ', ', il servizio che invia la newsletter. Viene usato solo per mandarti i nuovi articoli. Prima di essere aggiunto ricevi una email di conferma, e ogni email contiene il link per disiscriverti.'],
+      commentsTitle: 'Commenti',
+      commentsText: ['I commenti sotto gli articoli usano ', ' e sono salvati come discussioni pubbliche nel repository GitHub del sito. Per commentare accedi con il tuo account GitHub: nome utente, foto profilo e testo del commento sono pubblici. Il riquadro dei commenti viene caricato solo quando scorri fino in fondo all’articolo. Puoi modificare o cancellare i tuoi commenti in qualsiasi momento da GitHub.'],
       questionsTitle: 'Domande',
       questions: ['Per qualsiasi domanda sui tuoi dati scrivimi su ', '.'],
     }
@@ -39,6 +42,8 @@ const c = it
       stats: ['I use ', ' to count visits and a few actions (for example a completed quiz or a click on “Share”). Umami does not use cookies, does not collect personal data and does not follow you across sites. If your browser sends a “Do Not Track” signal, no statistics are collected.'],
       nlTitle: 'Newsletter',
       nl: ['If you subscribe, your email address is stored by ', ', the service that sends the newsletter. It is used only to send you new articles. You will receive a confirmation email before being added, and every email has an unsubscribe link.'],
+      commentsTitle: 'Comments',
+      commentsText: ['Comments under the articles use ', ' and are stored as public discussions in the site’s GitHub repository. To comment you sign in with your GitHub account: your username, profile picture and comment are public. The comment box only loads when you scroll to the end of an article. You can edit or delete your comments at any time on GitHub.'],
       questionsTitle: 'Questions',
       questions: ['Write to me on ', ' for any question about your data.'],
     };
@@ -71,6 +76,13 @@ const c = it
       <>
         <h2>{c.nlTitle}</h2>
         <p>{c.nl[0]}<a href="https://buttondown.com" target="_blank" rel="noopener">Buttondown</a>{c.nl[1]}</p>
+      </>
+    )}
+
+    {comments && (
+      <>
+        <h2>{c.commentsTitle}</h2>
+        <p>{c.commentsText[0]}<a href="https://giscus.app" target="_blank" rel="noopener">giscus</a>{c.commentsText[1]}</p>
       </>
     )}
 

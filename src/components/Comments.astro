@@ -1,0 +1,45 @@
+---
+import { GISCUS_REPO, GISCUS_REPO_ID, GISCUS_CATEGORY, GISCUS_CATEGORY_ID } from '../consts';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  /**
+   * Discussion key. Both language versions of an article pass the same key,
+   * so they share one comment thread.
+   */
+  term: string;
+}
+const { lang, term } = Astro.props;
+const s = t(lang).comments;
+const enabled = GISCUS_CATEGORY_ID.trim() !== '';
+// Brand theme served by this site (must be an absolute, public URL).
+const theme = new URL('/giscus-theme.css', Astro.site).href;
+---
+
+{enabled && (
+  <section class="comments" aria-labelledby="comments-title" id="comments">
+    <p class="label label-accent">{s.eyebrow}</p>
+    <h2 id="comments-title">{s.title}</h2>
+    <p class="comments-text">{s.text}</p>
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={GISCUS_REPO}
+      data-repo-id={GISCUS_REPO_ID}
+      data-category={GISCUS_CATEGORY}
+      data-category-id={GISCUS_CATEGORY_ID}
+      data-mapping="specific"
+      data-term={term}
+      data-strict="1"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme={theme}
+      data-lang={lang}
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async
+    ></script>
+  </section>
+)}
