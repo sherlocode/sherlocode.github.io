@@ -498,6 +498,162 @@ button.button { cursor: pointer; font-family: inherit; }
   .quiz-tile-media { flex-basis: 72px; padding: 10px; }
 }
 
+/* ---------- Architecture challenges ---------- */
+.arch { margin-top: 8px; }
+.arch-how { color: var(--text-2); margin: 0 0 22px; max-width: 70ch; }
+.arch .label { margin: 0 0 10px; }
+
+/* Draggable technology chips */
+.arch-palette { position: sticky; top: 76px; z-index: 5; background: rgba(10, 10, 11, 0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 14px 0 16px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+.arch-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.arch-chip {
+  display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--line-2); border-left: 3px solid var(--accent); border-radius: var(--radius);
+  padding: 9px 14px; font: inherit; text-align: left;
+  cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+  transition: border-color 0.15s, transform 0.15s, background 0.15s;
+}
+.arch-chip strong { font-size: 0.95rem; letter-spacing: -0.01em; }
+.arch-chip small { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--faint); text-transform: uppercase; }
+.arch-chip:hover { border-color: var(--accent); }
+.arch-chip.is-selected, .arch-card.is-selected { background: var(--accent-soft); border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.arch-chip.is-dragging, .arch-card.is-dragging { opacity: 0.35; }
+.arch-ghost {
+  position: fixed; left: 0; top: 0; z-index: 100; pointer-events: none; margin: 0;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--accent);
+  opacity: 0.95; rotate: -2deg;
+}
+
+/* Diagram */
+.arch-diagram {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0;
+  padding: 36px 28px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  background-image: linear-gradient(var(--surface) 1px, transparent 1px), linear-gradient(90deg, var(--surface) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.arch-side { display: flex; flex-direction: column; gap: 22px; }
+.arch-row { display: flex; align-items: center; min-height: 72px; }
+.arch-node, .arch-center {
+  flex-shrink: 0;
+  background: var(--surface-2); border: 1px solid var(--line-2); border-radius: var(--radius);
+  padding: 12px 14px; font-weight: 600; font-size: 0.92rem; text-align: center; max-width: 150px; line-height: 1.25;
+}
+.arch-center {
+  display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center;
+  min-width: 170px; max-width: 200px; min-height: 120px; padding: 18px;
+  background: var(--bg); border: 2px solid var(--accent); box-shadow: 0 0 40px rgba(205, 255, 58, 0.12);
+  font-size: 1.1rem;
+}
+.arch-center small, .arch-node small { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+.arch-arrow {
+  position: relative; flex: 1 1 24px; min-width: 24px; height: 2px; margin: 0 6px;
+  background: repeating-linear-gradient(90deg, var(--accent) 0 8px, transparent 8px 13px);
+}
+.arch-arrow::after {
+  content: ''; position: absolute; right: -2px; top: -5px;
+  border-left: 9px solid var(--accent); border-top: 6px solid transparent; border-bottom: 6px solid transparent;
+}
+.arch-arrow-label { flex: 1 1 110px; min-width: 90px; }
+.arch-arrow-label span {
+  position: absolute; left: 0; right: 10px; bottom: 8px;
+  font-family: var(--font-mono); font-size: 0.68rem; line-height: 1.3; color: var(--muted); text-align: center;
+}
+.arch-slot {
+  flex: 0 1 190px; min-width: 130px; min-height: 64px;
+  display: grid; place-items: center; padding: 10px 12px;
+  background: rgba(205, 255, 58, 0.03); color: var(--text);
+  border: 2px dashed var(--line-2); border-radius: var(--radius);
+  font: inherit; cursor: pointer; text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.arch-slot-empty { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+.arch-slot-value { font-weight: 700; font-size: 0.95rem; }
+.arch-slot.is-filled { border-style: solid; border-color: var(--accent); background: var(--surface); }
+.arch.has-selection .arch-slot:not(.is-filled), .arch.is-dragging .arch-slot:not(.is-filled) { border-color: rgba(205, 255, 58, 0.5); }
+.arch-slot.is-over, .arch-bin.is-over, .arch-deck.is-over { border-color: var(--accent) !important; background: var(--accent-soft) !important; }
+.arch-slot.is-correct { border-color: var(--accent-green); background: rgba(43, 255, 136, 0.08); }
+.arch-slot.is-wrong { border-color: var(--accent-orange); background: rgba(255, 122, 43, 0.08); }
+.arch-slot.is-correct .arch-slot-value::before { content: '✓ '; color: var(--accent-green); }
+.arch-slot.is-wrong .arch-slot-value::before { content: '✕ '; color: var(--accent-orange); }
+.arch.is-checked .arch-chip, .arch.is-checked .arch-slot, .arch.is-checked .arch-card { cursor: default; }
+.arch.is-checked .arch-palette { position: static; }
+
+/* Sort */
+.arch-deck-wrap { margin-bottom: 20px; }
+.arch-deck-head { display: flex; justify-content: space-between; gap: 12px; }
+.arch-deck {
+  display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  min-height: 70px; padding: 14px; background: var(--panel);
+  border: 1px dashed var(--line-2); border-radius: var(--radius);
+}
+.arch-card {
+  display: flex; align-items: flex-start; gap: 10px; width: 100%;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--line-2); border-radius: var(--radius);
+  padding: 12px 14px 12px 10px; font: inherit; font-size: 0.95rem; line-height: 1.4; text-align: left;
+  cursor: grab; user-select: none; -webkit-user-select: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.arch-card:hover { border-color: var(--accent); }
+.arch-grip { flex-shrink: 0; color: var(--faint); font-size: 1.1rem; line-height: 1.2; padding: 0 2px; touch-action: none; cursor: grab; }
+.arch-card.is-correct { border-color: var(--accent-green); background: rgba(43, 255, 136, 0.07); }
+.arch-card.is-wrong { border-color: var(--accent-orange); background: rgba(255, 122, 43, 0.07); }
+.arch-card.is-correct .arch-grip::before { content: '✓'; color: var(--accent-green); }
+.arch-card.is-wrong .arch-grip::before { content: '✕'; color: var(--accent-orange); }
+.arch-card.is-correct .arch-grip, .arch-card.is-wrong .arch-grip { font-size: 0; }
+.arch-card.is-correct .arch-grip::before, .arch-card.is-wrong .arch-grip::before { font-size: 1rem; font-family: var(--font-mono); font-weight: 700; }
+.arch-bins { display: grid; gap: 14px; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); }
+.arch-bin {
+  position: relative; display: flex; flex-direction: column; gap: 10px; min-height: 200px;
+  background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: var(--radius);
+  padding: 16px; transition: border-color 0.15s, background 0.15s;
+}
+.arch-bin header { display: flex; flex-direction: column; gap: 2px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.arch-bin header strong { font-size: 1.1rem; letter-spacing: -0.02em; }
+.arch-bin header small { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }
+.arch-bin-list { display: flex; flex-direction: column; gap: 8px; }
+.arch-bin-empty { margin: auto; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); padding: 18px 0; }
+.arch-bin.has-cards .arch-bin-empty { display: none; }
+.arch.has-selection .arch-bin, .arch.is-dragging .arch-bin { border-color: rgba(205, 255, 58, 0.45); cursor: pointer; }
+
+.arch-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.button:disabled { opacity: 0.4; cursor: not-allowed; filter: none; }
+.arch-result { margin-top: 28px; }
+.arch-review li { grid-template-columns: 24px 1fr; }
+.arch-review li > span:last-child { display: flex; flex-direction: column; gap: 4px; }
+.arch-review small { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+.arch-review .arch-review-answer { color: var(--text-2); }
+.arch-review .arch-review-answer b { color: var(--accent); }
+
+/* Challenge tiles in the Quiz section */
+.arch-tile .quiz-tile-media { border-color: var(--accent); background: radial-gradient(circle, rgba(205, 255, 58, 0.12), transparent 70%), var(--surface); }
+.arch-tile-icon { font-family: var(--font-mono); font-weight: 700; font-size: 1.5rem; color: var(--accent); letter-spacing: -0.08em; }
+.arch-type { color: var(--accent); }
+.arch-related { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+@media (max-width: 860px) {
+  .arch-diagram { grid-template-columns: 1fr; justify-items: stretch; padding: 22px 16px; gap: 0; }
+  .arch-side { gap: 0; }
+  .arch-row { flex-direction: column; align-items: center; min-height: 0; }
+  .arch-arrow { flex: 0 0 auto; width: 2px; min-width: 0; height: 30px; margin: 6px 0; background: repeating-linear-gradient(180deg, var(--accent) 0 8px, transparent 8px 13px); }
+  .arch-arrow::after { right: -5px; top: auto; bottom: -3px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 9px solid var(--accent); border-bottom: 0; }
+  .arch-arrow-label { height: 46px; min-width: 0; }
+  .arch-arrow-label span { left: 14px; right: auto; bottom: auto; top: 50%; transform: translateY(-50%); width: max-content; max-width: min(220px, 38vw); text-align: left; }
+  .arch-in .arch-row:last-child .arch-arrow-label, .arch-out .arch-row:first-child .arch-arrow-label { margin: 6px 0; }
+  .arch-in .arch-row + .arch-row, .arch-out .arch-row + .arch-row { margin-top: 26px; padding-top: 22px; border-top: 1px dashed var(--line-2); }
+  .arch-center { margin: 0 auto; min-height: 90px; }
+  .arch-slot { flex: 0 0 auto; width: min(100%, 260px); }
+  .arch-node { max-width: 220px; }
+  .arch-palette { top: 84px; margin-left: -20px; margin-right: -20px; padding: 10px 20px; }
+  .arch-palette .label { display: none; }
+  .arch-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .arch-chips::-webkit-scrollbar { display: none; }
+  /* Swipe sideways to scroll the palette, drag down to drop a technology. */
+  .arch-chip { flex-shrink: 0; touch-action: pan-x; padding: 8px 12px; }
+  .arch-bins { grid-template-columns: 1fr; }
+}
+
 /* ---------- "Spotted a mistake?" note ---------- */
 .note {
   position: relative;

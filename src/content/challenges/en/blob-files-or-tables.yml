@@ -1,0 +1,39 @@
+title: Blob, Files or Tables?
+description: Three kinds of Azure Storage, three different jobs. Drag each scenario under the storage service you would choose.
+type: sort
+order: 3
+draft: false
+related:
+- azure-blob-storage
+- azure-files
+- azure-tables
+technologies:
+- name: Azure Blob Storage
+  hint: Unstructured files and objects
+- name: Azure Files
+  hint: Cloud network share
+- name: Azure Table Storage
+  hint: NoSQL key/value
+slots: []
+cards:
+- text: Millions of product photos served to a website.
+  answer: Azure Blob Storage
+  explanation: 'Large amounts of unstructured binary data read through an API: block blobs.'
+- text: Backups that must be kept for years at the lowest storage cost.
+  answer: Azure Blob Storage
+  explanation: The Archive access tier has the lowest storage cost for data you almost never read.
+- text: A log file that many processes keep appending to, without ever editing it.
+  answer: Azure Blob Storage
+  explanation: 'Append blobs only allow adding data at the end: made for logs.'
+- text: A shared drive the team maps on their Windows PCs.
+  answer: Azure Files
+  explanation: 'A network share over SMB, without managing a file server: Azure Files.'
+- text: An old app moved to the cloud that still reads its files from a network folder.
+  answer: Azure Files
+  explanation: Azure Files keeps the file-share model, so the app works without code changes.
+- text: User preferences read by user ID, with different fields for different users.
+  answer: Azure Table Storage
+  explanation: Key/value rows with a flexible number of columns, looked up by partition key and row key.
+- text: Millions of small configuration rows, looked up by key, at low cost.
+  answer: Azure Table Storage
+  explanation: Many small rows with few columns is where Azure Tables shines (max 252 properties and about 1 MB per row).

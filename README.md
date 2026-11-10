@@ -57,6 +57,8 @@ That is it. From here on, you will not need to touch the code.
 
 **Quiz:** add questions in the **Quiz** field of the article (options, number of the correct option, optional explanation). Each language has its own quiz text.
 
+**Architecture challenges:** in Pages CMS open **Architecture challenges (English)** or **Sfide di architettura (Italiano)**. Choose the type: *diagram* (drag technologies into the empty boxes around a central component: fill in Center and Empty boxes) or *sort* (drag scenarios under the right technology: fill in Scenarios). The "Right technology" of each box or scenario must match one of the technology names exactly, otherwise the build stops with a clear message. They appear in the Quiz section and at `/quiz/architecture/<file name>/`.
+
 **Video:** Upload videos to YouTube (unlisted videos work too), switch the editor to *Source* mode, and paste:
 
 ```html
@@ -81,6 +83,7 @@ src/i18n.ts                    Interface texts in English and Italian
 src/content/blog/en/           English articles (one .md file each)
 src/content/blog/it/           Italian articles (same file name = translation)
 src/content/pages/<lang>/about.md  The About page in each language
+src/content/challenges/<lang>/  Architecture challenges (one .yml file each)
 src/views/                     Page layouts shared by both languages
 src/pages/ and src/pages/it/   Routes (thin files that pick the language)
 src/styles/global.css          Colors and styles (edit the variables at the top)

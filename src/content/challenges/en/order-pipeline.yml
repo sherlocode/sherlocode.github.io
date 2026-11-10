@@ -1,0 +1,44 @@
+title: Design an order pipeline
+description: An online shop must process orders reliably, keep the invoices, let customers check their order status and share reports with accounting. Drag the right Azure service into each empty box.
+type: diagram
+order: 1
+draft: false
+related:
+- azure-service-bus
+- azure-blob-storage
+- azure-tables
+- azure-files
+technologies:
+- name: Azure Service Bus
+  hint: Message broker
+- name: Azure Queue Storage
+  hint: Simple queue
+- name: Azure Blob Storage
+  hint: Files & objects
+- name: Azure Table Storage
+  hint: Key/value
+- name: Azure Files
+  hint: Network share
+center:
+  label: Order processor
+  detail: Azure Function
+slots:
+- side: in
+  external: Web shop
+  edge: sends every new order
+  answer: Azure Service Bus
+  explanation: Orders of the same customer must be processed in order (sessions), duplicates must be discarded and failed orders must not get lost (dead-lettering). Service Bus has all of this built in; a storage queue has none of it.
+- side: out
+  edge: saves the PDF invoice
+  answer: Azure Blob Storage
+  explanation: 'Invoices are unstructured files read and written through an API: block blobs in a container. Old invoices can move to the Cool or Archive tier to cut costs.'
+- side: out
+  edge: writes the order status, read by customer ID
+  answer: Azure Table Storage
+  explanation: 'Small records looked up by key (partition key = customer, row key = order) at low cost: exactly what Azure Tables is for.'
+- side: out
+  external: Accounting PCs
+  edge: publishes monthly reports to a shared drive
+  answer: Azure Files
+  explanation: 'The accountants open the reports from a network drive mapped on their PCs: an SMB file share is Azure Files’ job.'
+cards: []

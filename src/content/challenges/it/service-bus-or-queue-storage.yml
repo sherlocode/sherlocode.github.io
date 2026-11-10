@@ -1,0 +1,38 @@
+title: Service Bus o Queue Storage?
+description: Entrambi consegnano messaggi tra servizi, ma risolvono problemi diversi. Trascina ogni requisito sotto il servizio più adatto.
+type: sort
+order: 2
+draft: false
+related:
+- azure-service-bus
+technologies:
+- name: Azure Service Bus
+  hint: Message broker per le aziende
+- name: Azure Queue Storage
+  hint: Coda semplice ed economica nello storage account
+slots: []
+cards:
+- text: I messaggi dello stesso conto corrente vanno elaborati nell’ordine in cui sono stati inviati.
+  answer: Azure Service Bus
+  explanation: Le message session mantengono in ordine i messaggi correlati. Le code dello storage non garantiscono l’ordine.
+- text: Un messaggio deve arrivare a tre servizi diversi, ognuno con la sua copia.
+  answer: Azure Service Bus
+  explanation: Topic e subscription (publish/subscribe) danno a ogni iscritto la sua copia. Una coda dello storage consegna ogni messaggio a un solo consumatore.
+- text: Lo stesso ordine può essere inviato due volte per errore e va elaborato una volta sola.
+  answer: Azure Service Bus
+  explanation: Service Bus ha il rilevamento dei duplicati già pronto; con Queue Storage dovresti scriverlo tu.
+- text: I messaggi che continuano a fallire vanno messi da parte in automatico per analizzarli dopo.
+  answer: Azure Service Bus
+  explanation: Il dead-lettering li sposta in automatico in una coda secondaria. Queue Storage ti dice solo quante volte un messaggio è stato letto.
+- text: Alcuni messaggi pesano circa 1 MB.
+  answer: Azure Service Bus
+  explanation: I messaggi di Queue Storage sono limitati a 64 KB, mentre Service Bus Premium accetta messaggi fino a 100 MB.
+- text: Una semplice coda di lavori in background, come ridimensionare immagini, al costo più basso possibile.
+  answer: Azure Queue Storage
+  explanation: 'Non servono ordine, topic o sessioni: una coda dello storage fa il lavoro e costa pochissimo.'
+- text: La coda può accumulare un arretrato enorme, centinaia di GB, mentre i consumatori sono spenti.
+  answer: Azure Queue Storage
+  explanation: Una coda dello storage può crescere fino alla capacità dello storage account, molto oltre il limite di dimensione di una coda Service Bus.
+- text: L’app usa già uno storage account e le serve solo una coda raggiungibile via REST, senza un servizio in più da gestire.
+  answer: Azure Queue Storage
+  explanation: Queue Storage vive nello stesso storage account di blob e tabelle e si usa via HTTP/REST.

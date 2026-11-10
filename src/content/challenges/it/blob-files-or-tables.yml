@@ -1,0 +1,39 @@
+title: Blob, Files o Tables?
+description: Tre tipi di Azure Storage, tre lavori diversi. Trascina ogni scenario sotto il servizio di storage che sceglieresti.
+type: sort
+order: 3
+draft: false
+related:
+- azure-blob-storage
+- azure-files
+- azure-tables
+technologies:
+- name: Azure Blob Storage
+  hint: File e oggetti non strutturati
+- name: Azure Files
+  hint: Cartella di rete nel cloud
+- name: Azure Table Storage
+  hint: NoSQL chiave/valore
+slots: []
+cards:
+- text: Milioni di foto di prodotti mostrate su un sito web.
+  answer: Azure Blob Storage
+  explanation: 'Grandi quantità di dati binari non strutturati letti tramite API: block blob.'
+- text: Backup da conservare per anni al costo di storage più basso.
+  answer: Azure Blob Storage
+  explanation: Il livello di accesso Archive ha il costo di storage più basso per dati che non leggi quasi mai.
+- text: Un file di log a cui molti processi continuano ad aggiungere righe, senza mai modificarlo.
+  answer: Azure Blob Storage
+  explanation: 'Gli append blob permettono solo di aggiungere dati in coda: fatti apposta per i log.'
+- text: Un disco condiviso che il team collega ai propri PC Windows.
+  answer: Azure Files
+  explanation: 'Una condivisione di rete via SMB, senza gestire un file server: Azure Files.'
+- text: Una vecchia app portata nel cloud che legge ancora i suoi file da una cartella di rete.
+  answer: Azure Files
+  explanation: Azure Files mantiene il modello della cartella condivisa, quindi l’app funziona senza modifiche al codice.
+- text: Preferenze utente lette per ID utente, con campi diversi per utenti diversi.
+  answer: Azure Table Storage
+  explanation: Righe chiave/valore con un numero di colonne variabile, cercate per partition key e row key.
+- text: Milioni di piccole righe di configurazione, cercate per chiave, a basso costo.
+  answer: Azure Table Storage
+  explanation: Tante righe piccole con poche colonne sono il punto forte di Azure Tables (massimo 252 proprietà e circa 1 MB per riga).
