@@ -1,0 +1,44 @@
+title: Lake, warehouse o lakehouse?
+description: Tre modi di conservare i dati per l’analisi, spesso confusi tra loro. Trascina ogni scenario sotto l’architettura più adatta.
+type: sort
+order: 4
+draft: false
+related:
+- terminologia-per-fabric
+- onelake
+technologies:
+- name: Data lake
+  hint: Dati grezzi, qualsiasi formato
+- name: Data warehouse
+  hint: Dati puliti, pronti per i report
+- name: Data lakehouse
+  hint: Il meglio dei due, una sola copia
+slots: []
+cards:
+- text: Salvare log IoT, immagini e file JSON esattamente come arrivano, e decidere dopo come usarli.
+  answer: Data lake
+  explanation: 'Un data lake conserva enormi quantità di dati nel loro formato originale, di qualsiasi tipo: raccogli ora, decidi dopo.'
+- text: Un data scientist esplora dati grezzi, non ancora elaborati, per costruire e addestrare un modello.
+  answer: Data lake
+  explanation: I data scientist lavorano di solito direttamente sui dati grezzi del lake, prima che vengano puliti o aggregati.
+- text: Il posto più economico per tenere enormi volumi di dati strutturati, semi strutturati e non strutturati.
+  answer: Data lake
+  explanation: Uno storage economico e flessibile che accetta qualsiasi formato è la caratteristica principale del data lake.
+- text: L’ufficio finanza fa report SQL complessi su dati di ERP e CRM, puliti e integrati in uno schema fisso.
+  answer: Data warehouse
+  explanation: Un data warehouse raccoglie dati da fonti diverse, li pulisce, li integra e li conserva ottimizzati per le query di analisi.
+- text: Gli analisti vogliono risposte veloci e coerenti su dati curati; file grezzi e immagini non servono.
+  answer: Data warehouse
+  explanation: Il warehouse è pensato per analisi e reportistica su dati strutturati e curati, ottimizzati per la lettura.
+- text: 'Smettere di copiare i dati dal lake a un warehouse separato: le pipeline sono lente e i report spesso non aggiornati.'
+  answer: Data lakehouse
+  explanation: 'È proprio il problema per cui è nato il lakehouse: una sola copia dei dati, niente duplicati tra lake e warehouse.'
+- text: Storage aperto ed economico per tutti i dati, con prestazioni da warehouse sulle query sugli stessi file.
+  answer: Data lakehouse
+  explanation: Il lakehouse unisce lo storage economico e aperto del data lake alle prestazioni del data warehouse.
+- text: Organizzare gli stessi dati nei livelli bronze, silver e gold, dal grezzo al pronto per i report, in un’unica piattaforma.
+  answer: Data lakehouse
+  explanation: 'L’architettura medallion è un pattern applicato dentro un data lakehouse: dati grezzi (bronze), puliti (silver) e aggregati (gold) convivono.'
+- text: Data scientist e analisti di business lavorano sugli stessi dati, senza copie separate per ogni team.
+  answer: Data lakehouse
+  explanation: Una sola piattaforma serve sia l’esplorazione dei dati grezzi sia i report SQL, così ogni team legge gli stessi dati aggiornati.

@@ -1,0 +1,44 @@
+title: Lake, warehouse or lakehouse?
+description: Three ways to store data for analytics, often confused. Drag each scenario under the architecture that fits it best.
+type: sort
+order: 4
+draft: false
+related:
+- terminologia-per-fabric
+- onelake
+technologies:
+- name: Data lake
+  hint: Raw data, any format
+- name: Data warehouse
+  hint: Clean data, ready for reports
+- name: Data lakehouse
+  hint: The best of both, one copy
+slots: []
+cards:
+- text: Save IoT logs, images and JSON files exactly as they arrive, and decide later how to use them.
+  answer: Data lake
+  explanation: 'A data lake stores huge amounts of data in its original format, of any kind: collect now, decide later.'
+- text: A data scientist explores raw, unprocessed data to build and train a model.
+  answer: Data lake
+  explanation: Data scientists typically work directly on the raw data in the lake, before it is cleaned or aggregated.
+- text: The cheapest place to keep huge volumes of structured, semi-structured and unstructured data.
+  answer: Data lake
+  explanation: Cheap, flexible storage that accepts every format is the defining trait of a data lake.
+- text: Finance runs complex SQL reports on data from ERP and CRM, cleaned and integrated in a fixed schema.
+  answer: Data warehouse
+  explanation: A data warehouse collects data from different sources, cleans and integrates it, and stores it optimised for analytical queries.
+- text: Analysts need fast, consistent answers on curated data; raw files and images are not needed.
+  answer: Data warehouse
+  explanation: The warehouse is designed for analysis and reporting on structured, curated data, optimised for reads.
+- text: 'Stop copying data from the lake into a separate warehouse: the pipelines are slow and the reports are often out of date.'
+  answer: Data lakehouse
+  explanation: 'This is exactly the problem the lakehouse was introduced to solve: one copy of the data, no duplication between lake and warehouse.'
+- text: Open, low-cost storage of all your data, with warehouse-like query performance on the same files.
+  answer: Data lakehouse
+  explanation: A lakehouse combines the cheap, open storage of a data lake with the performance of a data warehouse.
+- text: Organise the same data in bronze, silver and gold layers, from raw to report-ready, in one platform.
+  answer: Data lakehouse
+  explanation: 'The medallion architecture is a pattern applied inside a data lakehouse: raw (bronze), cleaned (silver) and aggregated (gold) data live together.'
+- text: Data scientists and business analysts work on the same data, without separate copies for each team.
+  answer: Data lakehouse
+  explanation: One platform serves both raw exploration and SQL reporting, so every team reads the same, up-to-date data.
