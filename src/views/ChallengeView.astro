@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArchChallenge from '../components/ArchChallenge.astro';
+import { challengeLang, challengeKey, challengeUrl, challengeSize, getChallenges, getPublishedPosts, postKey, postUrl, type Challenge } from '../utils';
+import { LANGS, localizePath, t, type Lang } from '../i18n';
+
+interface Props {
+  challenge: Challenge;
+}
+const { challenge } = Astro.props;
+const d = challenge.data;
+const lang = challengeLang(challenge);
+const s = t(lang);
+const a = s.arch;
+const key = challengeKey(challenge);
+
+// Same challenge in the other language (same file name), otherwise that language's Quiz page.
+const alternates: Partial<Record<Lang, string>> = {};
+for (const l of LANGS) {
+  const tr = l === lang ? challenge : (await getChallenges(l)).find((c) => challengeKey(c) === key);
+  alternates[l] = tr ? challengeUrl(tr) : localizePath(l, '/quiz/');
+}
+
+// Articles to read first, in this language.
+const posts = await getPublishedPosts(lang);
+const related = d.related.map((key) => posts.find((p) => postKey(p) === key)).filter((p) => !!p);
+---
+
+<BaseLayout title={d.title} description={a.pageDescription(d.title)} lang={lang} alternates={alternates}>
+  <section class="post-header grid-bg quiz-header">
+    <div class="wrap">
+      <p class="crumbs">
+        <a href={localizePath(lang, '/quiz/')}>{s.nav.quiz}</a>
+        <span aria-hidden="true">/</span>
+        <a href={localizePath(lang, '/quiz/#architecture')}>{a.section}</a>
+      </p>
+      <p class="label label-accent">{a.eyebrow} · {d.type === 'diagram' ? a.typeDiagram : a.typeSort}</p>
+      <h1 style="margin-top:14px">{d.title}</h1>
+      <p class="lede">{d.description}</p>
+      {related.length > 0 && (
+        <div class="arch-related">
+          <span class="label" style="margin:6px 4px 0 0">{a.related}:</span>
+          <ul class="tags">
+            {related.map((p) => <li><a href={postUrl(p)}>{p.data.title}</a></li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <div class="wrap">
+    <ArchChallenge challenge={challenge} />
+    <p class="meta" style="margin-top:28px"><a href={localizePath(lang, '/quiz/#architecture')}>← {a.all}</a> <span class="sep">/</span> {a.size(challengeSize(challenge), d.type === 'diagram')}</p>
+  </div>
+</BaseLayout>

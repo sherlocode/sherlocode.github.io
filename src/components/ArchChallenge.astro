@@ -1,0 +1,428 @@
+---
+/*
+ * Interactive architecture challenge.
+ * - diagram: drag technologies from the palette onto the empty boxes around a central component.
+ * - sort:    drag scenario cards under the technology (column) they belong to.
+ * Works with mouse and touch (drag), and with tap/keyboard (select, then choose the target).
+ */
+import { challengeLang, challengeKey, challengeStorageKey, type Challenge } from '../utils';
+import { t } from '../i18n';
+
+interface Props {
+  challenge: Challenge;
+}
+const { challenge } = Astro.props;
+const d = challenge.data;
+const lang = challengeLang(challenge);
+const a = t(lang).arch;
+const q = t(lang).quiz;
+const isDiagram = d.type === 'diagram';
+const ins = d.slots.map((s, i) => ({ ...s, i })).filter((s) => s.side === 'in');
+const outs = d.slots.map((s, i) => ({ ...s, i })).filter((s) => s.side === 'out');
+// Cards are shuffled once per build; the script shuffles them again on every attempt.
+const cards = d.cards.map((c, i) => ({ ...c, i }));
+
+const data = JSON.stringify({
+  type: d.type,
+  key: challengeStorageKey(challenge),
+  id: challengeKey(challenge),
+  lang,
+  answers: isDiagram ? d.slots.map((s) => s.answer) : d.cards.map((c) => c.answer),
+  s: {
+    left: a.left(0).replace('0', '{n}'),
+    verdicts: q.verdicts,
+    best: q.best,
+    attempt: q.attempt,
+    attempts: q.attempts,
+    saved: q.saved,
+    deckDone: a.deckDone,
+  },
+});
+---
+
+<div class:list={['arch', `arch--${d.type}`]} data-arch={data}>
+  <p class="arch-how">{isDiagram ? a.howDiagram : a.howSort}</p>
+
+  {isDiagram ? (
+    <>
+      <div class="arch-palette" role="group" aria-label={a.palette}>
+        <p class="label">{a.palette}</p>
+        <div class="arch-chips">
+          {d.technologies.map((tech) => (
+            <button type="button" class="arch-chip" data-drag="tech" data-tech={tech.name} aria-pressed="false">
+              <strong>{tech.name}</strong>
+              {tech.hint && <small>{tech.hint}</small>}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="arch-diagram">
+        <div class="arch-side arch-in">
+          {ins.map((s) => (
+            <div class="arch-row">
+              {s.external && <span class="arch-node">{s.external}</span>}
+              {s.external && <span class="arch-arrow" aria-hidden="true"></span>}
+              <button type="button" class="arch-slot" data-slot={s.i} aria-label={`${a.drop}: ${s.edge}`}>
+                <span class="arch-slot-empty">{a.drop}</span>
+              </button>
+              <span class="arch-arrow arch-arrow-label"><span>{s.edge}</span></span>
+            </div>
+          ))}
+        </div>
+        <div class="arch-center">
+          <strong>{d.center?.label}</strong>
+          {d.center?.detail && <small>{d.center.detail}</small>}
+        </div>
+        <div class="arch-side arch-out">
+          {outs.map((s) => (
+            <div class="arch-row">
+              <span class="arch-arrow arch-arrow-label"><span>{s.edge}</span></span>
+              <button type="button" class="arch-slot" data-slot={s.i} aria-label={`${a.drop}: ${s.edge}`}>
+                <span class="arch-slot-empty">{a.drop}</span>
+              </button>
+              {s.external && <span class="arch-arrow" aria-hidden="true"></span>}
+              {s.external && <span class="arch-node">{s.external}</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <div class="arch-deck-wrap">
+        <div class="arch-deck-head">
+          <p class="label">{a.deck}</p>
+          <p class="label label-accent" data-left></p>
+        </div>
+        <div class="arch-deck" data-deck>
+          {cards.map((c) => (
+            <button type="button" class="arch-card" data-drag="card" data-card={c.i} aria-pressed="false">
+              <span class="arch-grip" data-grip aria-hidden="true">⠿</span>
+              <span class="arch-card-text">{c.text}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div class="arch-bins" style={`--cols:${d.technologies.length}`}>
+        {d.technologies.map((tech) => (
+          <section class="arch-bin" data-bin={tech.name} aria-label={tech.name} tabindex="-1">
+            <header>
+              <strong>{tech.name}</strong>
+              {tech.hint && <small>{tech.hint}</small>}
+            </header>
+            <div class="arch-bin-list" data-bin-list></div>
+            <span class="arch-bin-empty">{a.drop}</span>
+          </section>
+        ))}
+      </div>
+    </>
+  )}
+
+  <div class="arch-actions">
+    <button type="button" class="button" data-check disabled>{a.check}</button>
+    <button type="button" class="button button-ghost" data-reset>{a.reset}</button>
+  </div>
+
+  <div class="quiz-result arch-result" data-result hidden>
+    <p class="label label-accent">{q.resultLabel}</p>
+    <div class="quiz-score"><strong data-score></strong><span data-total></span></div>
+    <p class="quiz-verdict" data-verdict></p>
+    <p class="meta" data-best></p>
+    <ol class="quiz-review arch-review">
+      {(isDiagram ? d.slots : d.cards).map((item, i) => (
+        <li data-review={i}>
+          <span class="quiz-mark"></span>
+          <span>
+            <strong>{'edge' in item ? item.edge : item.text}</strong>
+            <small class="arch-review-answer">{a.rightAnswer}: <b>{item.answer}</b></small>
+            <small>{item.explanation}</small>
+          </span>
+        </li>
+      ))}
+    </ol>
+    <div class="share-actions">
+      <button class="button" type="button" data-retry data-umami-event="Challenge retry">{a.retry}</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  type Saved = { best: number; last: number; total: number; attempts: number; date: string };
+  type Config = {
+    type: 'diagram' | 'sort';
+    key: string;
+    id: string;
+    lang: string;
+    answers: string[];
+    s: { left: string; verdicts: string[]; best: string; attempt: string; attempts: string; saved: string; deckDone: string };
+  };
+
+  const read = (key: string): Saved | null => {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? (JSON.parse(raw) as Saved) : null;
+    } catch {
+      return null;
+    }
+  };
+  const write = (key: string, value: Saved) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {
+      /* storage unavailable: the challenge still works, it just isn't saved */
+    }
+  };
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-arch]')) {
+    const cfg = JSON.parse(root.dataset.arch!) as Config;
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const $$ = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)];
+    const isDiagram = cfg.type === 'diagram';
+    const checkBtn = $<HTMLButtonElement>('[data-check]');
+    const result = $('[data-result]');
+    const deck = isDiagram ? null : $('[data-deck]');
+    let locked = false;
+    let selected: HTMLElement | null = null;
+
+    /* ---------- state helpers ---------- */
+    const slotValue = (slot: HTMLElement) => slot.dataset.value ?? '';
+    const setSlot = (slot: HTMLElement, tech: string | null) => {
+      slot.replaceChildren();
+      if (tech) {
+        slot.dataset.value = tech;
+        slot.classList.add('is-filled');
+        const chip = document.createElement('span');
+        chip.className = 'arch-slot-value';
+        chip.textContent = tech;
+        slot.append(chip);
+      } else {
+        delete slot.dataset.value;
+        slot.classList.remove('is-filled');
+        const empty = document.createElement('span');
+        empty.className = 'arch-slot-empty';
+        empty.textContent = slot.getAttribute('aria-label')?.split(':')[0] ?? '';
+        slot.append(empty);
+      }
+      update();
+    };
+    const placeCard = (card: HTMLElement, target: HTMLElement) => {
+      const list = target.matches('[data-deck]') ? target : target.querySelector<HTMLElement>('[data-bin-list]');
+      if (!list) return;
+      list.append(card);
+      update();
+    };
+    const filledCount = () =>
+      isDiagram ? $$('[data-slot]').filter((s) => slotValue(s)).length : $$('[data-bin-list] [data-card]').length;
+    const total = cfg.answers.length;
+
+    const update = () => {
+      const done = filledCount();
+      checkBtn.disabled = locked || done < total;
+      if (!isDiagram) {
+        const left = total - done;
+        $('[data-left]').textContent = left > 0 ? cfg.s.left.replace('{n}', String(left)) : cfg.s.deckDone;
+        for (const bin of $$('[data-bin]')) bin.classList.toggle('has-cards', !!bin.querySelector('[data-card]'));
+      }
+    };
+
+    /* ---------- selection (tap / keyboard) ---------- */
+    const select = (el: HTMLElement | null) => {
+      if (selected) {
+        selected.classList.remove('is-selected');
+        selected.setAttribute('aria-pressed', 'false');
+      }
+      selected = el && el !== selected ? el : null;
+      if (selected) {
+        selected.classList.add('is-selected');
+        selected.setAttribute('aria-pressed', 'true');
+      }
+      root.classList.toggle('has-selection', !!selected);
+    };
+
+    const dropOn = (dragged: HTMLElement, target: HTMLElement | null) => {
+      if (!target || locked) return false;
+      if (isDiagram) {
+        const slot = target.closest<HTMLElement>('[data-slot]');
+        if (!slot) return false;
+        setSlot(slot, dragged.dataset.tech!);
+        return true;
+      }
+      const zone = target.closest<HTMLElement>('[data-bin], [data-deck]');
+      if (!zone) return false;
+      placeCard(dragged, zone);
+      return true;
+    };
+
+    let suppressClick = false;
+    root.addEventListener('click', (e) => {
+      if (suppressClick) {
+        suppressClick = false;
+        return;
+      }
+      if (locked) return;
+      const target = e.target as HTMLElement;
+      const draggable = target.closest<HTMLElement>('[data-drag]');
+      const zone = target.closest<HTMLElement>(isDiagram ? '[data-slot]' : '[data-bin], [data-deck]');
+
+      // Palette chip, or a card still in the deck: select it (tap again to deselect).
+      if (draggable && (isDiagram || draggable.closest('[data-deck]'))) {
+        select(draggable);
+        return;
+      }
+      // Something is selected: put it where the user tapped.
+      if (selected && zone) {
+        if (dropOn(selected, zone)) select(null);
+        return;
+      }
+      // Tap on a card already in a column: send it back to the deck.
+      if (draggable) {
+        placeCard(draggable, deck!);
+        return;
+      }
+      // Tap on a filled box: empty it.
+      if (isDiagram && zone && slotValue(zone)) setSlot(zone, null);
+    });
+
+    /* ---------- drag & drop (pointer events: mouse, pen, touch) ---------- */
+    let drag: { el: HTMLElement; ghost: HTMLElement | null; x: number; y: number; id: number; over: HTMLElement | null } | null = null;
+    const zoneAt = (x: number, y: number) => {
+      const el = document.elementFromPoint(x, y) as HTMLElement | null;
+      return el?.closest<HTMLElement>(isDiagram ? '[data-slot]' : '[data-bin], [data-deck]') ?? null;
+    };
+    root.addEventListener('pointerdown', (e) => {
+      if (locked || e.button !== 0) return;
+      const el = (e.target as HTMLElement).closest<HTMLElement>('[data-drag]');
+      if (!el) return;
+      // On touch screens, cards are dragged by their grip so the page can still scroll.
+      if (e.pointerType === 'touch' && !isDiagram && !(e.target as HTMLElement).closest('[data-grip]')) return;
+      drag = { el, ghost: null, x: e.clientX, y: e.clientY, id: e.pointerId, over: null };
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.ghost) {
+        if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6) return;
+        const rect = drag.el.getBoundingClientRect();
+        const ghost = drag.el.cloneNode(true) as HTMLElement;
+        ghost.classList.add('arch-ghost');
+        ghost.classList.remove('is-selected');
+        ghost.style.width = `${rect.width}px`;
+        document.body.append(ghost);
+        drag.ghost = ghost;
+        drag.el.classList.add('is-dragging');
+        root.classList.add('is-dragging');
+        select(null);
+      }
+      e.preventDefault();
+      drag.ghost.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
+      const over = zoneAt(e.clientX, e.clientY);
+      if (over !== drag.over) {
+        drag.over?.classList.remove('is-over');
+        over?.classList.add('is-over');
+        drag.over = over;
+      }
+    });
+    const endDrag = (e: PointerEvent) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const d = drag;
+      drag = null;
+      if (!d.ghost) return; // it was a tap: the click handler takes care of it
+      d.ghost.remove();
+      d.el.classList.remove('is-dragging');
+      root.classList.remove('is-dragging');
+      d.over?.classList.remove('is-over');
+      suppressClick = true;
+      setTimeout(() => (suppressClick = false), 0);
+      if (e.type === 'pointerup') dropOn(d.el, zoneAt(e.clientX, e.clientY));
+    };
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+
+    /* ---------- check & result ---------- */
+    checkBtn.addEventListener('click', () => {
+      if (checkBtn.disabled) return;
+      locked = true;
+      select(null);
+      root.classList.add('is-checked');
+      let score = 0;
+      const marks: boolean[] = [];
+      if (isDiagram) {
+        for (const slot of $$('[data-slot]')) {
+          const i = Number(slot.dataset.slot);
+          const ok = slotValue(slot) === cfg.answers[i];
+          marks[i] = ok;
+          slot.classList.add(ok ? 'is-correct' : 'is-wrong');
+        }
+      } else {
+        for (const card of $$('[data-card]')) {
+          const i = Number(card.dataset.card);
+          const bin = card.closest<HTMLElement>('[data-bin]');
+          const ok = bin?.dataset.bin === cfg.answers[i];
+          marks[i] = ok;
+          card.classList.add(ok ? 'is-correct' : 'is-wrong');
+        }
+      }
+      score = marks.filter(Boolean).length;
+      for (const li of $$('[data-review]')) {
+        const ok = marks[Number(li.dataset.review)];
+        li.className = ok ? 'ok' : 'ko';
+        li.querySelector('.quiz-mark')!.textContent = ok ? '✓' : '✕';
+      }
+
+      const prev = read(cfg.key);
+      const saved: Saved = {
+        best: Math.max(score, prev?.best ?? 0),
+        last: score,
+        total,
+        attempts: (prev?.attempts ?? 0) + 1,
+        date: new Date().toISOString(),
+      };
+      write(cfg.key, saved);
+      try {
+        (window as any).umami?.track('Challenge completed', { challenge: cfg.id, lang: cfg.lang, score, total, perfect: score === total });
+      } catch {
+        /* analytics not available */
+      }
+
+      const pct = score / total;
+      $('[data-score]').textContent = String(score);
+      $('[data-total]').textContent = `/ ${total}`;
+      $('[data-verdict]').textContent = cfg.s.verdicts[pct === 1 ? 0 : pct >= 0.7 ? 1 : pct >= 0.4 ? 2 : 3];
+      $('[data-best]').textContent =
+        `${cfg.s.best} ${saved.best} / ${total} · ${saved.attempts} ${saved.attempts === 1 ? cfg.s.attempt : cfg.s.attempts} · ${cfg.s.saved}`;
+      result.hidden = false;
+      checkBtn.disabled = true;
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    const reset = () => {
+      locked = false;
+      select(null);
+      root.classList.remove('is-checked');
+      result.hidden = true;
+      if (isDiagram) {
+        for (const slot of $$('[data-slot]')) {
+          slot.classList.remove('is-correct', 'is-wrong');
+          setSlot(slot, null);
+        }
+      } else {
+        const all = $$('[data-card]');
+        for (let i = all.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [all[i], all[j]] = [all[j], all[i]];
+        }
+        for (const card of all) {
+          card.classList.remove('is-correct', 'is-wrong');
+          deck!.append(card);
+        }
+      }
+      update();
+    };
+    $('[data-reset]').addEventListener('click', reset);
+    $('[data-retry]').addEventListener('click', () => {
+      reset();
+      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    reset();
+  }
+</script>

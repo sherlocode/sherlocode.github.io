@@ -1,0 +1,38 @@
+title: Service Bus or Queue Storage?
+description: Both deliver messages between services, but they solve different problems. Drag each requirement under the service that fits it best.
+type: sort
+order: 2
+draft: false
+related:
+- azure-service-bus
+technologies:
+- name: Azure Service Bus
+  hint: Enterprise message broker
+- name: Azure Queue Storage
+  hint: Simple, cheap queue in a storage account
+slots: []
+cards:
+- text: Messages for the same bank account must be processed in the order they were sent.
+  answer: Azure Service Bus
+  explanation: Message sessions keep related messages in order. Storage queues don’t guarantee ordering.
+- text: One message must reach three different services, each with its own copy.
+  answer: Azure Service Bus
+  explanation: Topics and subscriptions (publish/subscribe) give each subscriber its own copy. A storage queue delivers each message to one consumer.
+- text: The same order may be sent twice by mistake and must be processed only once.
+  answer: Azure Service Bus
+  explanation: Service Bus has built-in duplicate detection; with Queue Storage you would have to write it yourself.
+- text: Messages that keep failing must be set aside automatically for later analysis.
+  answer: Azure Service Bus
+  explanation: Dead-lettering moves them to a secondary queue automatically. Queue Storage only tells you how many times a message was read.
+- text: Some messages are about 1 MB in size.
+  answer: Azure Service Bus
+  explanation: Storage queue messages are limited to 64 KB, while Service Bus Premium accepts messages up to 100 MB.
+- text: A simple queue of background jobs, like resizing images, at the lowest possible cost.
+  answer: Azure Queue Storage
+  explanation: 'No ordering, topics or sessions needed: a storage queue does the job and costs very little.'
+- text: The queue may build up a huge backlog, hundreds of GB, while consumers are offline.
+  answer: Azure Queue Storage
+  explanation: A storage queue can grow up to the capacity of the storage account, far beyond the size limit of a Service Bus queue.
+- text: The app already uses a storage account and just needs a queue reachable over REST, with no extra service to manage.
+  answer: Azure Queue Storage
+  explanation: Queue Storage lives in the same storage account as blobs and tables and is used over HTTP/REST.

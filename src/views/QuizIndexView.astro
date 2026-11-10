@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import QuizStatus from '../components/QuizStatus.astro';
 import Newsletter from '../components/Newsletter.astro';
-import { getQuizPosts, quizStorageKey, quizUrl } from '../utils';
+import { getQuizPosts, quizStorageKey, quizUrl, getChallenges, challengeUrl, challengeStorageKey, challengeSize } from '../utils';
 import { t, type Lang } from '../i18n';
 
 interface Props {
@@ -13,6 +13,8 @@ const s = t(lang);
 const q = s.quiz;
 const posts = await getQuizPosts(lang);
 const totalQuestions = posts.reduce((n, p) => n + p.data.quiz.length, 0);
+const challenges = await getChallenges(lang);
+const a = s.arch;
 ---
 
 <BaseLayout title={s.nav.quiz} description={q.indexDescription} lang={lang}>
@@ -22,7 +24,7 @@ const totalQuestions = posts.reduce((n, p) => n + p.data.quiz.length, 0);
       <h1>{q.indexTitle[0]}<em>{q.indexTitle[1]}</em></h1>
       <p class="lede">{q.indexLede}</p>
       <div class="hero-stats" data-quiz-summary>
-        <div><strong>{posts.length}</strong><span>{q.stats.quizzes}</span></div>
+        <div><strong>{posts.length + challenges.length}</strong><span>{q.stats.quizzes}</span></div>
         <div><strong>{totalQuestions}</strong><span>{q.stats.questions}</span></div>
         <div><strong data-done>0</strong><span>{q.stats.completed}</span></div>
         <div><strong data-avg>—</strong><span>{q.stats.avg}</span></div>
@@ -30,9 +32,39 @@ const totalQuestions = posts.reduce((n, p) => n + p.data.quiz.length, 0);
     </div>
   </section>
 
+  {challenges.length > 0 && (
+    <section class="wrap" aria-labelledby="architecture" style="margin-bottom:56px">
+      <div class="section-head">
+        <h2 id="architecture"><i>01</i>{a.section}</h2>
+        <p class="meta" style="max-width:60ch">{a.sectionText}</p>
+      </div>
+      <div class="quiz-grid">
+        {challenges.map((c) => (
+          <article class="quiz-tile arch-tile" data-quiz-card>
+            <div class="quiz-tile-media">
+              <span class="arch-tile-icon" aria-hidden="true">{c.data.type === 'diagram' ? '⇄' : '⇅'}</span>
+            </div>
+            <div class="quiz-tile-body">
+              <p class="meta">
+                <span class="arch-type">{c.data.type === 'diagram' ? a.typeDiagram : a.typeSort}</span>
+                <span class="sep" aria-hidden="true">/</span>
+                <span>{a.size(challengeSize(c), c.data.type === 'diagram')}</span>
+              </p>
+              <h3><a href={challengeUrl(c)}>{c.data.title}</a></h3>
+              <div class="quiz-tile-foot">
+                <span class="quiz-status" data-quiz-status={challengeStorageKey(c)} data-total={challengeSize(c)} data-empty={q.notTaken} data-best-label={q.best} data-retake={q.retake}>{q.notTaken}</span>
+                <span class="read-more" data-quiz-action aria-hidden="true">{q.start}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
   <section class="wrap" aria-labelledby="quiz-title">
     <div class="section-head">
-      <h2 id="quiz-title"><i>01</i>{q.all}</h2>
+      <h2 id="quiz-title"><i>{challenges.length > 0 ? '02' : '01'}</i>{q.all}</h2>
     </div>
     {posts.length === 0 && <p class="empty">{q.empty}</p>}
     <div class="quiz-grid">

@@ -1,0 +1,44 @@
+title: Progetta una pipeline di ordini
+description: Un negozio online deve elaborare gli ordini in modo affidabile, conservare le fatture, far controllare lo stato dell’ordine ai clienti e condividere i report con la contabilità. Trascina il servizio Azure giusto in ogni riquadro vuoto.
+type: diagram
+order: 1
+draft: false
+related:
+- azure-service-bus
+- azure-blob-storage
+- azure-tables
+- azure-files
+technologies:
+- name: Azure Service Bus
+  hint: Message broker
+- name: Azure Queue Storage
+  hint: Coda semplice
+- name: Azure Blob Storage
+  hint: File e oggetti
+- name: Azure Table Storage
+  hint: Chiave/valore
+- name: Azure Files
+  hint: Cartella di rete
+center:
+  label: Elaborazione ordini
+  detail: Azure Function
+slots:
+- side: in
+  external: Negozio online
+  edge: invia ogni nuovo ordine
+  answer: Azure Service Bus
+  explanation: Gli ordini dello stesso cliente vanno elaborati in ordine (sessioni), i duplicati scartati e gli ordini in errore non devono andare persi (dead-lettering). Service Bus ha tutto questo già pronto, una coda dello storage no.
+- side: out
+  edge: salva la fattura in PDF
+  answer: Azure Blob Storage
+  explanation: 'Le fatture sono file non strutturati letti e scritti tramite API: block blob in un container. Le fatture vecchie possono passare al livello Cool o Archive per risparmiare.'
+- side: out
+  edge: scrive lo stato dell’ordine, letto per ID cliente
+  answer: Azure Table Storage
+  explanation: 'Piccoli record cercati per chiave (partition key = cliente, row key = ordine) a basso costo: è esattamente il lavoro di Azure Tables.'
+- side: out
+  external: PC della contabilità
+  edge: pubblica i report mensili su un disco condiviso
+  answer: Azure Files
+  explanation: 'I contabili aprono i report da un’unità di rete collegata ai loro PC: una condivisione SMB è il lavoro di Azure Files.'
+cards: []

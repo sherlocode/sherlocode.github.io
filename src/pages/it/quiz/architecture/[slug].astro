@@ -1,0 +1,8 @@
+---
+import ChallengeView from '../../../../views/ChallengeView.astro';
+import { challengePaths } from '../../../../routes';
+
+export const getStaticPaths = () => challengePaths('it');
+---
+
+<ChallengeView {...Astro.props} />

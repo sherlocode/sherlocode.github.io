@@ -81,3 +81,30 @@ export function readingMinutes(body: string | undefined): number {
 export function formatDate(date: Date, lang: Lang): string {
   return date.toLocaleDateString(LANG_META[lang].locale, { day: 'numeric', month: 'long', year: 'numeric' });
 }
+
+/* ---------- Architecture challenges ---------- */
+
+export type Challenge = CollectionEntry<'challenges'>;
+
+export const challengeLang = (c: Challenge): Lang => {
+  const first = c.id.split('/')[0];
+  return isLang(first) ? first : DEFAULT_LANG;
+};
+/** URL slug of a challenge; the same file name links its two language versions. */
+export const challengeSlug = (c: Challenge): string => c.id.split('/').slice(1).join('/') || c.id;
+export const challengeUrl = (c: Challenge): string =>
+  localizePath(challengeLang(c), `/quiz/architecture/${challengeSlug(c)}/`);
+/** Key shared by the two language versions of a challenge (file name, or translationKey). */
+export const challengeKey = (c: Challenge): string => c.data.translationKey ?? challengeSlug(c);
+/** localStorage key of a challenge result, shared by both languages. */
+export const challengeStorageKey = (c: Challenge) => `sherlocode:arch:${challengeKey(c)}`;
+/** Number of answers checked in a challenge (boxes or cards). */
+export const challengeSize = (c: Challenge) => (c.data.type === 'diagram' ? c.data.slots.length : c.data.cards.length);
+
+/** Published challenges in one language, in their configured order. */
+export async function getChallenges(lang: Lang): Promise<Challenge[]> {
+  const all = await getCollection('challenges', ({ data }) => import.meta.env.DEV || !data.draft);
+  return all
+    .filter((c) => challengeLang(c) === lang)
+    .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+}

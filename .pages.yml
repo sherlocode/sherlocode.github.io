@@ -174,6 +174,228 @@ content:
         options:
           format: markdown
 
+  - name: challenges-en
+    label: Architecture challenges (English)
+    type: collection
+    path: src/content/challenges/en
+    format: yaml
+    extension: yml
+    filename: "{primary}.yml"   # the file name becomes the URL: /quiz/architecture/<file name>/
+    view:
+      fields: [title, type, order, draft]
+      primary: title
+      sort: [order, title]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        description: The situation to solve, shown under the title.
+        type: text
+        required: true
+      - name: type
+        label: Type
+        description: "diagram = drag technologies into the empty boxes of an architecture; sort = drag scenarios under the right technology."
+        type: select
+        required: true
+        options:
+          values: [diagram, sort]
+      - name: order
+        label: Order
+        description: Lower numbers come first in the Quiz section.
+        type: number
+        default: 100
+      - name: draft
+        label: Draft (do not publish)
+        type: boolean
+        default: false
+      - name: translationKey
+        label: Translation key
+        description: "Optional. Links the English and Italian versions when their file names differ: write the other version's file name (without .yml). Fill it in on one of the two versions only."
+        type: string
+      - name: related
+        label: Related articles
+        description: File names of the articles to read first (e.g. azure-service-bus), one per line.
+        type: string
+        list: true
+      - name: technologies
+        label: Technologies
+        description: "diagram: the pieces you can drag (add some wrong ones too). sort: the columns."
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Name
+            type: string
+            required: true
+          - name: hint
+            label: Short hint
+            type: string
+      - name: center
+        label: Center component (diagram only)
+        type: object
+        fields:
+          - name: label
+            label: Label
+            type: string
+          - name: detail
+            label: Detail (e.g. Azure Function)
+            type: string
+      - name: slots
+        label: Empty boxes (diagram only)
+        type: object
+        list: true
+        fields:
+          - name: side
+            label: Side
+            description: "in = left of the center (sends to it), out = right of the center (receives from it)."
+            type: select
+            options:
+              values: [in, out]
+          - name: edge
+            label: Arrow label
+            description: What happens on the arrow, e.g. "saves the PDF invoice".
+            type: string
+          - name: external
+            label: External component (optional)
+            description: A fixed box at the far end of the arrow, e.g. "Web shop".
+            type: string
+          - name: answer
+            label: Right technology
+            description: Must match one of the technology names exactly.
+            type: string
+          - name: explanation
+            label: Explanation
+            type: text
+      - name: cards
+        label: Scenarios (sort only)
+        type: object
+        list: true
+        fields:
+          - name: text
+            label: Scenario
+            type: text
+          - name: answer
+            label: Right technology
+            description: Must match one of the technology names exactly.
+            type: string
+          - name: explanation
+            label: Explanation
+            type: text
+
+  - name: challenges-it
+    label: Sfide di architettura (Italiano)
+    type: collection
+    path: src/content/challenges/it
+    format: yaml
+    extension: yml
+    filename: "{primary}.yml"
+    view:
+      fields: [title, type, order, draft]
+      primary: title
+      sort: [order, title]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        description: The situation to solve, shown under the title.
+        type: text
+        required: true
+      - name: type
+        label: Type
+        description: "diagram = drag technologies into the empty boxes of an architecture; sort = drag scenarios under the right technology."
+        type: select
+        required: true
+        options:
+          values: [diagram, sort]
+      - name: order
+        label: Order
+        description: Lower numbers come first in the Quiz section.
+        type: number
+        default: 100
+      - name: draft
+        label: Draft (do not publish)
+        type: boolean
+        default: false
+      - name: translationKey
+        label: Translation key
+        description: "Optional. Links the English and Italian versions when their file names differ: write the other version's file name (without .yml). Fill it in on one of the two versions only."
+        type: string
+      - name: related
+        label: Related articles
+        description: File names of the articles to read first (e.g. azure-service-bus), one per line.
+        type: string
+        list: true
+      - name: technologies
+        label: Technologies
+        description: "diagram: the pieces you can drag (add some wrong ones too). sort: the columns."
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Name
+            type: string
+            required: true
+          - name: hint
+            label: Short hint
+            type: string
+      - name: center
+        label: Center component (diagram only)
+        type: object
+        fields:
+          - name: label
+            label: Label
+            type: string
+          - name: detail
+            label: Detail (e.g. Azure Function)
+            type: string
+      - name: slots
+        label: Empty boxes (diagram only)
+        type: object
+        list: true
+        fields:
+          - name: side
+            label: Side
+            description: "in = left of the center (sends to it), out = right of the center (receives from it)."
+            type: select
+            options:
+              values: [in, out]
+          - name: edge
+            label: Arrow label
+            description: What happens on the arrow, e.g. "saves the PDF invoice".
+            type: string
+          - name: external
+            label: External component (optional)
+            description: A fixed box at the far end of the arrow, e.g. "Web shop".
+            type: string
+          - name: answer
+            label: Right technology
+            description: Must match one of the technology names exactly.
+            type: string
+          - name: explanation
+            label: Explanation
+            type: text
+      - name: cards
+        label: Scenarios (sort only)
+        type: object
+        list: true
+        fields:
+          - name: text
+            label: Scenario
+            type: text
+          - name: answer
+            label: Right technology
+            description: Must match one of the technology names exactly.
+            type: string
+          - name: explanation
+            label: Explanation
+            type: text
+
   - name: about-en
     label: About (English)
     type: file
