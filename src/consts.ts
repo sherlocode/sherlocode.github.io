@@ -24,4 +24,4 @@ export const UMAMI_SCRIPT_URL = 'https://cloud.umami.is/script.js';
 export const GISCUS_REPO = 'sherlocode/sherlocode.github.io';
 export const GISCUS_REPO_ID = 'R_kgDOVc8sbA';
 export const GISCUS_CATEGORY = 'Comments';
-export const GISCUS_CATEGORY_ID = '';
+export const GISCUS_CATEGORY_ID = 'DIC_kwDOVc8sbM4DKzA';

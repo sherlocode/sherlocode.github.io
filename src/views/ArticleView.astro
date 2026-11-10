@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import QuizStatus from '../components/QuizStatus.astro';
 import Newsletter from '../components/Newsletter.astro';
 import Comments from '../components/Comments.astro';
-import { AUTHOR, LINKEDIN_URL } from '../consts';
+import { AUTHOR, LINKEDIN_URL, GISCUS_CATEGORY_ID } from '../consts';
 import { LANGS, localizePath, t } from '../i18n';
 import {
   formatDate, readingMinutes, tagUrl, quizStorageKey, postLang, postUrl, quizUrl, postKey, getTranslation, type Post,
@@ -57,6 +57,9 @@ const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeUR
           )}
           <div><dt>{s.post.reading}</dt><dd>{s.post.minutes(readingMinutes(post.body))}</dd></div>
         </dl>
+        {GISCUS_CATEGORY_ID && (
+          <p class="note"><span class="note-icon" aria-hidden="true">!</span><span>{s.comments.articleNote[0]}<a href="#comments" data-umami-event="Report mistake click">{s.comments.articleNote[1]}</a></span></p>
+        )}
       </div>
     </header>
 
