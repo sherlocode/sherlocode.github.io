@@ -118,22 +118,6 @@ E' un pattern che introduce 3 livelli di ingestione dei dati all'interno di un d
 
 E' un managed service di Azure che permette di definire e schedulare data pipelines per trasferire e trasformare dati. Si può integrare con gli altri servizi di Azure permettendo di acquisire dati da stoage di dati sul cloud, usare la potenza di calcolo del cloud per eleborarli e alla fine salvare il risultato all'interno di un altro data store.
 
-Al suo interno possiamo trovare le seguenti componenti:
-
-- Databricks Lakehouse - un unico storage costruito su Delta Lake che supporta sia l'analisi dei dati tramite SQL che machine learning
-- Databricks SQL 
-- Databricks Notebooks
-- Unity Catalog - un layer unico di governance per dati e asset AI all'interno del workspace di Databricks che permette di governare un accesso al dato granulare, la sua provenienza e navigazione
-- Genie - un interfaccia AI a linguaggio naturale che permette all'utente di fare domande sui dati a cui ha accesso, questo assistente genera ed esegue query SQL restituendo il loro risultato.  
-
-### Azure Databriks
-
-![image.png](/media/image-6.png)
-
-E' una piattaforma cloud di analytics costruita su Apache Spark, ottimizzata per grandi quantità di dati, data science e SQL analytics. Inoltre si basa su formati open-source lakehouse come per esempio Delta Lake. 
-
-Databriks fa parte dei managed services su Azure.
-
 ### Microsoft Purview
 
 ![image.png](/media/image-7.png)
