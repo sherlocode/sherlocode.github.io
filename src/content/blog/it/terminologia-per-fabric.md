@@ -116,7 +116,7 @@ E' un pattern che introduce 3 livelli di ingestione dei dati all'interno di un d
 
 ![image.png](/media/image-5.png)
 
-E' un managed service di Azure che permette di definire e schedulare data pipelines per trasferire e trasformare dati. Si può integrare con gli altri servizi di Azure permettendo di acquisire dati da stoage di dati sul cloud, usare la potenza di calcolo del cloud per eleborarli e alla fine salvare il risultato all'interno di un altro data store.
+E' un managed service di Azure che permette di definire e schedulare data pipelines per trasferire e trasformare dati. Si può integrare con gli altri servizi di Azure permettendo di acquisire dati da stoage di dati sul cloud, usare la potenza di calcolo del cloud per eleborarli e alla fine salvare il risultato all'interno di un altro data store. Questo è un servizio standalone per cui non è legato a Fabric ma può essenzialmente utilizzarlo come sorgente o destinazione.
 
 ### Microsoft Purview
 
