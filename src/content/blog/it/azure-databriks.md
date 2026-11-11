@@ -2,7 +2,7 @@
 title: Azure Databriks
 description: "#2 - Azure Databricks"
 pubDate: 2026-11-11
-heroImage: /media/image-6.png
+heroImage: /media/databricks-c40eaf44-1.png
 draft: false
 ---
 # Azure Databricks
