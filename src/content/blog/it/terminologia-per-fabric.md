@@ -7,54 +7,63 @@ tags:
   - Fabric
 draft: false
 quiz:
-- question: Qual è la caratteristica principale di un data lake?
-  options:
-  - Accetta solo dati strutturati e puliti
-  - Conserva grandi quantità di dati nel loro formato originale, di qualsiasi tipo
-  - È ottimizzato solo per le transazioni quotidiane
-  - Contiene solo dati aggregati
-  answer: 2
-  explanation: Il data lake salva subito i dati così come sono, per decidere dopo come usarli.
-- question: Quale problema risolve il data lakehouse?
-  options:
-  - Avere i dati duplicati tra data lake e data warehouse, con pipeline lente e dati non aggiornati
-  - La mancanza di backup
-  - L'assenza di un formato di file standard
-  - La gestione delle email aziendali
-  answer: 1
-  explanation: Il lakehouse unisce lo storage del data lake con le prestazioni del data warehouse, evitando le copie.
-- question: Nel modello OLAP, cos'è una 'misura'?
-  options:
-  - Un asse di analisi, come tempo o regione
-  - Un valore numerico da analizzare, come fatturato o quantità venduta
-  - Un livello di dettaglio dentro una dimensione
-  - Il numero di dimensioni del cubo
-  answer: 2
-  explanation: Le misure sono i valori numerici; le dimensioni sono gli assi lungo cui si analizzano.
-- question: Nell'architettura medallion, in quale livello i dati vengono puliti e normalizzati?
-  options:
-  - Bronze
-  - Silver
-  - Gold
-  - Platinum
-  answer: 2
-  explanation: 'Bronze: dati grezzi. Silver: puliti e normalizzati. Gold: aggregati per i report.'
-- question: Come si crea un Azure Data Lake Storage Gen2?
-  options:
-  - Creando un database SQL
-  - Abilitando l'hierarchical namespace nello storage account
-  - Installando Databricks
-  - Attivando OneLake in Fabric
-  answer: 2
-  explanation: ADLS Gen2 è uno storage account con l'opzione hierarchical namespace abilitata.
-- question: A cosa serve Microsoft Purview?
-  options:
-  - A creare pipeline ETL
-  - 'Alla governance dei dati: mappa, tracciamento e policy'
-  - Ad addestrare modelli di machine learning
-  - A ospitare data warehouse
-  answer: 2
-  explanation: Purview mappa i dati, traccia da dove nascono e come si spostano, e ne gestisce policy e permessi.
+  - question: Qual è la caratteristica principale di un data lake?
+    options:
+      - Accetta solo dati strutturati e puliti
+      - Conserva grandi quantità di dati nel loro formato originale, di
+        qualsiasi tipo
+      - È ottimizzato solo per le transazioni quotidiane
+      - Contiene solo dati aggregati
+    answer: 2
+    explanation: Il data lake salva subito i dati così come sono, per decidere dopo
+      come usarli.
+  - question: Quale problema risolve il data lakehouse?
+    options:
+      - Avere i dati duplicati tra data lake e data warehouse, con pipeline
+        lente e dati non aggiornati
+      - La mancanza di backup
+      - L'assenza di un formato di file standard
+      - La gestione delle email aziendali
+    answer: 1
+    explanation: Il lakehouse unisce lo storage del data lake con le prestazioni del
+      data warehouse, evitando le copie.
+  - question: Nel modello OLAP, cos'è una 'misura'?
+    options:
+      - Un asse di analisi, come tempo o regione
+      - Un valore numerico da analizzare, come fatturato o quantità venduta
+      - Un livello di dettaglio dentro una dimensione
+      - Il numero di dimensioni del cubo
+    answer: 2
+    explanation: Le misure sono i valori numerici; le dimensioni sono gli assi lungo
+      cui si analizzano.
+  - question: Nell'architettura medallion, in quale livello i dati vengono puliti e
+      normalizzati?
+    options:
+      - Bronze
+      - Silver
+      - Gold
+      - Platinum
+    answer: 2
+    explanation: "Bronze: dati grezzi. Silver: puliti e normalizzati. Gold:
+      aggregati per i report."
+  - question: Come si crea un Azure Data Lake Storage Gen2?
+    options:
+      - Creando un database SQL
+      - Abilitando l'hierarchical namespace nello storage account
+      - Installando Databricks
+      - Attivando OneLake in Fabric
+    answer: 2
+    explanation: ADLS Gen2 è uno storage account con l'opzione hierarchical
+      namespace abilitata.
+  - question: A cosa serve Microsoft Purview?
+    options:
+      - A creare pipeline ETL
+      - "Alla governance dei dati: mappa, tracciamento e policy"
+      - Ad addestrare modelli di machine learning
+      - A ospitare data warehouse
+    answer: 2
+    explanation: Purview mappa i dati, traccia da dove nascono e come si spostano, e
+      ne gestisce policy e permessi.
 ---
 ### **Data lake**
 
@@ -107,7 +116,15 @@ E' un pattern che introduce 3 livelli di ingestione dei dati all'interno di un d
 
 ![image.png](/media/image-5.png)
 
-E' un servizio Azure che permette di definire e schedulare data pipelines per trasferire e trasformare dati. Si può integrare con gli altri servizi di Azure permettendo di acquisire dati da stoage di dati sul cloud, usare la potenza di calcolo del cloud per eleborarli e alla fine salvare il risultato all'interno di un altro data store.
+E' un managed service di Azure che permette di definire e schedulare data pipelines per trasferire e trasformare dati. Si può integrare con gli altri servizi di Azure permettendo di acquisire dati da stoage di dati sul cloud, usare la potenza di calcolo del cloud per eleborarli e alla fine salvare il risultato all'interno di un altro data store.
+
+Al suo interno possiamo trovare le seguenti componenti:
+
+- Databricks Lakehouse - un unico storage costruito su Delta Lake che supporta sia l'analisi dei dati tramite SQL che machine learning
+- Databricks SQL 
+- Databricks Notebooks
+- Unity Catalog - un layer unico di governance per dati e asset AI all'interno del workspace di Databricks che permette di governare un accesso al dato granulare, la sua provenienza e navigazione
+- Genie - un interfaccia AI a linguaggio naturale che permette all'utente di fare domande sui dati a cui ha accesso, questo assistente genera ed esegue query SQL restituendo il loro risultato.  
 
 ### Azure Databriks
 
@@ -154,3 +171,12 @@ Questi store includono data warehouses relezionali, data lakes basati su file-sy
 
 **Analytical data model**
 
+In passato la convenzione era crea data models per semplificare la creazione di report e dashboard per la visualizzazione interattiva dei dati. Questi modelli sono descritti da dei cubi, come visto in precedenza. Ad oggi invece viene presa una decisione diversa ossia l'utilizzo dei modelli semantici, che stanno alla base di Fabric e Power BI. Questi modelli definiscono tabelle, relazioni, gerarchie e misure scritte in [DAX](https://learn.microsoft.com/en-us/dax/dax-overview). Inoltre, usando Fabric, i modelli semantici possono usare la modalità **Direct Lake** che permette di caricare i dati direttamente da OneLake senza dover importare una copia separata dei dati all'interno del modello.
+
+**Data visualization**
+
+I dati dai modelli vengono dai data analysts utilizzati per creare reports, dashboards e altre visualizzazioni. Oltre a queste figure tecniche anche utenti non tecnici possono crearsi le proprie visualizzazioni, KPI  e reports.
+
+**AI-assisted analytics**
+
+Sono stati introdotte diverse funzionalità AI per aiutare gli utenti tecnici e non a interrogare dati, creare report e visualizzazioni. Tramite **Copilot in Microsoft Fabric** e **Copilot in Power BI** usando il linguaggio naturale si possono eseguire tutte queste operazioni. Anche in Azure Databricks, è stato introdotto **Genie**.
