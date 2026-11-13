@@ -2,7 +2,7 @@
 title: Real-time processing
 description: "#3 - Real-time processing"
 pubDate: 2026-11-12
-heroImage: /media/real-time-data-processing-2.svg
+heroImage: /media/real-time-data-processing-1-1.svg
 tags:
   - Fabric
 draft: false
