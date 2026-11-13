@@ -33,3 +33,18 @@ Nell'elaborazione a stream invece ogni singolo dato che arriva viene processato 
 Solitamente in soluzioni che vanno ad eseguire analisi su grandi quantità di dati si vanno a combinare le sue soluzioni per ottenere i vantaggi delle due. 
 
 Solitamente si configura un elaborazione dei dati in stream per avere il dato più aggiornato possibile e ci si costruisce sopra della dashboard real-time per consumare il dato (per esempio una dashboard che mostra lo stato attuale dei sensori antiincendio). Mentre i dati processati vengono memorizzati in uno storage per poi andare ad eseguire elaborazioni in batch sui dati storici (per esempio un analisi per capire quanti incendi si verificano durante l'anno e in quali orari). 
+
+Qui sotto riporto uno schema che descrive un **architettura lambda**, un pattern comune che combina l'elaborazione batch e quelle stream.
+
+![image.png](/media/image-20.png)
+
+In dettaglio è strutturata come segue:
+
+1. I dati da una sorgente stream vengono acquisiti in real-time
+2. Altri dati da altre sorgenti vengono acquisiti e memorizzati in un data storage (spesso un data lake) per l'elaborazione batch
+3. Se i dati acquisiti in real-time non richiedono di essere elaborazioni immediatamente vengono salvati all'interno di un data storage per essere, anch'essi, elaborazioni in batch
+4. Se i dati invece richiedono di essere processati in real-time, viene configurata un elaborazione stream per elaborare i dati acquisiti in real-time e consumarti tramite visualizzazioni o analisi in real-time. Solitamente questo processo coinvolge il filtraggio e l'aggregazione dei dati in una finestra temporale molto ridotta
+5. I dati che non provengono dalla sorgente stream vengono elaborati in batch periodicamente e preparati per l'analisi. Il risultato dell'elaborazione viene salvato in un analytical data store (un data warehouse) per eseguire poi analisi sullo storico.
+6. Anche il risultato dell'elaborazione stream può essere salvato nel data warehouse per integrare le informazioni storiche
+7. Strumenti di analytics e di visualizzazione sono usati per mostrare e esplorare i dati in real-time e storici
+
