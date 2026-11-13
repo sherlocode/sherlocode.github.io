@@ -49,3 +49,12 @@ In dettaglio è strutturata come segue:
 6. Anche il risultato dell'elaborazione stream può essere salvato nel data warehouse per integrare le informazioni storiche
 7. Strumenti di analytics e di visualizzazione sono usati per mostrare e esplorare i dati in real-time e storici
 
+## Architettura per l'elaborazione stream
+
+Ad alto livello un architettura per l'elaborazione stream si presenta in questo modo
+
+![image.png](/media/image-21.png)
+
+Inizialmente una sorgente genera dei dati che possono essere dei segnali emessi da dei sensori, un post su un social media, o un file di log che viene scritto. Il dato generato viene poi catturato in una sorgente stream per l'elaborazione, nei casi più semplici può essere una cartella nel cloud o una tabella in un database. Nei casi più complicati la sorgente può essere una coda che permette di elaborare gli eventi in ordine e solo una volta.
+
+I dati legati all'evento vengono processati, spesso si usa una **perpetual query** - un tipo di query che elabora continuamente i dati proveniente da eventi in real-time non appena vengono generati. In questo caso, la **perpetual query**, opera sugli eventi selezionando i dati da certi tipi di eventi e aggregando i dati nell'arco di periodi temporali. Il risultato finale viene scritto in un output, detto anche **sink**, che può essere file, una tabella di un database, un dashboard real-time o un altra queue per un ulteriore elaborazione.
