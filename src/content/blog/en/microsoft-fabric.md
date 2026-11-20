@@ -1,58 +1,68 @@
 ---
 title: Microsoft Fabric
-description: '#4 - Microsoft Fabric'
-pubDate: 2026-11-11
+description: "#4 - Microsoft Fabric"
+pubDate: 2026-11-20
 heroImage: /media/microsoftfabric2023.svg
+tags:
+  - Fabric
 draft: false
 quiz:
-- question: Which Fabric Data Factory tool is low-code and based on Power Query?
-  options:
-  - Pipelines
-  - Dataflows Gen2
-  - Eventstream
-  - Mirroring
-  answer: 2
-  explanation: Dataflows Gen2 is a low-code tool for building data transformation logic visually, and it is based on Power Query.
-- question: What happens to data referenced through OneLake Shortcuts?
-  options:
-  - It is copied into OneLake
-  - It is replicated into OneLake in real time
-  - It stays in the external storage, without being copied or moved
-  - It is moved permanently into OneLake
-  answer: 3
-  explanation: Shortcuts reference external storage from within OneLake, but the data is neither copied nor moved.
-- question: Which tool automatically replicates data into OneLake in real time without building a pipeline?
-  options:
-  - Mirroring
-  - OneLake Shortcuts
-  - Pipelines
-  - Power BI
-  answer: 1
-  explanation: Mirroring handles the replication of data into OneLake automatically, with no need for a pipeline.
-- question: Which sources can Eventstream connect to?
-  options:
-  - Only manually uploaded CSV files
-  - Only Fabric Warehouse
-  - Only relational databases such as Azure SQL Database
-  - Event sources such as Azure Event Hub, Apache Kafka or custom endpoints
-  answer: 4
-  explanation: Eventstream ingests real-time sources and connects to event sources such as Azure Event Hub, Apache Kafka or custom endpoints.
-- question: What sets Apache Spark apart when processing data?
-  options:
-  - It only works with SQL
-  - It only handles batch processing
-  - It spreads processing across several machines (a cluster) in parallel
-  - It processes data on a single, very powerful machine
-  answer: 3
-  explanation: Spark carries out processing on several machines, called a cluster, working in parallel to improve performance.
-- question: In Spark Structured Streaming, what is the output that the query result is written to called?
-  options:
-  - Dataframe
-  - Sink
-  - Shortcut
-  - Batch
-  answer: 2
-  explanation: The output of the query is written to a sink, which can be a file, a database or a dashboard.
+  - question: Which Fabric Data Factory tool is low-code and based on Power Query?
+    options:
+      - Pipelines
+      - Dataflows Gen2
+      - Eventstream
+      - Mirroring
+    answer: 2
+    explanation: Dataflows Gen2 is a low-code tool for building data transformation
+      logic visually, and it is based on Power Query.
+  - question: What happens to data referenced through OneLake Shortcuts?
+    options:
+      - It is copied into OneLake
+      - It is replicated into OneLake in real time
+      - It stays in the external storage, without being copied or moved
+      - It is moved permanently into OneLake
+    answer: 3
+    explanation: Shortcuts reference external storage from within OneLake, but the
+      data is neither copied nor moved.
+  - question: Which tool automatically replicates data into OneLake in real time
+      without building a pipeline?
+    options:
+      - Mirroring
+      - OneLake Shortcuts
+      - Pipelines
+      - Power BI
+    answer: 1
+    explanation: Mirroring handles the replication of data into OneLake
+      automatically, with no need for a pipeline.
+  - question: Which sources can Eventstream connect to?
+    options:
+      - Only manually uploaded CSV files
+      - Only Fabric Warehouse
+      - Only relational databases such as Azure SQL Database
+      - Event sources such as Azure Event Hub, Apache Kafka or custom endpoints
+    answer: 4
+    explanation: Eventstream ingests real-time sources and connects to event sources
+      such as Azure Event Hub, Apache Kafka or custom endpoints.
+  - question: What sets Apache Spark apart when processing data?
+    options:
+      - It only works with SQL
+      - It only handles batch processing
+      - It spreads processing across several machines (a cluster) in parallel
+      - It processes data on a single, very powerful machine
+    answer: 3
+    explanation: Spark carries out processing on several machines, called a cluster,
+      working in parallel to improve performance.
+  - question: In Spark Structured Streaming, what is the output that the query
+      result is written to called?
+    options:
+      - Dataframe
+      - Sink
+      - Shortcut
+      - Batch
+    answer: 2
+    explanation: The output of the query is written to a sink, which can be a file,
+      a database or a dashboard.
 ---
 # Microsoft Fabric
 
