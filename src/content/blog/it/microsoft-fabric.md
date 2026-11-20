@@ -1,6 +1,6 @@
 ---
 title: Microsoft Fabric
-description: "# - Microsoft Fabric"
+description: "#4 - Microsoft Fabric"
 pubDate: 2026-11-11
 heroImage: /media/microsoftfabric2023.svg
 draft: false
