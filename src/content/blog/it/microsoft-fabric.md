@@ -41,7 +41,25 @@ E' un set di strumenti presente in Fabric che permette di acquisire, processare 
 
 Nella pratica andiamo a collegarci a una sorgente dati, memorizziamo e interroghiamo i dati, costruiamo delle dashboard real-time e impostazione notifiche o avvisi quando certe condizioni vengono soddisfatte (esempio: Se il dato di un sensore ha un certo valore posso mandare un email)
 
-  
-
 ![image.png](/media/image-22.png)
 
+### Apache Spark
+
+Apache Spark è un motore di elaborazione dei dati che permette di gestire grandi dataset di dati in modo rapido. Fino a qui nulla di nuovo. Un elemento che però lo distingue è il fatto che l'elaborazione non viene effettuata solo una singola macchina, ma su diverse (definito cluster) che permettono di eseguire elaborazioni in parallelo aumentando le performance. Questo motore permette di scrivere codice in diversi linguaggi (R, Python, Scala, Java, R e SQL) e può gestire sia l'elaborazione batch che stream, 
+
+Spark può essere utilizzato sia in Microsoft Fabric che in Azure Databriks.
+
+All'interno di Spark troviamo **Spark Structured Streaming.** Questa è una libreria che facilita l'uso di dati in streaming. Per capire come funzione possiamo accomunare la gestione dei dati in streaming a come gestione le tabelle in un foglio di lavoro di Excel, dove però i dati crescono in real-time.
+
+In dettaglio:
+
+1. Ci colleghiamo ad una sorgente streaming - per esempio, una coda di messaggi come Azure Event Hubs
+2. Spark legge i dati in arrivo e li memorizza in un dataframe - Una tabella con righe e colonne in cui vengono salvati i dati non appena arrivano
+3. Scriviamo delle query per interrogare questi dati
+4. L'output della query viene scritto in un output (detto sink) che può essere un file, un database o una dashboard.
+
+![image.png](/media/image-23.png)
+
+
+
+&nbsp;
