@@ -35,3 +35,13 @@ In questo caso invece i dati vengono replicati direttamente in OneLake in real-t
 
 Strumento per eseguire l'ingestion di sorgenti real-time che si può collegare a event sources come Azure Event Hub, Apache Kafka o endpoint custom. Quando si collega esegue un filtraggio e una trasformazione dei dati prima di memorizzarli dentro Fabric Lakehouse.  
 
+### Microsoft Fabric Real-Time Intelligence
+
+E' un set di strumenti presente in Fabric che permette di acquisire, processare ed analizzare i dati arrivati in streaming. Ogni strumento al suo interno permette di costruire l'intera pipeline per l'elaborazione dei dati, si parte dall'acquisizione dei dati fino ad arrivare alla loro visualizzazione e automazioni di determinate azioni basate sui dati acquisiti. 
+
+Nella pratica andiamo a collegarci a una sorgente dati, memorizziamo e interroghiamo i dati, costruiamo delle dashboard real-time e impostazione notifiche o avvisi quando certe condizioni vengono soddisfatte (esempio: Se il dato di un sensore ha un certo valore posso mandare un email)
+
+  
+
+![image.png](/media/image-22.png)
+
