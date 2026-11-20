@@ -1,58 +1,69 @@
 ---
 title: Microsoft Fabric
-description: '#4 - Microsoft Fabric'
-pubDate: 2026-11-11
+description: "#4 - Microsoft Fabric"
+pubDate: 2026-11-20
 heroImage: /media/microsoftfabric2023.svg
+tags:
+  - Fabric
 draft: false
 quiz:
-- question: Quale strumento di Fabric Data Factory è low-code e si basa su Power Query?
-  options:
-  - Pipelines
-  - Dataflows Gen2
-  - Eventstream
-  - Mirroring
-  answer: 2
-  explanation: Dataflows Gen2 è uno strumento low-code che permette di creare le logiche di trasformazione dei dati in modo visuale e si basa su Power Query.
-- question: Cosa succede ai dati referenziati tramite le OneLake Shortcuts?
-  options:
-  - Vengono copiati in OneLake
-  - Vengono replicati in real-time in OneLake
-  - Restano nello storage esterno, senza essere copiati o spostati
-  - Vengono spostati definitivamente in OneLake
-  answer: 3
-  explanation: Le shortcut referenziano uno storage esterno all'interno di OneLake, ma i dati non vengono copiati né spostati.
-- question: Quale strumento replica automaticamente i dati in OneLake in real-time senza costruire una pipeline?
-  options:
-  - Mirroring
-  - OneLake Shortcuts
-  - Pipelines
-  - Power BI
-  answer: 1
-  explanation: Il Mirroring gestisce in automatico la replica dei dati in OneLake, senza bisogno di una pipeline.
-- question: A quali sorgenti si può collegare Eventstream?
-  options:
-  - Solo a file CSV caricati manualmente
-  - Solo a Fabric Warehouse
-  - Solo a database relazionali come Azure SQL Database
-  - A event sources come Azure Event Hub, Apache Kafka o endpoint custom
-  answer: 4
-  explanation: Eventstream esegue l'ingestion di sorgenti real-time e si collega a event sources come Azure Event Hub, Apache Kafka o endpoint custom.
-- question: Cosa distingue Apache Spark nell'elaborazione dei dati?
-  options:
-  - Funziona solo con il linguaggio SQL
-  - Gestisce solo l'elaborazione batch
-  - Distribuisce l'elaborazione su più macchine (un cluster) in parallelo
-  - Elabora i dati su una sola macchina molto potente
-  answer: 3
-  explanation: Spark esegue l'elaborazione su diverse macchine, definite cluster, lavorando in parallelo e aumentando le performance.
-- question: In Spark Structured Streaming, come si chiama l'output in cui viene scritto il risultato della query?
-  options:
-  - Dataframe
-  - Sink
-  - Shortcut
-  - Batch
-  answer: 2
-  explanation: L'output della query viene scritto in un sink, che può essere un file, un database o una dashboard.
+  - question: Quale strumento di Fabric Data Factory è low-code e si basa su Power Query?
+    options:
+      - Pipelines
+      - Dataflows Gen2
+      - Eventstream
+      - Mirroring
+    answer: 2
+    explanation: Dataflows Gen2 è uno strumento low-code che permette di creare le
+      logiche di trasformazione dei dati in modo visuale e si basa su Power
+      Query.
+  - question: Cosa succede ai dati referenziati tramite le OneLake Shortcuts?
+    options:
+      - Vengono copiati in OneLake
+      - Vengono replicati in real-time in OneLake
+      - Restano nello storage esterno, senza essere copiati o spostati
+      - Vengono spostati definitivamente in OneLake
+    answer: 3
+    explanation: Le shortcut referenziano uno storage esterno all'interno di
+      OneLake, ma i dati non vengono copiati né spostati.
+  - question: Quale strumento replica automaticamente i dati in OneLake in real-time
+      senza costruire una pipeline?
+    options:
+      - Mirroring
+      - OneLake Shortcuts
+      - Pipelines
+      - Power BI
+    answer: 1
+    explanation: Il Mirroring gestisce in automatico la replica dei dati in OneLake,
+      senza bisogno di una pipeline.
+  - question: A quali sorgenti si può collegare Eventstream?
+    options:
+      - Solo a file CSV caricati manualmente
+      - Solo a Fabric Warehouse
+      - Solo a database relazionali come Azure SQL Database
+      - A event sources come Azure Event Hub, Apache Kafka o endpoint custom
+    answer: 4
+    explanation: Eventstream esegue l'ingestion di sorgenti real-time e si collega a
+      event sources come Azure Event Hub, Apache Kafka o endpoint custom.
+  - question: Cosa distingue Apache Spark nell'elaborazione dei dati?
+    options:
+      - Funziona solo con il linguaggio SQL
+      - Gestisce solo l'elaborazione batch
+      - Distribuisce l'elaborazione su più macchine (un cluster) in parallelo
+      - Elabora i dati su una sola macchina molto potente
+    answer: 3
+    explanation: Spark esegue l'elaborazione su diverse macchine, definite cluster,
+      lavorando in parallelo e aumentando le performance.
+  - question: In Spark Structured Streaming, come si chiama l'output in cui viene
+      scritto il risultato della query?
+    options:
+      - Dataframe
+      - Sink
+      - Shortcut
+      - Batch
+    answer: 2
+    explanation: L'output della query viene scritto in un sink, che può essere un
+      file, un database o una dashboard.
 ---
 # Microsoft Fabric
 
