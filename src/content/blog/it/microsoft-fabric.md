@@ -3,7 +3,7 @@ title: Microsoft Fabric
 description: "# - Microsoft Fabric"
 pubDate: 2026-11-11
 heroImage: /media/microsoftfabric2023.svg
-draft: true
+draft: false
 ---
 # Microsoft Fabric
 
