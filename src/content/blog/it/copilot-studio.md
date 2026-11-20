@@ -7,6 +7,3 @@ draft: true
 ---
 # **Copilot Studio**
 
-
-
-&nbsp;
